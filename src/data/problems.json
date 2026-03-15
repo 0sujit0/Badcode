@@ -1,0 +1,522 @@
+[
+  {
+    "id": "L1_P1",
+    "level": 1,
+    "title": "Customer Directory",
+    "story": "As a new data analyst, the first thing you need to do is explore our customer base. Retrieve <strong>all columns</strong> from the <code>Customers</code> table.",
+    "requiredConcept": "SELECT",
+    "expectedOutput": [{"id":1,"first_name":"John","last_name":"Doe","email":"john@example.com","registration_date":"2023-01-10"},{"id":2,"first_name":"Sarah","last_name":"Smith","email":"sarah.smith@example.com","registration_date":"2023-02-20"},{"id":3,"first_name":"Michael","last_name":"Johnson","email":"mjohnson@example.com","registration_date":"2023-03-05"},{"id":4,"first_name":"Emily","last_name":"Davis","email":"emily.d@example.com","registration_date":"2023-03-10"},{"id":5,"first_name":"David","last_name":"Wilson","email":"dwilson@example.com","registration_date":"2023-04-01"},{"id":6,"first_name":"Jessica","last_name":"Taylor","email":"jtaylor@example.com","registration_date":"2023-04-15"},{"id":7,"first_name":"Chris","last_name":"Anderson","email":"canderson@example.com","registration_date":"2023-05-01"},{"id":8,"first_name":"Sophie","last_name":"Martinez","email":"smartinez@example.com","registration_date":"2023-05-15"},{"id":9,"first_name":"Isabella","last_name":"Garcia","email":"igarcia@example.com","registration_date":"2023-06-01"}],
+    "hints": [
+      "Use the SELECT keyword followed by the columns you want.",
+      "The asterisk (*) is a wildcard that selects all columns.",
+      "Try running: SELECT * FROM Customers;"
+    ]
+  },
+  {
+    "id": "L1_P2",
+    "level": 1,
+    "title": "Product Catalog",
+    "story": "The warehouse manager needs a list of all products. Retrieve <strong>all columns</strong> from the <code>Products</code> table.",
+    "requiredConcept": "SELECT",
+    "expectedOutput": [{"id":1,"name":"Laptop","category":"Electronics","price":1200,"stock":20},{"id":2,"name":"Wireless Mouse","category":"Electronics","price":25,"stock":150},{"id":3,"name":"Mechanical Keyboard","category":"Electronics","price":89.99,"stock":50},{"id":4,"name":"Coffee Mug","category":"Home","price":12.5,"stock":300},{"id":5,"name":"Desk Lamp","category":"Home","price":45,"stock":75},{"id":6,"name":"Laptop Stand","category":"Accessories","price":35,"stock":120},{"id":7,"name":"Bluetooth Speaker","category":"Electronics","price":55,"stock":200},{"id":8,"name":"Notebook","category":"Office","price":5,"stock":500},{"id":9,"name":"Keyboard","category":"Electronics","price":70,"stock":100}],
+    "hints": [
+      "Similar to the previous lesson, use SELECT *.",
+      "Make sure you are targeting the Products table this time.",
+      "Try: SELECT * FROM Products;"
+    ]
+  },
+  {
+    "id": "L1_P3",
+    "level": 1,
+    "title": "Customer Contact List",
+    "story": "The marketing team only needs customer names. Return only the <code>first_name</code> and <code>last_name</code> columns from <code>Customers</code>.",
+    "requiredConcept": "SELECT",
+    "expectedOutput": [{"first_name":"John","last_name":"Doe"},{"first_name":"Sarah","last_name":"Smith"},{"first_name":"Michael","last_name":"Johnson"},{"first_name":"Emily","last_name":"Davis"},{"first_name":"David","last_name":"Wilson"},{"first_name":"Jessica","last_name":"Taylor"},{"first_name":"Chris","last_name":"Anderson"},{"first_name":"Sophie","last_name":"Martinez"},{"first_name":"Isabella","last_name":"Garcia"}],
+    "hints": [
+      "Instead of *, list the columns separated by a comma.",
+      "Column names are first_name and last_name.",
+      "SELECT first_name, last_name FROM Customers;"
+    ]
+  },
+  {
+    "id": "L1_P4",
+    "level": 1,
+    "title": "Order Ledger",
+    "story": "Let's look at what's been happening in sales. Retrieve <strong>all columns</strong> from the <code>Orders</code> table.",
+    "requiredConcept": "SELECT",
+    "expectedOutput": [{"id":101,"customer_id":1,"product_id":1,"order_date":"2023-05-01","status":"Delivered","amount":1200},{"id":102,"customer_id":2,"product_id":2,"order_date":"2023-05-02","status":"Processing","amount":45},{"id":103,"customer_id":2,"product_id":4,"order_date":"2023-05-03","status":"Delivered","amount":12.5},{"id":104,"customer_id":3,"product_id":5,"order_date":"2023-05-04","status":"Shipped","amount":45},{"id":105,"customer_id":4,"product_id":3,"order_date":"2023-05-05","status":"Delivered","amount":89.99},{"id":106,"customer_id":5,"product_id":6,"order_date":"2023-05-06","status":"Processing","amount":35},{"id":107,"customer_id":1,"product_id":7,"order_date":"2023-05-07","status":"Delivered","amount":55},{"id":108,"customer_id":6,"product_id":8,"order_date":"2023-05-08","status":"Cancelled","amount":5},{"id":109,"customer_id":2,"product_id":9,"order_date":"2023-05-09","status":"Delivered","amount":70},{"id":110,"customer_id":7,"product_id":2,"order_date":"2023-05-10","status":"Shipped","amount":25},{"id":111,"customer_id":8,"product_id":4,"order_date":"2023-05-11","status":"Delivered","amount":12.5},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":113,"customer_id":3,"product_id":3,"order_date":"2023-05-13","status":"Delivered","amount":89.99},{"id":114,"customer_id":4,"product_id":2,"order_date":"2023-05-14","status":"Shipped","amount":25},{"id":115,"customer_id":5,"product_id":5,"order_date":"2023-05-15","status":"Delivered","amount":45},{"id":116,"customer_id":9,"product_id":7,"order_date":"2023-05-16","status":"Delivered","amount":55},{"id":117,"customer_id":2,"product_id":1,"order_date":"2023-05-17","status":"Delivered","amount":1200},{"id":118,"customer_id":6,"product_id":6,"order_date":"2023-05-18","status":"Cancelled","amount":35},{"id":119,"customer_id":7,"product_id":3,"order_date":"2023-05-19","status":"Processing","amount":89.99},{"id":120,"customer_id":8,"product_id":9,"order_date":"2023-05-25","status":"Delivered","amount":70}],
+    "hints": [
+      "Select everything from the Orders table.",
+      "The command structure is always SELECT ... FROM ...",
+      "SELECT * FROM Orders;"
+    ]
+  },
+  {
+    "id": "L1_P5",
+    "level": 1,
+    "title": "Employee Overview",
+    "story": "Management wants a simple staff list. Return <code>first_name</code>, <code>last_name</code>, and <code>department</code> from the <code>Employees</code> table.",
+    "requiredConcept": "SELECT",
+    "expectedOutput": [{"first_name":"Alice","last_name":"Brown","department":"Sales"},{"first_name":"Bob","last_name":"Thompson","department":"Engineering"},{"first_name":"Charlie","last_name":"Davis","department":"Marketing"},{"first_name":"Diana","last_name":"Price","department":"Sales"},{"first_name":"Evan","last_name":"Wright","department":"Engineering"}],
+    "hints": [
+      "Select the three specific columns requested.",
+      "Separate the column names with commas.",
+      "SELECT first_name, last_name, department FROM Employees;"
+    ]
+  },
+  {
+    "id": "L2_P1",
+    "level": 2,
+    "title": "Processing Orders",
+    "story": "The logistics team needs to know which orders are still <strong>Processing</strong>. Filter the <code>Orders</code> table where the <code>status</code> is 'Processing'.",
+    "requiredConcept": "WHERE",
+    "expectedOutput": [{"id":102,"customer_id":2,"product_id":2,"order_date":"2023-05-02","status":"Processing","amount":45},{"id":106,"customer_id":5,"product_id":6,"order_date":"2023-05-06","status":"Processing","amount":35},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":119,"customer_id":7,"product_id":3,"order_date":"2023-05-19","status":"Processing","amount":89.99}],
+    "hints": [
+      "Use the WHERE clause to filter rows.",
+      "String values like 'Processing' must be enclosed in single quotes.",
+      "SELECT * FROM Orders WHERE status = 'Processing';"
+    ]
+  },
+  {
+    "id": "L2_P2",
+    "level": 2,
+    "title": "Electronics Inventory",
+    "story": "Find all products that belong to the <strong>Electronics</strong> category.",
+    "requiredConcept": "WHERE",
+    "expectedOutput": [{"id":1,"name":"Laptop","category":"Electronics","price":1200,"stock":20},{"id":2,"name":"Wireless Mouse","category":"Electronics","price":25,"stock":150},{"id":3,"name":"Mechanical Keyboard","category":"Electronics","price":89.99,"stock":50},{"id":7,"name":"Bluetooth Speaker","category":"Electronics","price":55,"stock":200},{"id":9,"name":"Keyboard","category":"Electronics","price":70,"stock":100}],
+    "hints": [
+      "Filter the Products table.",
+      "Use WHERE category = 'Electronics'.",
+      "SELECT * FROM Products WHERE category = 'Electronics';"
+    ]
+  },
+  {
+    "id": "L2_P3",
+    "level": 2,
+    "title": "High Value Orders",
+    "story": "We need to track significant sales. Find all orders where the <code>amount</code> is <strong>greater than 500</strong>.",
+    "requiredConcept": "WHERE",
+    "expectedOutput": [{"id":101,"customer_id":1,"product_id":1,"order_date":"2023-05-01","status":"Delivered","amount":1200},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":117,"customer_id":2,"product_id":1,"order_date":"2023-05-17","status":"Delivered","amount":1200}],
+    "hints": [
+      "Use the greater than operator (>).",
+      "Numbers should not have quotes.",
+      "SELECT * FROM Orders WHERE amount > 500;"
+    ]
+  },
+  {
+    "id": "L2_P4",
+    "level": 2,
+    "title": "Low Stock Alert",
+    "story": "Alert the stock manager! Find products where the <code>stock</code> is <strong>less than 30</strong>.",
+    "requiredConcept": "WHERE",
+    "expectedOutput": [{"id":1,"name":"Laptop","category":"Electronics","price":1200,"stock":20}],
+    "hints": [
+      "Use the less than operator (<).",
+      "Check the Products table.",
+      "SELECT * FROM Products WHERE stock < 30;"
+    ]
+  },
+  {
+    "id": "L2_P5",
+    "level": 2,
+    "title": "Active Orders",
+    "story": "Find all orders that have <strong>NOT</strong> been 'Delivered'.",
+    "requiredConcept": "WHERE",
+    "expectedOutput": [{"id":102,"customer_id":2,"product_id":2,"order_date":"2023-05-02","status":"Processing","amount":45},{"id":104,"customer_id":3,"product_id":5,"order_date":"2023-05-04","status":"Shipped","amount":45},{"id":106,"customer_id":5,"product_id":6,"order_date":"2023-05-06","status":"Processing","amount":35},{"id":108,"customer_id":6,"product_id":8,"order_date":"2023-05-08","status":"Cancelled","amount":5},{"id":110,"customer_id":7,"product_id":2,"order_date":"2023-05-10","status":"Shipped","amount":25},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":114,"customer_id":4,"product_id":2,"order_date":"2023-05-14","status":"Shipped","amount":25},{"id":118,"customer_id":6,"product_id":6,"order_date":"2023-05-18","status":"Cancelled","amount":35},{"id":119,"customer_id":7,"product_id":3,"order_date":"2023-05-19","status":"Processing","amount":89.99}],
+    "hints": [
+      "The 'not equal' operator is (<>).",
+      "Filter status in the Orders table.",
+      "SELECT * FROM Orders WHERE status <> 'Delivered';"
+    ]
+  },
+  {
+    "id": "L3_P1",
+    "level": 3,
+    "title": "Newest Orders",
+    "story": "The CEO wants to see our latest activity. Sort all orders by <code>order_date</code> in descending order (newest first).",
+    "requiredConcept": "ORDER BY",
+    "expectedOutput": [{"id":120,"customer_id":8,"product_id":9,"order_date":"2023-05-25","status":"Delivered","amount":70},{"id":119,"customer_id":7,"product_id":3,"order_date":"2023-05-19","status":"Processing","amount":89.99},{"id":118,"customer_id":6,"product_id":6,"order_date":"2023-05-18","status":"Cancelled","amount":35},{"id":117,"customer_id":2,"product_id":1,"order_date":"2023-05-17","status":"Delivered","amount":1200},{"id":116,"customer_id":9,"product_id":7,"order_date":"2023-05-16","status":"Delivered","amount":55},{"id":115,"customer_id":5,"product_id":5,"order_date":"2023-05-15","status":"Delivered","amount":45},{"id":114,"customer_id":4,"product_id":2,"order_date":"2023-05-14","status":"Shipped","amount":25},{"id":113,"customer_id":3,"product_id":3,"order_date":"2023-05-13","status":"Delivered","amount":89.99},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":111,"customer_id":8,"product_id":4,"order_date":"2023-05-11","status":"Delivered","amount":12.5},{"id":110,"customer_id":7,"product_id":2,"order_date":"2023-05-10","status":"Shipped","amount":25},{"id":109,"customer_id":2,"product_id":9,"order_date":"2023-05-09","status":"Delivered","amount":70},{"id":108,"customer_id":6,"product_id":8,"order_date":"2023-05-08","status":"Cancelled","amount":5},{"id":107,"customer_id":1,"product_id":7,"order_date":"2023-05-07","status":"Delivered","amount":55},{"id":106,"customer_id":5,"product_id":6,"order_date":"2023-05-06","status":"Processing","amount":35},{"id":105,"customer_id":4,"product_id":3,"order_date":"2023-05-05","status":"Delivered","amount":89.99},{"id":104,"customer_id":3,"product_id":5,"order_date":"2023-05-04","status":"Shipped","amount":45},{"id":103,"customer_id":2,"product_id":4,"order_date":"2023-05-03","status":"Delivered","amount":12.5},{"id":102,"customer_id":2,"product_id":2,"order_date":"2023-05-02","status":"Processing","amount":45},{"id":101,"customer_id":1,"product_id":1,"order_date":"2023-05-01","status":"Delivered","amount":1200}],
+    "hints": [
+      "Add ORDER BY at the end of your query.",
+      "Use DESC for descending order.",
+      "SELECT * FROM Orders ORDER BY order_date DESC;"
+    ]
+  },
+  {
+    "id": "L3_P2",
+    "level": 3,
+    "title": "Top Expensive Products",
+    "story": "Show me the <strong>Top 3</strong> most expensive products in our catalog. Include only the <code>name</code> and <code>price</code>.",
+    "requiredConcept": "LIMIT",
+    "expectedOutput": [{"name":"Laptop","price":1200},{"name":"Mechanical Keyboard","price":89.99},{"name":"Keyboard","price":70}],
+    "hints": [
+      "Combine ORDER BY price DESC with the LIMIT clause.",
+      "Make sure you select only name and price.",
+      "SELECT name, price FROM Products ORDER BY price DESC LIMIT 3;"
+    ]
+  },
+  {
+    "id": "L3_P3",
+    "level": 3,
+    "title": "Selected Customers",
+    "story": "A special promotion is running for our first three customers. Find all orders placed by <code>customer_id</code> <strong>1, 2, or 3</strong>.",
+    "requiredConcept": "IN",
+    "expectedOutput": [{"id":101,"customer_id":1,"product_id":1,"order_date":"2023-05-01","status":"Delivered","amount":1200},{"id":102,"customer_id":2,"product_id":2,"order_date":"2023-05-02","status":"Processing","amount":45},{"id":103,"customer_id":2,"product_id":4,"order_date":"2023-05-03","status":"Delivered","amount":12.5},{"id":104,"customer_id":3,"product_id":5,"order_date":"2023-05-04","status":"Shipped","amount":45},{"id":107,"customer_id":1,"product_id":7,"order_date":"2023-05-07","status":"Delivered","amount":55},{"id":109,"customer_id":2,"product_id":9,"order_date":"2023-05-09","status":"Delivered","amount":70},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":113,"customer_id":3,"product_id":3,"order_date":"2023-05-13","status":"Delivered","amount":89.99},{"id":117,"customer_id":2,"product_id":1,"order_date":"2023-05-17","status":"Delivered","amount":1200}],
+    "hints": [
+      "Instead of using multiple OR statements, use the IN keyword.",
+      "The syntax is WHERE column IN (val1, val2, ...).",
+      "SELECT * FROM Orders WHERE customer_id IN (1, 2, 3);"
+    ]
+  },
+  {
+    "id": "L3_P4",
+    "level": 3,
+    "title": "Mid Range Products",
+    "story": "Find products with a price <strong>between 50 and 500</strong>.",
+    "requiredConcept": "BETWEEN",
+    "expectedOutput": [{"id":3,"name":"Mechanical Keyboard","category":"Electronics","price":89.99,"stock":50},{"id":7,"name":"Bluetooth Speaker","category":"Electronics","price":55,"stock":200},{"id":9,"name":"Keyboard","category":"Electronics","price":70,"stock":100}],
+    "hints": [
+      "The BETWEEN operator is inclusive.",
+      "Syntax is WHERE price BETWEEN 50 AND 500.",
+      "SELECT * FROM Products WHERE price BETWEEN 50 AND 500;"
+    ]
+  },
+  {
+    "id": "L3_P5",
+    "level": 3,
+    "title": "Preview Orders",
+    "story": "Quick check! Return only the <strong>5 most recent</strong> orders.",
+    "requiredConcept": "LIMIT",
+    "expectedOutput": [{"id":120,"customer_id":8,"product_id":9,"order_date":"2023-05-25","status":"Delivered","amount":70},{"id":119,"customer_id":7,"product_id":3,"order_date":"2023-05-19","status":"Processing","amount":89.99},{"id":118,"customer_id":6,"product_id":6,"order_date":"2023-05-18","status":"Cancelled","amount":35},{"id":117,"customer_id":2,"product_id":1,"order_date":"2023-05-17","status":"Delivered","amount":1200},{"id":116,"customer_id":9,"product_id":7,"order_date":"2023-05-16","status":"Delivered","amount":55}],
+    "hints": [
+      "First sort by date descending.",
+      "Then apply LIMIT 5.",
+      "SELECT * FROM Orders ORDER BY order_date DESC LIMIT 5;"
+    ]
+  },
+  {
+    "id": "L4_P1",
+    "level": 4,
+    "title": "Total Orders",
+    "story": "How many total orders have been placed so far? Use <code>COUNT</code>.",
+    "requiredConcept": "COUNT",
+    "expectedOutput": [{"COUNT(*)":20}],
+    "hints": [
+      "Use the COUNT(*) function.",
+      "Select this from the Orders table.",
+      "SELECT COUNT(*) FROM Orders;"
+    ]
+  },
+  {
+    "id": "L4_P2",
+    "level": 4,
+    "title": "Total Revenue",
+    "story": "Calculate the <code>SUM</code> of all order amounts.",
+    "requiredConcept": "SUM",
+    "expectedOutput": [{"SUM(amount)":4429.97}],
+    "hints": [
+      "Use the SUM() function and pass 'amount' as the argument.",
+      "SELECT SUM(amount) FROM Orders;",
+      "Remember that numbers might look different depending on seed data."
+    ]
+  },
+  {
+    "id": "L4_P3",
+    "level": 4,
+    "title": "Average Product Price",
+    "story": "What is the average price of all the products we sell?",
+    "requiredConcept": "AVG",
+    "expectedOutput": [{"AVG(price)":166.3877777777778}],
+    "hints": [
+      "Use the AVG() function on the price column in the Products table.",
+      "SELECT AVG(price) FROM Products;",
+      "SQLite does not automatically round results unless you ask it to."
+    ]
+  },
+  {
+    "id": "L4_P4",
+    "level": 4,
+    "title": "Orders Per Customer",
+    "story": "Count how many orders each customer has placed. Show <code>customer_id</code> and the count.",
+    "requiredConcept": "GROUP BY",
+    "expectedOutput": [{"customer_id":1,"COUNT(*)":3},{"customer_id":2,"COUNT(*)":4},{"customer_id":3,"COUNT(*)":2},{"customer_id":4,"COUNT(*)":2},{"customer_id":5,"COUNT(*)":2},{"customer_id":6,"COUNT(*)":2},{"customer_id":7,"COUNT(*)":2},{"customer_id":8,"COUNT(*)":2},{"customer_id":9,"COUNT(*)":1}],
+    "hints": [
+      "You need to use GROUP BY at the end of the query.",
+      "Group specifically by customer_id.",
+      "SELECT customer_id, COUNT(*) FROM Orders GROUP BY customer_id;"
+    ]
+  },
+  {
+    "id": "L4_P5",
+    "level": 4,
+    "title": "High Value Customers",
+    "story": "Find <code>customer_id</code>s of people who have placed <strong>more than 1 order</strong>. Use <code>HAVING</code>.",
+    "requiredConcept": "HAVING",
+    "expectedOutput": [{"customer_id":1},{"customer_id":2},{"customer_id":3},{"customer_id":4},{"customer_id":5},{"customer_id":6},{"customer_id":7},{"customer_id":8}],
+    "hints": [
+      "HAVING is used to filter groups whereas WHERE filters rows.",
+      "Use GROUP BY customer_id first, then HAVING COUNT(*) > 1.",
+      "SELECT customer_id FROM Orders GROUP BY customer_id HAVING COUNT(*) > 1;"
+    ]
+  },
+  {
+    "id": "L5_P1",
+    "level": 5,
+    "title": "Customer Orders",
+    "story": "We need the customer names for each order. <code>JOIN</code> the <strong>Customers</strong> and <strong>Orders</strong> tables. Show order <code>id</code> and customer <code>first_name</code>.",
+    "requiredConcept": "JOIN",
+    "expectedOutput": [{"id":101,"first_name":"John"},{"id":102,"first_name":"Sarah"},{"id":103,"first_name":"Sarah"},{"id":104,"first_name":"Michael"},{"id":105,"first_name":"Emily"},{"id":106,"first_name":"David"},{"id":107,"first_name":"John"},{"id":108,"first_name":"Jessica"},{"id":109,"first_name":"Sarah"},{"id":110,"first_name":"Chris"},{"id":111,"first_name":"Sophie"},{"id":112,"first_name":"John"},{"id":113,"first_name":"Michael"},{"id":114,"first_name":"Emily"},{"id":115,"first_name":"David"},{"id":116,"first_name":"Isabella"},{"id":117,"first_name":"Sarah"},{"id":118,"first_name":"Jessica"},{"id":119,"first_name":"Chris"},{"id":120,"first_name":"Sophie"}],
+    "hints": [
+      "Join on the common column: customer_id in Orders and id in Customers.",
+      "Use INNER JOIN or just JOIN.",
+      "SELECT Orders.id, Customers.first_name FROM Orders JOIN Customers ON Orders.customer_id = Customers.id;"
+    ]
+  },
+  {
+    "id": "L5_P2",
+    "level": 5,
+    "title": "Order Product Names",
+    "story": "Which product was purchased in each order? JOIN <strong>Orders</strong> and <strong>Products</strong> to show order <code>id</code> and product <code>name</code>.",
+    "requiredConcept": "JOIN",
+    "expectedOutput": [{"id":101,"name":"Laptop"},{"id":102,"name":"Wireless Mouse"},{"id":103,"name":"Coffee Mug"},{"id":104,"name":"Desk Lamp"},{"id":105,"name":"Mechanical Keyboard"},{"id":106,"name":"Laptop Stand"},{"id":107,"name":"Bluetooth Speaker"},{"id":108,"name":"Notebook"},{"id":109,"name":"Keyboard"},{"id":110,"name":"Wireless Mouse"},{"id":111,"name":"Coffee Mug"},{"id":112,"name":"Laptop"},{"id":113,"name":"Mechanical Keyboard"},{"id":114,"name":"Wireless Mouse"},{"id":115,"name":"Desk Lamp"},{"id":116,"name":"Bluetooth Speaker"},{"id":117,"name":"Laptop"},{"id":118,"name":"Laptop Stand"},{"id":119,"name":"Mechanical Keyboard"},{"id":120,"name":"Keyboard"}],
+    "hints": [
+      "Join on product_id in Orders and id in Products.",
+      "Orders is your main table.",
+      "SELECT Orders.id, Products.name FROM Orders JOIN Products ON Orders.product_id = Products.id;"
+    ]
+  },
+  {
+    "id": "L5_P3",
+    "level": 5,
+    "title": "Order Details Dashboard",
+    "story": "The dashboard needs a detailed view. Show <code>first_name</code> (from Customers), product <code>name</code>, and order <code>amount</code>.",
+    "requiredConcept": "JOIN",
+    "expectedOutput": [{"first_name":"John","name":"Laptop","amount":1200},{"first_name":"Sarah","name":"Wireless Mouse","amount":45},{"first_name":"Sarah","name":"Coffee Mug","amount":12.5},{"first_name":"Michael","name":"Desk Lamp","amount":45},{"first_name":"Emily","name":"Mechanical Keyboard","amount":89.99},{"first_name":"David","name":"Laptop Stand","amount":35},{"first_name":"John","name":"Bluetooth Speaker","amount":55},{"first_name":"Jessica","name":"Notebook","amount":5},{"first_name":"Sarah","name":"Keyboard","amount":70},{"first_name":"Chris","name":"Wireless Mouse","amount":25},{"first_name":"Sophie","name":"Coffee Mug","amount":12.5},{"first_name":"John","name":"Laptop","amount":1200},{"first_name":"Michael","name":"Mechanical Keyboard","amount":89.99},{"first_name":"Emily","name":"Wireless Mouse","amount":25},{"first_name":"David","name":"Desk Lamp","amount":45},{"first_name":"Isabella","name":"Bluetooth Speaker","amount":55},{"first_name":"Sarah","name":"Laptop","amount":1200},{"first_name":"Jessica","name":"Laptop Stand","amount":35},{"first_name":"Chris","name":"Mechanical Keyboard","amount":89.99},{"first_name":"Sophie","name":"Keyboard","amount":70}],
+    "hints": [
+      "You need to chain two JOIN statements.",
+      "JOIN Customers ON ... JOIN Products ON ...",
+      "SELECT Customers.first_name, Products.name, Orders.amount FROM Orders JOIN Customers ON Orders.customer_id = Customers.id JOIN Products ON Orders.product_id = Products.id;"
+    ]
+  },
+  {
+    "id": "L5_P4",
+    "level": 5,
+    "title": "Customer Purchase History",
+    "story": "Show a history of what each customer has bought. Select <code>first_name</code> and product <code>name</code>.",
+    "requiredConcept": "JOIN",
+    "expectedOutput": [{"first_name":"John","name":"Laptop"},{"first_name":"Sarah","name":"Wireless Mouse"},{"first_name":"Sarah","name":"Coffee Mug"},{"first_name":"Michael","name":"Desk Lamp"},{"first_name":"Emily","name":"Mechanical Keyboard"},{"first_name":"David","name":"Laptop Stand"},{"first_name":"John","name":"Bluetooth Speaker"},{"first_name":"Jessica","name":"Notebook"},{"first_name":"Sarah","name":"Keyboard"},{"first_name":"Chris","name":"Wireless Mouse"},{"first_name":"Sophie","name":"Coffee Mug"},{"first_name":"John","name":"Laptop"},{"first_name":"Michael","name":"Mechanical Keyboard"},{"first_name":"Emily","name":"Wireless Mouse"},{"first_name":"David","name":"Desk Lamp"},{"first_name":"Isabella","name":"Bluetooth Speaker"},{"first_name":"Sarah","name":"Laptop"},{"first_name":"Jessica","name":"Laptop Stand"},{"first_name":"Chris","name":"Mechanical Keyboard"},{"first_name":"Sophie","name":"Keyboard"}],
+    "hints": [
+      "Similar to the previous query, but only select two columns.",
+      "Chain JOINs on the Orders table.",
+      "SELECT Customers.first_name, Products.name FROM Orders JOIN Customers ON Orders.customer_id = Customers.id JOIN Products ON Orders.product_id = Products.id;"
+    ]
+  },
+  {
+    "id": "L5_P5",
+    "level": 5,
+    "title": "Potential Customers",
+    "story": "We might have users who registered but never placed an order. Find the <code>first_name</code> of customers who have no entries in the <code>Orders</code> table.",
+    "requiredConcept": "LEFT JOIN",
+    "expectedOutput": [],
+    "hints": [
+      "Use a LEFT JOIN from Customers to Orders.",
+      "Then filter for where the order ID is NULL.",
+      "SELECT Customers.first_name FROM Customers LEFT JOIN Orders ON Customers.id = Orders.customer_id WHERE Orders.id IS NULL;"
+    ]
+  },
+  {
+    "id": "L6_P1",
+    "level": 6,
+    "title": "Add a New Customer",
+    "story": "We have a walk-in! Insert a new customer named <strong>Rahul Sharma</strong> with email <code>r.sharma@example.com</code> and today's date <code>2023-10-25</code>.",
+    "requiredConcept": "INSERT",
+    "expectedOutput": { "affectedRows": 1 },
+    "hints": [
+      "Use INSERT INTO Customers (first_name, last_name, email, registration_date) VALUES (...);",
+      "Strings must be in single quotes.",
+      "INSERT INTO Customers (first_name, last_name, email, registration_date) VALUES ('Rahul', 'Sharma', 'r.sharma@example.com', '2023-10-25');"
+    ]
+  },
+  {
+    "id": "L6_P2",
+    "level": 6,
+    "title": "New Product Arrival",
+    "story": "New inventory! Insert a <code>Gaming Headset</code> in the <code>Electronics</code> category for <code>99.99</code> with <code>40</code> in stock.",
+    "requiredConcept": "INSERT",
+    "expectedOutput": { "affectedRows": 1 },
+    "hints": [
+      "Use INSERT INTO Products.",
+      "List name, category, price, stock.",
+      "INSERT INTO Products (name, category, price, stock) VALUES ('Gaming Headset', 'Electronics', 99.99, 40);"
+    ]
+  },
+  {
+    "id": "L6_P3",
+    "level": 6,
+    "title": "Restock Inventory",
+    "story": "A shipment of Laptops arrived. Update the <code>stock</code> of the <strong>Laptop</strong> to <code>50</code>.",
+    "requiredConcept": "UPDATE",
+    "expectedOutput": { "affectedRows": 1 },
+    "hints": [
+      "Use the UPDATE table SET column = value WHERE condition syntax.",
+      "UPDATE Products SET stock = 50 WHERE name = 'Laptop';",
+      "Always include a WHERE clause to avoid updating all rows!"
+    ]
+  },
+  {
+    "id": "L6_P4",
+    "level": 6,
+    "title": "Correct Order Amount",
+    "story": "Order 102 had a coupon we forgot to apply. Update its <code>amount</code> to <code>40.00</code>.",
+    "requiredConcept": "UPDATE",
+    "expectedOutput": { "affectedRows": 1 },
+    "hints": [
+      "UPDATE Orders SET amount = 40.00 WHERE id = 102;",
+      "Filter by the order id.",
+      "SET amount = 40.00."
+    ]
+  },
+  {
+    "id": "L6_P5",
+    "level": 6,
+    "title": "Remove Cancelled Orders",
+    "story": "Clean up the database. Delete all orders that have a <code>status</code> of <strong>Cancelled</strong>.",
+    "requiredConcept": "DELETE",
+    "expectedOutput": { "affectedRows": 2 },
+    "hints": [
+      "Use DELETE FROM Orders WHERE status = 'Cancelled';",
+      "Be very careful with DELETE, there is no undo!",
+      "DELETE FROM Orders WHERE status = 'Cancelled';"
+    ]
+  },
+  {
+    "id": "L7_P1",
+    "level": 7,
+    "title": "Email Prefix",
+    "story": "Extract the first 4 characters of every customer's email.",
+    "requiredConcept": "SUBSTR",
+    "expectedOutput": [{"email_prefix":"john"},{"email_prefix":"sara"},{"email_prefix":"mjoh"},{"email_prefix":"emil"},{"email_prefix":"dwil"},{"email_prefix":"jtay"},{"email_prefix":"cand"},{"email_prefix":"smar"},{"email_prefix":"igar"},{"email_prefix":"rahu"}],
+    "hints": [
+      "SQLite uses SUBSTR(column, start, length).",
+      "Note that indices start at 1.",
+      "SELECT SUBSTR(email, 1, 4) as email_prefix FROM Customers;"
+    ]
+  },
+  {
+    "id": "L7_P2",
+    "level": 7,
+    "title": "Find the @ Symbol",
+    "story": "Determine the character position of the '@' symbol in each email.",
+    "requiredConcept": "INSTR",
+    "expectedOutput": [{"at_position":5},{"at_position":12},{"at_position":9},{"at_position":8},{"at_position":8},{"at_position":8},{"at_position":10},{"at_position":10},{"at_position":8},{"at_position":9}],
+    "hints": [
+      "Use the INSTR(string, substring) function.",
+      "SELECT INSTR(email, '@') as at_position FROM Customers;",
+      "Searching for a single character."
+    ]
+  },
+  {
+    "id": "L7_P3",
+    "level": 7,
+    "title": "Email Username",
+    "story": "Extract the text *before* the '@' symbol in each email.",
+    "requiredConcept": "SUBSTR",
+    "expectedOutput": [{"username":"john"},{"username":"sarah.smith"},{"username":"mjohnson"},{"username":"emily.d"},{"username":"dwilson"},{"username":"jtaylor"},{"username":"canderson"},{"username":"smartinez"},{"username":"igarcia"},{"username":"r.sharma"}],
+    "hints": [
+      "Combine SUBSTR and INSTR.",
+      "Start at 1, and go for (INSTR(email, '@') - 1) characters.",
+      "SELECT SUBSTR(email, 1, INSTR(email, '@') - 1) as username FROM Customers;"
+    ]
+  },
+  {
+    "id": "L7_P4",
+    "level": 7,
+    "title": "Customer Tenure",
+    "story": "How many days have passed since each customer registered? Use <code>julianday</code>.",
+    "requiredConcept": "julianday",
+    "expectedOutput": [{"first_name":"John","days_registered":1160}],
+    "hints": [
+      "Use julianday('now') - julianday(registration_date).",
+      "The result depends on today's current date.",
+      "SELECT first_name, (julianday('2026-03-15') - julianday(registration_date)) as days_registered FROM Customers;"
+    ]
+  },
+  {
+    "id": "L7_P5",
+    "level": 7,
+    "title": "Customer Email Domain",
+    "story": "Extract the email domain (everything after the '@').",
+    "requiredConcept": "SUBSTR",
+    "expectedOutput": [{"domain":"example.com"}],
+    "hints": [
+      "Start at INSTR(email, '@') + 1.",
+      "You don't need a length argument for SUBSTR to go to the end.",
+      "SELECT SUBSTR(email, INSTR(email, '@') + 1) as domain FROM Customers;"
+    ]
+  },
+  {
+    "id": "L8_P1",
+    "level": 8,
+    "title": "Rank Products by Price",
+    "story": "Rank our products from most expensive to cheapest. Show name, price, and rank.",
+    "requiredConcept": "OVER",
+    "expectedOutput": [{"name":"Laptop","price":1200,"price_rank":1},{"name":"Gaming Headset","price":99.99,"price_rank":2},{"name":"Mechanical Keyboard","price":89.99,"price_rank":3},{"name":"Keyboard","price":70,"price_rank":4},{"name":"Bluetooth Speaker","price":55,"price_rank":5},{"name":"Desk Lamp","price":45,"price_rank":6},{"name":"Laptop Stand","price":35,"price_rank":7},{"name":"Wireless Mouse","price":25,"price_rank":8},{"name":"Coffee Mug","price":12.5,"price_rank":9},{"name":"Notebook","price":5,"price_rank":10}],
+    "hints": [
+      "Use the RANK() window function.",
+      "OVER(ORDER BY price DESC).",
+      "SELECT name, price, RANK() OVER(ORDER BY price DESC) as price_rank FROM Products;"
+    ]
+  },
+  {
+    "id": "L8_P2",
+    "level": 8,
+    "title": "Employee Salary Ranking",
+    "story": "Rank employees based on their <code>salary</code> across the whole company.",
+    "requiredConcept": "OVER",
+    "expectedOutput": [{"first_name":"Evan","salary":110000,"salary_rank":1},{"first_name":"Alice","salary":95000,"salary_rank":2},{"first_name":"Bob","salary":85000,"salary_rank":3},{"first_name":"Charlie","salary":65000,"salary_rank":4},{"first_name":"Diana","salary":55000,"salary_rank":5}],
+    "hints": [
+      "Use RANK() OVER(ORDER BY salary DESC).",
+      "Select from the Employees table.",
+      "SELECT first_name, salary, RANK() OVER(ORDER BY salary DESC) as salary_rank FROM Employees;"
+    ]
+  },
+  {
+    "id": "L8_P3",
+    "level": 8,
+    "title": "Department Salary Leaderboard",
+    "story": "Rank employees by salary <strong>within their own departments</strong>.",
+    "requiredConcept": "OVER",
+    "expectedOutput": [{"first_name":"Evan","department":"Engineering","salary":110000,"dept_rank":1},{"first_name":"Bob","department":"Engineering","salary":85000,"dept_rank":2},{"first_name":"Charlie","department":"Marketing","salary":65000,"dept_rank":1},{"first_name":"Alice","department":"Sales","salary":95000,"dept_rank":1},{"first_name":"Diana","department":"Sales","salary":55000,"dept_rank":2}],
+    "hints": [
+      "You need PARTITION BY inside the OVER clause.",
+      "RANK() OVER(PARTITION BY department ORDER BY salary DESC).",
+      "SELECT first_name, department, salary, RANK() OVER(PARTITION BY department ORDER BY salary DESC) as dept_rank FROM Employees;"
+    ]
+  },
+  {
+    "id": "L8_P4",
+    "level": 8,
+    "title": "Top Customers by Spending",
+    "story": "Find the top spending customers. First calculate total spending per customer in a <strong>CTE</strong>, then rank them.",
+    "requiredConcept": "CTE",
+    "expectedOutput": [{"customer_id":1,"total_spent":2455,"rank":1},{"customer_id":2,"total_spent":1327.5,"rank":2},{"customer_id":3,"total_spent":134.99,"rank":3},{"customer_id":4,"total_spent":114.99,"rank":4},{"customer_id":7,"total_spent":114.99,"rank":4},{"customer_id":8,"total_spent":82.5,"rank":6},{"customer_id":5,"total_spent":80,"rank":7},{"customer_id":9,"total_spent":55,"rank":8}],
+    "hints": [
+      "Define the CTE with WITH spend_table AS (...).",
+      "In the main query, select from your spend_table and use RANK().",
+      "WITH CustomerSpend AS (SELECT customer_id, SUM(amount) as total_spent FROM Orders GROUP BY customer_id) SELECT customer_id, total_spent, RANK() OVER(ORDER BY total_spent DESC) as rank FROM CustomerSpend;"
+    ]
+  },
+  {
+    "id": "L8_P5",
+    "level": 8,
+    "title": "Running Revenue",
+    "story": "Calculate the cumulative (running) total of revenue as it grows day by day.",
+    "requiredConcept": "OVER",
+    "expectedOutput": [{"order_date":"2023-05-01","amount":1200,"running_total":1200},{"order_date":"2023-05-02","amount":40,"running_total":1240},{"order_date":"2023-05-03","amount":12.5,"running_total":1252.5},{"order_date":"2023-05-04","amount":45,"running_total":1297.5},{"order_date":"2023-05-05","amount":89.99,"running_total":1387.49},{"order_date":"2023-05-06","amount":35,"running_total":1422.49},{"order_date":"2023-05-07","amount":55,"running_total":1477.49},{"order_date":"2023-05-09","amount":70,"running_total":1547.49},{"order_date":"2023-05-10","amount":25,"running_total":1572.49},{"order_date":"2023-05-11","amount":12.5,"running_total":1584.99},{"order_date":"2023-05-12","amount":1200,"running_total":2784.99},{"order_date":"2023-05-13","amount":89.99,"running_total":2874.98},{"order_date":"2023-05-14","amount":25,"running_total":2899.98},{"order_date":"2023-05-15","amount":45,"running_total":2944.98},{"order_date":"2023-05-16","amount":55,"running_total":2999.98},{"order_date":"2023-05-17","amount":1200,"running_total":4199.98},{"order_date":"2023-05-19","amount":89.99,"running_total":4289.97},{"order_date":"2023-05-25","amount":70,"running_total":4359.97}],
+    "hints": [
+      "Use SUM(amount) OVER(ORDER BY order_date).",
+      "Window functions can perform cumulative sums.",
+      "SELECT order_date, amount, SUM(amount) OVER(ORDER BY order_date) as running_total FROM Orders;"
+    ]
+  }
+]
