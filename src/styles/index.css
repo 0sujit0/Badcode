@@ -16,8 +16,13 @@
   /* Text */
   --text-primary:   #E8E6E3;
   --text-secondary: #7A7880;
-  --text-muted:     #4A4850;
+  --text-muted:     #6D6B75;
   --text-inverse:   #0A0A0B;
+
+  /* Inline code */
+  --code-bg:        #1A1A24;
+  --code-color:     #C8F542;
+  --code-border:    rgba(200, 245, 66, 0.18);
 
   /* Borders */
   --border:         #222228;
@@ -102,6 +107,10 @@
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
   --shadow-lg: 0 12px 28px rgba(0,0,0,0.1);
+
+  --code-bg:    rgba(0, 0, 0, 0.07);
+  --code-color: #2d5f00;
+  --code-border: rgba(0, 0, 0, 0.12);
 }
 
 [data-theme="light"] .navbar {
@@ -252,11 +261,11 @@ h1, h2, h3, h4, h5, h6 {
 code {
   font-family: var(--font-mono);
   font-size: 0.82em;
-  background: #1A1A24;
-  color: #C8F542;
+  background: var(--code-bg);
+  color: var(--code-color);
   padding: 0.15em 0.5em;
   border-radius: 5px;
-  border: 1px solid rgba(200, 245, 66, 0.18);
+  border: 1px solid var(--code-border);
 }
 
 /* ─── Stagger animation ──────────────────────────────── */
@@ -274,6 +283,28 @@ code {
 }
 .progress-fill {
   animation: fillBar 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+}
+
+/* ─── AI Coach spinner ───────────────────────────────── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.coach-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+/* ─── Dataset Explorer mobile toggle ─────────────────── */
+.dataset-mobile-toggle { display: none !important; }
+
+@media (max-width: 768px) {
+  .dataset-mobile-toggle { display: flex !important; }
 }
 
 /* ─── Responsive Grid Classes ────────────────────────── */
@@ -331,18 +362,26 @@ code {
     margin-top: 1rem;
   }
 
-  /* Lesson → stacked layout */
+  /* Lesson → stacked layout: context → schema → editor → results */
   .lesson-layout {
     grid-template-columns: 1fr;
     gap: 1rem;
     padding: 1rem;
   }
 
+  /* Reorder panels: schema (right panel) before editor (middle panel) */
+  .lesson-panel-left   { order: 1; }
+  .lesson-panel-right  { order: 2; }
+  .lesson-panel-middle { order: 3; }
+
   /* Make sticky panels not sticky on mobile */
   .lesson-layout .card,
   .lesson-layout .card-dark {
     position: static !important;
   }
+
+  /* Collapse dataset explorer on mobile by default */
+  .dataset-mobile-body.collapsed { display: none; }
 }
 
 /* Phone (≤ 480px) */

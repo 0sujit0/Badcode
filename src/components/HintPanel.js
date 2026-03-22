@@ -3,6 +3,13 @@ export function renderHintPanel(containerId, problem, failedAttempts, onShowAnsw
   if (!container || !problem) return;
 
   const hintLevel = Math.min(failedAttempts, 3);
+  // Track previously shown hints so we only animate newly unlocked ones
+  const prevHintLevel = parseInt(container.dataset.hintLevel ?? '-1');
+  container.dataset.hintLevel = hintLevel;
+
+  const newlyUnlocked = (n) => hintLevel >= n && prevHintLevel < n;
+  const animStyle = 'opacity: 0; animation: fadeIn 0.5s forwards;';
+
   let html = `
     <div style="background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem; margin-top: 1rem;">
       <h4 style="margin-bottom: 1rem; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary);">
@@ -17,7 +24,7 @@ export function renderHintPanel(containerId, problem, failedAttempts, onShowAnsw
 
   if (hintLevel >= 1) {
     html += `
-        <div style="font-size: 0.9rem; padding: 0.75rem; background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius-md); border-left: 3px solid var(--accent); opacity: 0; animation: fadeIn 0.5s forwards;">
+        <div style="font-size: 0.9rem; padding: 0.75rem; background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius-md); border-left: 3px solid var(--accent); ${newlyUnlocked(1) ? animStyle : ''}">
           <strong>Hint 2:</strong> ${problem.hints[1]}
         </div>
     `;
@@ -25,14 +32,14 @@ export function renderHintPanel(containerId, problem, failedAttempts, onShowAnsw
     html += `
         <div style="font-size: 0.85rem; padding: 0.75rem; color: var(--text-muted); border: 1px dashed var(--border); border-radius: var(--radius-md); text-align: center;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.25rem; vertical-align: middle;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          Hint 2 unlocks after 1 failed attempt
+          Give it a try to unlock Hint 2
         </div>
     `;
   }
 
   if (hintLevel >= 2) {
      html += `
-      <div style="font-size: 0.9rem; padding: 0.75rem; background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius-md); border-left: 3px solid var(--success); opacity: 0; animation: fadeIn 0.5s forwards;">
+      <div style="font-size: 0.9rem; padding: 0.75rem; background: var(--bg-card); color: var(--text-primary); border-radius: var(--radius-md); border-left: 3px solid var(--success); ${newlyUnlocked(2) ? animStyle : ''}">
         <strong>Hint 3:</strong> ${problem.hints[2]}
       </div>
     `;
@@ -40,7 +47,7 @@ export function renderHintPanel(containerId, problem, failedAttempts, onShowAnsw
     html += `
       <div style="font-size: 0.85rem; padding: 0.75rem; color: var(--text-muted); border: 1px dashed var(--border); border-radius: var(--radius-md); text-align: center;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.25rem; vertical-align: middle;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-        Hint 3 unlocks after 2 failed attempts
+        One more try unlocks Hint 3
       </div>
     `;
   }

@@ -29,7 +29,7 @@ export function initEditor(containerId, initialValue, onRun) {
   container.innerHTML = '';
   
   editorInstance = monaco.editor.create(container, {
-    value: initialValue || 'SELECT * FROM Customers;',
+    value: initialValue ?? '',
     language: 'sql',
     theme: 'vs-dark',
     minimap: { enabled: false },

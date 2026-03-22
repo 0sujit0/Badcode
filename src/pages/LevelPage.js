@@ -1,5 +1,16 @@
 import problems from '../data/problems.json';
-import { getProblemStatus } from '../store/progress.js';
+import { getProblemStatus, isLevelUnlocked } from '../store/progress.js';
+
+const LEVEL_OBJECTIVES = {
+  1: ['Retrieve data using SELECT', 'Avoid duplicates with DISTINCT', 'Rename columns using aliases', 'Combine text with concatenation'],
+  2: ['Filter rows with WHERE', 'Combine conditions with AND / OR', 'Match patterns using LIKE', 'Exclude results with NOT'],
+  3: ['Sort results with ORDER BY', 'Limit rows with LIMIT and OFFSET', 'Match sets with IN and BETWEEN'],
+  4: ['Count, sum, and average with aggregate functions', 'Group results with GROUP BY', 'Filter groups with HAVING'],
+  5: ['Combine tables with INNER JOIN', 'Find unmatched rows with LEFT JOIN', 'Join three tables in one query'],
+  6: ['Add records with INSERT', 'Modify records with UPDATE', 'Remove records with DELETE'],
+  7: ['Manipulate strings with SUBSTR, INSTR, REPLACE', 'Change case with UPPER / LOWER', 'Convert types with CAST'],
+  8: ['Rank rows with window functions', 'Build reusable queries with CTEs', 'Categorise data with CASE WHEN', 'Merge datasets with UNION'],
+};
 
 export default function LevelPage() {
   const hash = window.location.hash;
@@ -15,6 +26,8 @@ export default function LevelPage() {
     4: 'Aggregation',  5: 'Joins',           6: 'Data Manipulation',
     7: 'Functions',    8: 'Advanced SQL',
   };
+
+  const locked = !isLevelUnlocked(levelId, problems);
 
   // Progress calculation
   const completedCount = levelProblems.filter(p => getProblemStatus(p.id).completed).length;
@@ -184,10 +197,10 @@ export default function LevelPage() {
           <code style="
             font-family:var(--font-mono);font-size:0.72rem;font-weight:600;
             color:${isActive ? '#1A2200' : 'var(--text-muted)'};
-            background:${isActive ? '#C8F542' : 'var(--bg-elevated)'};
-            padding:0.18rem 0.5rem;border-radius:4px;
-            border:1px solid ${isActive ? '#B0D930' : 'var(--border)'};
-          ">${p.requiredConcept}</code>
+            background:${isActive ? '#C8F542' : 'transparent'};
+            padding:0.18rem ${isActive ? '0.5rem' : '0'};border-radius:${isActive ? '4px' : '0'};
+            ${isActive ? 'border:1px solid #B0D930;' : ''}
+          ">${isActive ? '' : '#'}${p.requiredConcept}</code>
           ${ctaBtn}
         </div>
       </div>
@@ -279,6 +292,15 @@ export default function LevelPage() {
           <p style="color:#9A9898;font-size:0.9rem;max-width:480px;line-height:1.65;margin-bottom:0;">
             Solve real business data requests to earn your rank. Each mission unlocks the next.
           </p>
+
+          ${(LEVEL_OBJECTIVES[levelId] || []).length > 0 ? `
+          <ul style="margin-top:1rem;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:0.4rem;">
+            ${(LEVEL_OBJECTIVES[levelId] || []).map(obj => `
+              <li style="font-size:0.75rem;color:#9A9898;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:0.2rem 0.7rem;display:flex;align-items:center;gap:0.3rem;">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                ${obj}
+              </li>`).join('')}
+          </ul>` : ''}
         </div>
       </div>
 
@@ -301,8 +323,42 @@ export default function LevelPage() {
         </div>
       </div>
 
+      <!-- Lock gate banner -->
+      ${locked && levelId > 1 ? (() => {
+        const prevTotal = problems.filter(p => p.level === levelId - 1).length;
+        const needed = Math.ceil(prevTotal * 0.8);
+        return `
+        <div style="
+          margin-bottom:2rem;
+          background:rgba(234,179,8,0.07);
+          border:1px solid rgba(234,179,8,0.25);
+          border-radius:14px;padding:1.25rem 1.5rem;
+          display:flex;align-items:center;gap:1rem;
+          animation:fadeUp 0.4s ease both;
+        ">
+          <div style="
+            width:36px;height:36px;border-radius:50%;flex-shrink:0;
+            background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.3);
+            display:flex;align-items:center;justify-content:center;
+          "><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ca8a04" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <div style="flex:1;">
+            <div style="font-weight:700;color:var(--text-primary);margin-bottom:0.2rem;font-size:0.9rem;">Level ${levelId - 1} not yet 80% complete</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);">Complete at least ${needed} of ${prevTotal} missions in Level ${levelId - 1} to unlock this level.</div>
+          </div>
+          <a href="#/level/${levelId - 1}" style="
+            flex-shrink:0;
+            display:inline-flex;align-items:center;gap:0.35rem;
+            padding:0.45rem 1rem;border-radius:999px;
+            font-family:var(--font-sans);font-size:0.8rem;font-weight:700;
+            text-decoration:none;
+            background:rgba(234,179,8,0.15);color:#ca8a04;
+            border:1px solid rgba(234,179,8,0.3);
+          ">Go back →</a>
+        </div>`;
+      })() : ''}
+
       <!-- Mission grid -->
-      <div class="grid-missions">
+      <div class="grid-missions" style="${locked ? 'pointer-events:none;opacity:0.4;' : ''}">
         ${cards}
       </div>
 

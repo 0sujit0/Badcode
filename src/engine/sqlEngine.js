@@ -84,6 +84,46 @@ export function validateResult(result, expectedOutput) {
   return JSON.stringify(userRows) === JSON.stringify(expectedOutput);
 }
 
+export function validateResultDetailed(result, expectedOutput) {
+  if (!result || !expectedOutput) return { verdict: 'incorrect', reason: 'no_result' };
+
+  // DML path
+  if (typeof expectedOutput === 'object' && 'affectedRows' in expectedOutput) {
+    return result.rowsModified === expectedOutput.affectedRows
+      ? { verdict: 'correct' }
+      : { verdict: 'incorrect', reason: 'wrong_affected_rows' };
+  }
+
+  const userRows = result.rows || [];
+
+  // Exact match
+  if (JSON.stringify(userRows) === JSON.stringify(expectedOutput)) {
+    return { verdict: 'correct' };
+  }
+
+  // Column check
+  const userCols = result.columns || [];
+  const expectedCols = expectedOutput.length > 0 ? Object.keys(expectedOutput[0]) : [];
+  const colsMatch = userCols.length === expectedCols.length && userCols.every(c => expectedCols.includes(c));
+
+  if (!colsMatch) {
+    return { verdict: 'partial', reason: 'wrong_columns' };
+  }
+
+  // Row count check
+  if (userRows.length !== expectedOutput.length) {
+    return { verdict: 'partial', reason: 'wrong_row_count', got: userRows.length, expected: expectedOutput.length };
+  }
+
+  // Order-insensitive match (right rows, wrong order)
+  const normalize = rows => JSON.stringify([...rows].sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b))));
+  if (normalize(userRows) === normalize(expectedOutput)) {
+    return { verdict: 'partial', reason: 'wrong_order' };
+  }
+
+  return { verdict: 'partial', reason: 'wrong_values' };
+}
+
 // Check if the required concept keyword is present in the query
 export function checkConcept(sqlStr, requiredConcept) {
   if (!requiredConcept) return true;
