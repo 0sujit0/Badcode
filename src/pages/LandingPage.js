@@ -497,12 +497,12 @@ export default function LandingPage() {
         </p>
 
         <div class="lp-actions">
-          <a href="#/lesson/L1_P1" class="lp-btn-primary">
-            Open the Editor
+          <a href="#/dashboard" class="lp-btn-primary">
+            Get started
             <span class="lp-arrow">&#8594;</span>
           </a>
-          <a href="#/dashboard" class="lp-btn-secondary">
-            View Curriculum ↓
+          <a href="#/lesson/L1_P1" class="lp-btn-secondary">
+            Open the Editor
           </a>
         </div>
 
