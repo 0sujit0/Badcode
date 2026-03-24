@@ -2,17 +2,20 @@ import { initEditor, getEditorValue, setEditorValue } from '../components/Editor
 import { renderResultsTable } from '../components/ResultsTable.js';
 import { renderDatasetExplorer } from '../components/DatasetExplorer.js';
 import { renderHintPanel } from '../components/HintPanel.js';
-import { initDatabase, executeQuery, validateResultDetailed, checkConcept } from '../engine/sqlEngine.js';
-import { saveLocalProgress } from '../store/progress.js';
+import { resetDatabase, executeQuery, validateResultDetailed, checkConcept } from '../engine/sqlEngine.js';
+import { saveLocalProgress, getLocalProgress } from '../store/progress.js';
 import { isAIEnabled } from '../ai/aiToggle.js';
 import { getCoachResponse } from '../ai/aiCoach.js';
 import problems from '../data/problems.json';
+import { schema } from '../data/schema.js';
+import PipelineSidebar from '../components/PipelineSidebar.js';
+import PipelineProblem, { bindPipelineProblem } from '../components/PipelineProblem.js';
 
 export default function LessonPage() {
   const hash = window.location.hash;
   const lessonId = hash.split('/').pop() || 'L1_P1';
   const problem = problems.find(p => p.id === lessonId);
-  
+
   if (!problem) {
     return `<div class="container mt-8"><h3>Problem not found</h3></div>`;
   }
@@ -25,33 +28,88 @@ export default function LessonPage() {
 
   let failedAttempts = 0;
 
-  // Use double-rAF to ensure the router's innerHTML is fully painted before
-  // we run DOM queries and mount Monaco.
+  const isPipelineProblem = problem.type === 'arrange_pipeline';
+
   requestAnimationFrame(() => requestAnimationFrame(async () => {
-    const editorContainer = document.getElementById('editor-container');
-    if (editorContainer) {
-      editorContainer.innerHTML = `
-        <div style="display:flex;align-items:center;justify-content:center;height:100%;gap:0.6rem;color:var(--text-muted);font-size:0.85rem;">
-          <span class="coach-spinner"></span> Initializing SQL engine…
-        </div>
-      `;
+    if (!isPipelineProblem) {
+      const editorContainer = document.getElementById('editor-container');
+      if (editorContainer) {
+        editorContainer.innerHTML = `
+          <div style="display:flex;align-items:center;justify-content:center;height:100%;gap:0.6rem;color:var(--text-muted);font-size:0.85rem;">
+            <span class="coach-spinner"></span> Initializing SQL engine…
+          </div>
+        `;
+      }
     }
 
     try {
-      await initDatabase();
-      renderDatasetExplorer('dataset-explorer-container');
-      renderHintPanel('hint-container', problem, failedAttempts, (answer) => {
-        setEditorValue(answer);
-      });
+      if (!isPipelineProblem) {
+        await resetDatabase(problem.level);
+        renderDatasetExplorer('dataset-explorer-container', problem);
+        renderHintPanel('hint-container', problem, failedAttempts, (answer) => {
+          setEditorValue(answer);
+        });
 
-      const starterQuery = problem.starterQuery || '';
-      initEditor('editor-container', starterQuery, () => {
-        document.getElementById('run-btn').click();
-      });
+        const starterQuery = problem.starterQuery || '';
+        initEditor('editor-container', starterQuery, () => {
+          document.getElementById('run-btn').click();
+        });
 
-      document.getElementById('run-btn').addEventListener('click', handleRun);
+        // Wire up editor placeholder
+        setTimeout(() => {
+          const editorEl = document.getElementById('editor-container');
+          if (editorEl) {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'editor-placeholder';
+            placeholder.id = 'editor-placeholder';
+            placeholder.textContent = 'Write your SQL query here...';
+            editorEl.style.position = 'relative';
+            editorEl.appendChild(placeholder);
+
+            const checkPlaceholder = () => {
+              const val = (getEditorValue() || '').trim();
+              if (placeholder) {
+                placeholder.style.display = val === '' ? 'block' : 'none';
+              }
+            };
+
+            const attachListener = (attempts = 0) => {
+              if (window._editorInstance) {
+                window._editorInstance.onDidChangeModelContent(checkPlaceholder);
+                checkPlaceholder();
+              } else if (attempts < 20) {
+                setTimeout(() => attachListener(attempts + 1), 150);
+              }
+            };
+            attachListener();
+          }
+        }, 200);
+
+        document.getElementById('run-btn').addEventListener('click', handleRun);
+      } else {
+        // Init Pipeline Problem
+        renderDatasetExplorer('dataset-explorer-container', problem);
+        bindPipelineProblem(problem, () => {
+          saveLocalProgress(problem.id, {
+            completed: true,
+            withAssist: false,
+            attempts: 1
+          });
+          const continueHref = isLastProblem
+            ? `#/level-complete/${problem.level}`
+            : `#/lesson/${nextProblemId}`;
+          const ppContainer = document.getElementById('pp-container');
+          if (ppContainer) {
+            const btnArea = document.createElement('div');
+            btnArea.innerHTML = `
+              <a href="${continueHref}" class="btn btn-primary" style="margin-top:0.5rem;width:100%;justify-content:center;padding:0.875rem;font-size:1rem;border-radius:var(--radius-full);box-shadow:0 4px 14px rgba(200,245,66,0.2);">Continue &rarr;</a>
+            `;
+            ppContainer.appendChild(btnArea);
+          }
+        });
+      }
     } catch (e) {
-      console.error("Setup error", e);
+      console.error('Setup error', e);
       document.getElementById('dataset-explorer-container').innerHTML = `
         <div style="color:var(--error); padding: 1rem;">
            <strong>Setup Error:</strong> ${e.toString()}
@@ -65,15 +123,16 @@ export default function LessonPage() {
   async function handleRun() {
     const sql = getEditorValue();
     const result = executeQuery(sql);
-    renderResultsTable('results-container', result);
-
     const feedbackEl = document.getElementById('feedback-container');
     const editorCard = document.getElementById('editor-card');
 
+    // Reset previous feedback and borders
+    feedbackEl.innerHTML = '';
+    if (editorCard) editorCard.style.borderColor = 'var(--border)';
+
     if (result.error) {
       failedAttempts++;
-      if (editorCard) editorCard.style.borderColor = '';
-      feedbackEl.innerHTML = `<div style="margin-top: 0.75rem; background: var(--error-dim); border: 1px solid rgba(239,68,68,0.25); border-radius: var(--radius-md); padding: 0.75rem 1rem; color: var(--error); font-size: 0.85rem;"><span style="font-family: var(--font-mono);">SyntaxError:</span> Check results panel for details.</div>`;
+      renderResultsTable('results-container', result);
       renderHintPanel('hint-container', problem, failedAttempts, (ans) => setEditorValue(ans));
       maybeShowAICoach(sql, 'syntax_error', result);
       return;
@@ -81,8 +140,10 @@ export default function LessonPage() {
 
     if (!checkConcept(sql, problem.requiredConcept)) {
       failedAttempts++;
-      if (editorCard) editorCard.style.borderColor = '';
-      feedbackEl.innerHTML = `<div style="margin-top: 0.75rem; background: var(--error-dim); border: 1px solid rgba(239,68,68,0.25); border-radius: var(--radius-md); padding: 0.75rem 1rem; color: var(--error); font-size: 0.85rem;">You must use the <span style="font-family: var(--font-mono); background: rgba(239,68,68,0.2); padding: 0.1rem 0.3rem; border-radius: 4px;">${problem.requiredConcept}</span> keyword.</div>`;
+      const syntheticResult = {
+        error: `You must use the ${problem.requiredConcept} keyword in your query.`
+      };
+      renderResultsTable('results-container', syntheticResult);
       renderHintPanel('hint-container', problem, failedAttempts, (ans) => setEditorValue(ans));
       maybeShowAICoach(sql, 'missing_concept', result);
       return;
@@ -90,49 +151,29 @@ export default function LessonPage() {
 
     const validation = validateResultDetailed(result, problem.expectedOutput);
 
-    if (validation.verdict === 'correct') {
-      if (editorCard) editorCard.style.borderColor = 'rgba(34, 197, 94, 0.5)';
+    // Send to ResultsTable which handles the unified banner logic
+    renderResultsTable('results-container', result, validation, '0.8ms');
 
-      // Save progress to localStorage
+    if (validation.verdict === 'correct') {
+      if (editorCard) editorCard.style.borderColor = 'var(--success)';
+
       saveLocalProgress(problem.id, {
         completed: true,
         withAssist: failedAttempts > 0,
         attempts: failedAttempts + 1
       });
 
-      // Determine Continue destination
       const continueHref = isLastProblem
         ? `#/level-complete/${problem.level}`
         : `#/lesson/${nextProblemId}`;
 
       feedbackEl.innerHTML = `
-        <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
-          <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.25rem 0;">
-            <div style="width: 26px; height: 26px; border-radius: 50%; background: #4ade80; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-            <span style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">Correct query!</span>
-          </div>
-          <a href="${continueHref}" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.875rem; font-size: 1rem; border-radius: var(--radius-full);">Continue &rarr;</a>
+        <div style="margin-top: 1rem; animation: fadeUp 0.3s ease-out;">
+          <a href="${continueHref}" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.875rem; font-size: 1rem; border-radius: var(--radius-full); box-shadow: 0 4px 14px rgba(200, 245, 66, 0.2);">Continue &rarr;</a>
         </div>
       `;
-    } else if (validation.verdict === 'partial') {
-      failedAttempts++;
-      if (editorCard) editorCard.style.borderColor = '';
-      const monoStyle = `font-family:var(--font-mono);background:rgba(234,179,8,0.15);padding:0.1rem 0.3rem;border-radius:4px;`;
-      const partialMessages = {
-        wrong_columns: `Right table, but check your <code style="${monoStyle}">SELECT</code> clause — you're selecting the wrong columns.`,
-        wrong_row_count: `Your columns look right, but your query returned <strong>${validation.got}</strong> row${validation.got !== 1 ? 's' : ''} — expected <strong>${validation.expected}</strong>. Check your <code style="${monoStyle}">WHERE</code> or <code style="${monoStyle}">HAVING</code> clause.`,
-        wrong_order: `All the right rows, but in the wrong order. Add or fix your <code style="${monoStyle}">ORDER BY</code> clause.`,
-        wrong_values: `Your query has the right shape but the values don't match. Review your conditions and column references.`,
-      };
-      feedbackEl.innerHTML = `<div style="margin-top:0.75rem;background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:var(--radius-md);padding:0.75rem 1rem;color:#ca8a04;font-size:0.85rem;">${partialMessages[validation.reason] || 'Almost there — double-check your query.'}</div>`;
-      renderHintPanel('hint-container', problem, failedAttempts, (ans) => setEditorValue(ans));
-      maybeShowAICoach(sql, 'wrong_result', result);
     } else {
       failedAttempts++;
-      if (editorCard) editorCard.style.borderColor = '';
-      feedbackEl.innerHTML = `<div style="margin-top: 0.75rem; background: var(--error-dim); border: 1px solid rgba(239,68,68,0.25); border-radius: var(--radius-md); padding: 0.75rem 1rem; color: var(--error); font-size: 0.85rem;">Results don't match the expected output. Try again!</div>`;
       renderHintPanel('hint-container', problem, failedAttempts, (ans) => setEditorValue(ans));
       maybeShowAICoach(sql, 'wrong_result', result);
     }
@@ -186,62 +227,128 @@ export default function LessonPage() {
   const problemNumber = currentIndex + 1;
   const totalInLevel = levelProblems.length;
 
-  const stepDots = levelProblems.map((p, i) => `
-    <div style="
-      height: 3px; flex: 1; border-radius: 2px;
-      background: ${i < currentIndex ? 'var(--accent)' : i === currentIndex ? 'var(--accent)' : 'var(--bg-elevated)'};
-      opacity: ${i === currentIndex ? '1' : i < currentIndex ? '0.5' : '1'};
-    "></div>
-  `).join('');
+  const progressData = getLocalProgress();
+
+  // Build progress dot-track using CSS classes
+  const stepDots = levelProblems.map((p, i) => {
+    const isCompleted = progressData[p.id]?.completed;
+    const isCurrent = p.id === problem.id;
+    let dotClass = 'progress-dot';
+    if (isCurrent) dotClass += ' active';
+    else if (isCompleted) dotClass += ' done';
+    return `<div class="${dotClass}"></div>`;
+  }).join('');
+
+  // Difficulty badge
+  const difficulty = problemNumber <= 2 ? 'EASY' : problemNumber <= 4 ? 'MEDIUM' : 'HARD';
+  const difficultyKey = difficulty.toLowerCase();
+  const diffDot = difficulty === 'EASY'
+    ? 'background:var(--success)'
+    : difficulty === 'MEDIUM'
+    ? 'background:var(--warning)'
+    : 'background:var(--error)';
+
+  // Wrap table names in problem.story with .table-ref spans — replace <code> tags
+  let storyHtml = problem.story;
+  storyHtml = storyHtml.replace(/<code>([^<]+)<\/code>/g, (match, name) => {
+    return `<span class="table-ref">${name}</span>`;
+  });
 
   return `
-    <div class="lesson-layout">
+    <div class="lesson-layout" style="margin-top: 1rem;">
+
       <!-- Left Panel: Context -->
-      <div class="card lesson-panel-left" style="display: flex; flex-direction: column; gap: 1rem; position: sticky; top: 1.5rem;">
-        <div>
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
-            <a href="#/level/${problem.level}" style="color: var(--text-secondary); text-decoration: none; font-size: 0.875rem;">&larr; Back to Level</a>
-            <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">${problemNumber} / ${totalInLevel}</span>
+      <div class="lesson-panel-left" style="display: flex; flex-direction: column; gap: 18px; position: sticky; top: 1.5rem;">
+
+        <!-- Problem Nav Group -->
+        <div class="problem-nav-group">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <a href="#/level/${problem.level}" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; font-weight: 500; transition: color 0.15s;" onmouseenter="this.style.color='var(--text-primary)'" onmouseleave="this.style.color='var(--text-secondary)'">
+              <span>←</span> Back to Level
+            </a>
+            <span style="font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-mono); font-weight: 600;">${problemNumber} / ${totalInLevel}</span>
           </div>
-
-          <!-- Step progress bar -->
-          <div style="display: flex; gap: 3px; margin-bottom: 1rem;">${stepDots}</div>
-
-          <h3 style="font-size: 1.75rem; margin-bottom: 1rem; line-height: 1.25;">${problem.title}</h3>
-
-          <div style="background: var(--bg-elevated); padding: 1rem; border-radius: var(--radius-md); font-size: 0.95rem; line-height: 1.7; color: var(--text-primary);">
-            ${problem.story}
-          </div>
+          <!-- Progress Dot-Track -->
+          <div class="progress-track">${stepDots}</div>
         </div>
 
-        <div id="hint-container" style="flex-shrink: 0;"></div>
+        <!-- Problem Title Group -->
+        <div class="problem-title-group">
+          <h3 style="font-size: 1.5rem; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em; color: var(--text-primary);">${problem.title}</h3>
+          <span class="difficulty-badge ${difficultyKey}">
+            <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; ${diffDot};"></span>
+            ${difficulty}
+          </span>
+        </div>
+
+        <!-- Problem Description Card -->
+        <div class="problem-card">${storyHtml}</div>
+
+        <!-- Hints Section -->
+        <div id="hint-container"></div>
+
+        <!-- AI Coach -->
         <div id="ai-coach-container"></div>
       </div>
 
       <!-- Middle Panel: Editor & Results -->
       <div class="lesson-panel-middle" style="display: flex; flex-direction: column; gap: 1rem;">
-        <div id="editor-card" class="card-dark" style="display: flex; flex-direction: column;">
-          <div class="flex justify-between items-center mb-4">
-            <h4 style="color: var(--text-secondary); margin: 0; font-size: 0.9rem; font-weight: 500;">Query Editor</h4>
-            <button id="run-btn" class="btn btn-primary">Run Query (${shortcut})</button>
+        ${isPipelineProblem ? PipelineProblem(problem) : `
+        <!-- EDITOR SECTION -->
+        <div id="editor-card" style="background: #111114; border: 1px solid var(--border); border-radius: var(--radius-md); display: flex; flex-direction: column; overflow: hidden; transition: border-color 0.3s;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); background: #0A0A0B;">
+            <h4 style="color: var(--text-secondary); margin: 0; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.6rem;">
+              QUERY EDITOR
+              <span class="badge" style="background: rgba(200, 245, 66, 0.1); color: var(--accent); border: 1px solid rgba(200, 245, 66, 0.2);">SQL</span>
+            </h4>
+            <button id="run-btn" style="
+              background: var(--accent); color: var(--text-inverse);
+              border: none; border-radius: 4px; padding: 0.35rem 0.8rem;
+              font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700;
+              display: flex; align-items: center; gap: 0.4rem; cursor: pointer;
+              transition: transform 0.1s, opacity 0.15s;
+            " onmouseenter="this.style.opacity='0.9'" onmouseleave="this.style.opacity='1'" onmousedown="this.style.transform='scale(0.97)'" onmouseup="this.style.transform='scale(1)'">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Run <span style="font-family: var(--font-mono); opacity: 0.7; font-weight: 600; font-size: 0.75rem;">${shortcut.replace('+', ' ')}</span>
+            </button>
           </div>
-          <div id="editor-container" style="height: 320px; background: #1a1a1a; border-radius: var(--radius-md); overflow: hidden;">
-            <!-- Monaco will go here -->
+
+          <div id="editor-container" style="height: 280px; width: 100%; position: relative;">
+            <!-- Monaco + placeholder will go here -->
           </div>
-          <div id="feedback-container"></div>
+
+          <div style="display: flex; justify-content: center; align-items: center; padding: 0; color: var(--text-muted); background: #111114; height: 16px; border-top: 1px solid rgba(255,255,255,0.03);">
+          </div>
         </div>
 
-        <div class="card" style="display: flex; flex-direction: column;">
-          <h4 style="color: var(--text-secondary); margin-bottom: 0.75rem; margin-top: 0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em;">Results</h4>
-          <div id="results-container" style="min-width: 0;">
-            <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 2rem; text-align: center;">Run a query to see results</p>
+        <!-- RESULTS SECTION -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column;">
+          <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg-results-toolbar);">
+            <h4 style="color: var(--text-secondary); margin: 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Results</h4>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <div id="results-status-dot" class="status-dot"></div>
+              <span id="results-status-text" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">Waiting</span>
+            </div>
           </div>
+
+          <div id="results-container" style="min-width: 0;">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 1rem; color: var(--text-muted); text-align: center;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 1rem; opacity: 0.3;"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg>
+              <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Run a query to see results</p>
+              <p style="font-size: 0.75rem; font-family: var(--font-mono); opacity: 0.5;">Press ${shortcut.replace('+', ' ')}</p>
+            </div>
+          </div>
+          <div id="feedback-container" style="padding: 0 1rem 1rem;"></div>
         </div>
+        `}
       </div>
 
-      <!-- Right Panel: Dataset Explorer -->
-      <div class="card lesson-panel-right" style="position: sticky; top: 1.5rem;">
-        <!-- Mobile-only toggle header (hidden on desktop via CSS) -->
+      <!-- Right Panel: Dataset Explorer & Pipeline Sidebar -->
+      <div class="lesson-panel-right" style="position: sticky; top: 1.5rem; max-height: calc(100vh - 3rem); overflow-y: auto;">
+        <div id="pipeline-sidebar-container" style="margin-bottom: 1.5rem;">
+          ${PipelineSidebar(problem.level, problem)}
+        </div>
+        <!-- Mobile-only toggle header -->
         <button class="dataset-mobile-toggle" onclick="
           const body = document.getElementById('dataset-body');
           const chev = document.getElementById('dataset-toggle-chev');
@@ -255,7 +362,6 @@ export default function LessonPage() {
           </span>
           <svg id="dataset-toggle-chev" style="transition:transform 0.2s ease;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
-        <!-- On mobile: collapsed by default. On desktop: no CSS rule hides it. -->
         <div id="dataset-body" class="dataset-mobile-body collapsed">
           <div id="dataset-explorer-container"></div>
         </div>
