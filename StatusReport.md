@@ -1,6 +1,6 @@
 # StatusReport — badcode SQL Learning Platform
 
-> Last updated: 2026-03-15
+> Last updated: 2026-03-24
 > Project directory: `/Users/solarsystem/.gemini/antigravity/playground/ruby-feynman`
 
 ---
@@ -201,8 +201,10 @@ npm install
 
 # Start dev server
 npm run dev
-# → http://localhost:3000 (or 3001 if 3000 is taken)
+# → http://localhost:3000 (or next available port — 3001, 3002, etc.)
 ```
+
+> **Note:** Node is not on the system PATH by default. The `export PATH` line above must be run in each new shell session, or added to `~/.zshrc`.
 
 ---
 
@@ -222,13 +224,18 @@ npm run dev
 - [x] `syncToSupabase` — saves progress to Supabase on every problem completion
 - [x] `loadFromSupabase` — loads and merges Supabase progress on login
 - [x] `migrateGuestProgress` — bulk-uploads localStorage data when a guest signs in
+- [x] Landing page redesigned with split-pane editor hero mockup
+- [x] Breadcrumb navigation in Navbar (Modules → Level → Problem)
+- [x] Supabase project confirmed active and reachable (2026-03-24)
+- [x] Auth key format updated to new `sb_publishable_...` format (compatible with supabase-js v2.99+)
+- [x] Dev server running — port auto-increments if 3000/3001 are in use
 
 ---
 
 ## What Remains / Possible Next Steps
 
 - [ ] **Email confirmation UX** — Supabase sends a confirmation email on sign-up; the UI currently just shows a message. Could auto-switch to sign-in mode or poll for confirmation.
-- [ ] **Forgot password flow** — `supabase.auth.resetPasswordForEmail()` not yet wired up
+- [ ] **Forgot password flow** — `supabase.auth.resetPasswordForEmail()` not yet wired up — users must currently reset via Supabase dashboard
 - [ ] **Profile page** — show user stats, total problems solved, levels completed
 - [ ] **Leaderboard** — aggregate `user_progress` data across users (requires a Postgres view or Edge Function)
 - [ ] **Streak / XP system** — gamification layer on top of progress

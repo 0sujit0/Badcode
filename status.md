@@ -1,6 +1,6 @@
 # Project Status — badcode SQL Learning Platform
 
-> Last updated: 2026-03-24
+> Last updated: 2026-03-24 (session update)
 > Project: `/Users/solarsystem/.gemini/antigravity/playground/ruby-feynman`
 > Git branch: `main`
 
@@ -197,7 +197,7 @@ Problem asks to extract email domain. `expectedOutput` has 1 row (`"example.com"
 - [ ] **Fix Bug #2** — redesign L7_P4 with stable date arithmetic
 - [ ] **Fix Bug #3** — fix L7_P5 expected output or problem design
 - [ ] **Email confirmation UX** — Supabase sends a confirmation email on sign-up; UI just shows a message
-- [ ] **Forgot password flow** — `supabase.auth.resetPasswordForEmail()` not wired up
+- [ ] **Forgot password flow** — `supabase.auth.resetPasswordForEmail()` not wired up — users currently must reset via Supabase dashboard
 - [ ] **Profile page** — user stats, total problems solved, levels completed
 - [ ] **Leaderboard** — aggregate `user_progress` across users (Postgres view or Edge Function)
 - [ ] **Streak / XP gamification** layer
@@ -211,6 +211,15 @@ Problem asks to extract email domain. `expectedOutput` has 1 row (`"example.com"
 ```bash
 export PATH="$HOME/.nvm/versions/node/v24.14.0/bin:$PATH"
 npm install          # first time only
-npm run dev          # → http://localhost:3000
+npm run dev          # → http://localhost:3000 (or next available port)
 npm run build        # → dist/
 ```
+
+**Note:** `npm` must be invoked with the nvm node in PATH — it is not on the system PATH by default. Vite will auto-increment the port if 3000/3001 are in use (e.g. → 3002).
+
+## Supabase Status (as of 2026-03-24)
+
+- Project URL: `https://blruqrhfwoipdkxlocgu.supabase.co` — **active and reachable** (confirmed via `getSession()`)
+- Anon key format: `sb_publishable_...` (new Supabase key format, compatible with `@supabase/supabase-js` v2.99+)
+- Auth modal: Sign In / Sign Up both wired up and visible in navbar
+- Sign-in returns "invalid credentials" if account doesn't exist — user must Sign Up first, then confirm email

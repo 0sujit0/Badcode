@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>badcode — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ========== DARK THEME (default) ========== */
+:root {
+  --bg-page: #0D0D0D;
+  --bg-card: #161616;
+  --bg-elevated: #1C1C1C;
+  --bg-inset: #1C1C1C;
+  --border: #222228;
+  --border-main: #2A2A2A;
+  --border-accent: rgba(200,245,66,0.35);
+  --text-primary: #F0F0F0;
+  --text-secondary: #999999;
+  --text-muted: #666666;
+  --text-inverse: #0A0A0B;
+  --accent: #C8FF00;
+  --accent-dim: rgba(200,245,66,0.12);
+  --accent-glow: rgba(200,245,66,0.08);
+  --success: #34D399;
+  --success-dim: rgba(52,211,153,0.10);
+  --error: #F87171;
+  --error-dim: rgba(248,113,113,0.08);
+  --warning: #FBBF24;
+  --code-bg: #1A1A24;
+  --code-color: #C8F542;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.6);
+  --glow-green: 0 0 24px rgba(200,245,66,0.12);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-2xl: 28px;
+  --radius-full: 9999px;
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-serif: 'Instrument Serif', serif;
+}
+
+/* ========== LIGHT THEME ========== */
+[data-theme="light"] {
+  --bg-page: #F7F6F2;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #FAFAF8;
+  --bg-inset: #F0EFEB;
+  --border: #E2E1DC;
+  --border-main: #D4D3CE;
+  --border-accent: rgba(107,143,0,0.35);
+  --text-primary: #1A1A18;
+  --text-secondary: #6B6B65;
+  --text-muted: #9C9C95;
+  --text-inverse: #F0F0F0;
+  --accent: #6B8F00;
+  --accent-dim: rgba(107,143,0,0.10);
+  --accent-glow: rgba(107,143,0,0.06);
+  --success: #16A34A;
+  --success-dim: rgba(22,163,74,0.08);
+  --error: #DC2626;
+  --error-dim: rgba(220,38,38,0.06);
+  --warning: #D97706;
+  --code-bg: #F0EFEB;
+  --code-color: #4D7000;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+  --glow-green: 0 0 24px rgba(107,143,0,0.08);
+}
+
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 56px;
+  background: rgba(13,13,13,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  transition: background 0.3s ease;
+}
+[data-theme="light"] .navbar {
+  background: rgba(247,246,242,0.88);
+}
+
+.nav-left { display: flex; align-items: center; gap: 12px; }
+.brand-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--accent); display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; color: var(--text-inverse);
+}
+.brand-name {
+  font-family: var(--font-mono); font-size: 15px; font-weight: 700;
+  color: var(--text-primary); letter-spacing: -0.5px;
+}
+.nav-breadcrumb {
+  font-size: 13px; color: var(--text-muted);
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-breadcrumb span { color: var(--text-secondary); }
+
+.nav-right { display: flex; align-items: center; gap: 12px; }
+
+.btn-outline {
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  color: var(--text-secondary); background: transparent;
+  border: 1px solid var(--border-main); border-radius: var(--radius-md);
+  padding: 6px 14px; cursor: pointer; transition: 0.18s ease;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+.theme-toggle {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: 0.18s ease; color: var(--text-secondary);
+  font-size: 16px;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn-primary {
+  font-family: var(--font-sans); font-size: 13px; font-weight: 600;
+  color: var(--text-inverse); background: var(--accent);
+  border: none; border-radius: var(--radius-md);
+  padding: 7px 16px; cursor: pointer; transition: 0.18s ease;
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+/* ========== MAIN LAYOUT ========== */
+.main { max-width: 1080px; margin: 0 auto; padding: 80px 24px 60px; }
+
+/* ========== CONTINUE BANNER (Change #2) ========== */
+.continue-banner {
+  border-top: 3px solid var(--accent);
+  background: var(--bg-card);
+  background-image: radial-gradient(ellipse at 20% 50%, var(--accent-dim) 0%, transparent 60%);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 28px;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-left { display: flex; align-items: center; gap: 16px; }
+
+.banner-badge {
+  width: 44px; height: 44px; border-radius: var(--radius-md);
+  background: var(--accent); display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+  color: var(--text-inverse);
+  animation: pulse-ring 2s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200,245,66,0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(200,245,66,0); }
+}
+[data-theme="light"] .banner-badge {
+  animation-name: pulse-ring-light;
+}
+@keyframes pulse-ring-light {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(107,143,0,0.25); }
+  50% { box-shadow: 0 0 0 8px rgba(107,143,0,0); }
+}
+
+.banner-badge svg { width: 20px; height: 20px; }
+
+.banner-text-group { display: flex; flex-direction: column; gap: 2px; }
+.banner-label {
+  font-size: 11px; font-family: var(--font-mono); font-weight: 500;
+  color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px;
+}
+.banner-title { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+.banner-desc { font-size: 13px; color: var(--text-secondary); }
+
+.banner-right { display: flex; align-items: center; gap: 16px; }
+.banner-progress {
+  width: 110px; height: 4px; background: var(--bg-elevated);
+  border-radius: var(--radius-full); overflow: hidden;
+}
+.banner-progress-fill {
+  height: 100%; width: 25%; background: var(--accent);
+  border-radius: var(--radius-full); transition: width 0.5s ease;
+}
+
+/* ========== STATS ROW (Change #3) ========== */
+.stats-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  margin-bottom: 28px;
+}
+.stat-cell {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 16px 20px;
+}
+.stat-number {
+  font-family: var(--font-mono); font-size: 28px; font-weight: 700;
+  color: var(--text-primary); display: flex; align-items: baseline; gap: 4px;
+}
+.stat-number .accent-num { color: var(--accent); }
+.stat-label {
+  font-size: 12px; font-weight: 500; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.3px; margin-top: 2px;
+}
+
+/* ========== SECTION HEADER + MODE TOGGLE (Change #5) ========== */
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.section-title {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+  color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;
+}
+.mode-toggle { display: flex; gap: 4px; }
+.mode-btn {
+  font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+  padding: 6px 14px; border-radius: var(--radius-md);
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); cursor: pointer; transition: 0.18s ease;
+  display: flex; align-items: center; gap: 5px;
+}
+.mode-btn.active {
+  background: var(--accent-dim); color: var(--accent);
+  border-color: var(--border-accent);
+}
+.mode-btn:not(.active):hover { border-color: var(--text-muted); }
+.mode-icon { font-size: 13px; }
+
+/* ========== MODULE CARDS GRID ========== */
+.cards-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+
+/* ========== CARD BASE ========== */
+.module-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  cursor: pointer;
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  display: flex; flex-direction: column; gap: 12px;
+  opacity: 0; animation: fadeUp 0.4s ease forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========== CARD STATES (Change #1) ========== */
+
+/* Not Started */
+.module-card.state-not-started:hover {
+  border-color: var(--border-main);
+}
+.module-card.state-not-started .card-num { color: var(--text-muted); }
+
+/* In Progress — accent top stripe + left glow */
+.module-card.state-in-progress {
+  border-color: var(--border-accent);
+  border-top: 2px solid var(--accent);
+  box-shadow: inset 3px 0 0 0 var(--accent-glow), var(--glow-green);
+}
+.module-card.state-in-progress:hover {
+  box-shadow: inset 3px 0 0 0 rgba(200,245,66,0.15), 0 0 32px rgba(200,245,66,0.18);
+  transform: translateY(-2px);
+}
+.module-card.state-in-progress .card-num { color: var(--accent); }
+
+/* Complete — success left border */
+.module-card.state-complete {
+  border-left: 3px solid var(--success);
+}
+.module-card.state-complete:hover {
+  border-color: var(--success);
+  border-left: 3px solid var(--success);
+}
+.module-card.state-complete .card-num { color: var(--success); opacity: 0.7; }
+
+/* Locked — reduced opacity */
+.module-card.state-locked {
+  opacity: 0; animation: fadeUp 0.4s ease forwards;
+}
+.module-card.state-locked .card-inner { opacity: 0.5; }
+.module-card.state-locked:hover { cursor: not-allowed; }
+.module-card.state-locked .card-num { color: var(--text-muted); opacity: 0.4; }
+
+/* ========== CARD INTERNALS ========== */
+.card-inner { transition: opacity 0.2s ease; }
+
+.card-top { display: flex; align-items: center; justify-content: space-between; }
+.card-num {
+  font-family: var(--font-mono); font-size: 32px; font-weight: 700;
+  line-height: 1; transition: color 0.18s ease;
+}
+
+/* Badges */
+.badge {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  padding: 3px 10px; border-radius: var(--radius-full);
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.badge-not-started { background: var(--bg-elevated); color: var(--text-muted); }
+.badge-in-progress { background: var(--accent-dim); color: var(--accent); }
+.badge-complete { background: var(--success-dim); color: var(--success); }
+.badge-locked { background: var(--bg-elevated); color: var(--warning); }
+
+.card-title { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+
+/* Skills pills (Change #7 — max 3 + overflow) */
+.skills-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.skill-pill {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+  padding: 2px 8px; border-radius: var(--radius-sm);
+  background: var(--bg-elevated); color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.skill-pill.overflow {
+  background: transparent; border-color: var(--border);
+  color: var(--text-muted); font-style: italic;
+}
+
+/* Card Footer — progress bar + difficulty dots (Change #4) */
+.card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: auto; padding-top: 8px;
+}
+.progress-track {
+  flex: 1; height: 3px; background: var(--bg-elevated);
+  border-radius: var(--radius-full); margin-right: 12px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; border-radius: var(--radius-full);
+  background: var(--accent); transition: width 0.5s ease;
+}
+.progress-fill.complete-fill { background: var(--success); }
+
+.card-footer-right { display: flex; align-items: center; gap: 10px; }
+.difficulty-dots { display: flex; gap: 3px; }
+.diff-dot {
+  width: 4px; height: 12px; border-radius: 2px;
+  background: var(--border-main);
+}
+.diff-dot.filled { background: var(--accent); }
+.diff-dot.filled-success { background: var(--success); }
+
+.card-counter {
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);
+}
+
+/* ========== ANIMATIONS (Change #6) ========== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.module-card:nth-child(1) { animation-delay: 0ms; }
+.module-card:nth-child(2) { animation-delay: 70ms; }
+.module-card:nth-child(3) { animation-delay: 140ms; }
+.module-card:nth-child(4) { animation-delay: 210ms; }
+.module-card:nth-child(5) { animation-delay: 280ms; }
+.module-card:nth-child(6) { animation-delay: 350ms; }
+.module-card:nth-child(7) { animation-delay: 420ms; }
+.module-card:nth-child(8) { animation-delay: 490ms; }
+.module-card:nth-child(9) { animation-delay: 560ms; }
+.module-card:nth-child(10) { animation-delay: 630ms; }
+
+/* Locked cards animate in but then stay dimmed */
+.module-card.state-locked {
+  animation: fadeUpLocked 0.4s ease forwards;
+}
+@keyframes fadeUpLocked {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr; }
+  .continue-banner { flex-direction: column; gap: 16px; align-items: flex-start; }
+  .banner-right { width: 100%; justify-content: space-between; }
+}
+
+/* ========== UTILITY ========== */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-left">
+    <div class="brand-dot">*</div>
+    <span class="brand-name">badcode</span>
+    <div class="nav-breadcrumb">
+      <span style="margin: 0 4px;">›</span>
+      <span>Modules</span>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="btn-outline">Cheat Sheet</button>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
+      <span id="themeIcon">☀</span>
+    </button>
+    <button class="btn-primary">Sign In</button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- CONTINUE BANNER -->
+  <div class="continue-banner">
+    <div class="banner-left">
+      <div class="banner-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+      </div>
+      <div class="banner-text-group">
+        <span class="banner-label">Continue where you left off</span>
+        <span class="banner-title">Grouping & Aggregation</span>
+        <span class="banner-desc">Challenge 2 of 4 — you were so close last time.</span>
+      </div>
+    </div>
+    <div class="banner-right">
+      <div class="banner-progress">
+        <div class="banner-progress-fill" style="width: 50%"></div>
+      </div>
+      <button class="btn-primary">Continue →</button>
+    </div>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="stats-row">
+    <div class="stat-cell">
+      <div class="stat-number"><span class="accent-num">14</span> / 87</div>
+      <div class="stat-label">Problems solved</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-number">1</div>
+      <div class="stat-label">Module in progress</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-number">6</div>
+      <div class="stat-label">Modules remaining</div>
+    </div>
+  </div>
+
+  <!-- SECTION HEADER -->
+  <div class="section-header">
+    <span class="section-title">All Modules</span>
+    <div class="mode-toggle">
+      <button class="mode-btn active">
+        <span class="mode-icon">🔒</span> Guided
+      </button>
+      <button class="mode-btn">
+        <span class="mode-icon">🧭</span> Explore
+      </button>
+    </div>
+  </div>
+
+  <!-- MODULE CARDS -->
+  <div class="cards-grid">
+
+    <!-- 01 — Complete -->
+    <div class="module-card state-complete">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-num">01</span>
+          <span class="badge badge-complete">Complete</span>
+        </div>
+        <div class="card-title">The SELECT Statement</div>
+        <div class="skills-row">
+          <span class="skill-pill">SELECT</span>
+          <span class="skill-pill">DISTINCT</span>
+          <span class="skill-pill">ALIASES</span>
+        </div>
+        <div class="card-footer">
+          <div class="progress-track"><div class="progress-fill complete-fill" style="width:100%"></div></div>
+          <div class="card-footer-right">
+            <div class="difficulty-dots">
+              <div class="diff-dot filled-success"></div>
+              <div class="diff-dot"></div>
+              <div class="diff-dot"></div>
+            </div>
+            <span class="card-counter">8/8</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 — Complete -->
+    <div class="module-card state-complete">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-num">02</span>
+          <span class="badge badge-complete">Complete</span>
+        </div>
+        <div class="card-title">The WHERE Clause</div>
+        <div class="skills-row">
+          <span class="skill-pill">WHERE</span>
+          <span class="skill-pill">AND</span>
+          <span class="skill-pill">LIKE</span>
+          <span class="skill-pill overflow">+2</span>
+        </div>
+        <div class="card-footer">
+          <div class="progress-track"><div class="progress-fill complete-fill" style="width:100%"></div></div>
+          <div class="card-footer-right">
+            <div class="difficulty-dots">
+              <div class="diff-dot filled-success"></div>
+              <div class="diff-dot"></div>
+              <div class="diff-dot"></div>
+            </div>
+            <span class="card-counter">11/11</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 — Complete -->
+    <div class="module-card state-complete">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-num">03</span>
+          <span class="badge badge-complete">Complete</span>
+        </div>
+        <div class="card-title">Sorting & Limiting</div>
+        <div class="skills-row">
+          <span class="skill-pill">ORDER BY</span>
+          <span class="skill-pill">LIMIT</span>
+          <span class="skill-pill">OFFSET</span>
+        </div>
+        <div class="card-footer">
+          <div class="progress-track"><div class="progress-fill complete-fill" style="width:100%"></div></div>
+          <div class="card-footer-right">
+            <div class="difficulty-dots">
+              <div class="diff-dot filled-success"></div>
+              <div class="diff-dot filled-success"></div>
+              <div class="diff-dot"></div>
+            </div>
+            <span class="card-counter">8/8</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 — In Progress -->
+    <div class="module-card state-in-progress">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-num">04</span>
+          <span class="badge badge-in-progress">In Progress</span>
+        </div>
+        <div class="card-title">Grouping & Aggregation</div>
+        <div class="skills-row">
+          <span class="skill-pill">COUNT</span>
+          <span class="skill-pill">GROUP BY</span>
+          <span class="skill-pill">HAVING</span>
+        </div>
+        <div class="card-footer">
+          <div class="progress-track"><div class="progress-fill" style="width:50%"></div></div>
+          <div class="card-footer-right">
+            <div class="difficulty-dots">
+              <div class="diff-dot filled"></div>
+              <div class="diff-dot filled"></div>
+              <div class="diff-dot"></div>
+            </div>
+            <span class="card-counter">2/4</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 — Not Started -->
+    <div class="module-card state-not-started">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-num">05</span>
+          <span class="badge badge-not-started">Not Started</span>
+        </div>
+        <div class="card-title">Multiple Tables</div>
+        <div class="skills-row">
+          <span class="skill-pill">INNER JOIN</span>
+          <span class="skill-pill">LEFT JOIN</span>
+          <span class="skill-pill">SELF JOIN</span>
+        </div>
+        <div class="card-footer">
+          <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+          <div class="card-footer-right">
+            <div class="difficulty-dots">
+              <div class="diff-dot filled"></div>
+              <div class="diff-dot filled"></div>
+              <div class="diff-dot"></div>
+            </div>
+            <span class="card-counter">0/7</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 — Not Started -->
+    <div class="module-card state-not-started">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-num">06</span>
+          <span class="badge badge-not-started">Not Started</span>
+        </div>
+        <div class="card-title">Handling NULL Values</div>
+        <div class="skills-row">
+          <span class="skill-pill">COALESCE</span>
+          <span class="skill-pill">IS NOT NULL</span>
+          <span class="skill-pill overflow">+1</span>
+        </div>
+        <div class="card-footer">
+          <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+          <div class="card-footer-right">
+            <div class="difficulty-dots">
+              <div class="diff-dot filled"></div>
+              <div class="diff-dot filled"></div>
+              <div class="diff-dot"></div>
+            </div>
+            <span class="card-counter">0/6</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 — Locked -->
+    <div class="module-card state-locked">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-num">07</span>
+          <span class="badge badge-locked">🔒 Locked</span>
+        </div>
+        <div class="card-title">Subqueries</div>
+        <div class="skills-row">
+          <span class="skill-pill">IN (SELECT)</span>
+          <span class="skill-pill">EXISTS</span>
+          <span class="skill-pill">CORRELATED</span>
+        </div>
+        <div class="card-footer">
+          <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+          <div class="card-footer-right">
+            <div class="difficulty-dots">
+              <div class="diff-dot"></div>
+              <div class="diff-dot"></div>
+              <div class="diff-dot"></div>
+            </div>
+            <span class="card-counter">0/8</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 — Locked -->
+    <div class="module-card state-locked">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-num">08</span>
+          <span class="badge badge-locked">🔒 Locked</span>
+        </div>
+        <div class="card-title">Window Functions</div>
+        <div class="skills-row">
+          <span class="skill-pill">ROW_NUMBER</span>
+          <span class="skill-pill">RANK</span>
+          <span class="skill-pill overflow">+2</span>
+        </div>
+        <div class="card-footer">
+          <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+          <div class="card-footer-right">
+            <div class="difficulty-dots">
+              <div class="diff-dot"></div>
+              <div class="diff-dot"></div>
+              <div class="diff-dot"></div>
+            </div>
+            <span class="card-counter">0/10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 — Locked -->
+    <div class="module-card state-locked">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-num">09</span>
+          <span class="badge badge-locked">🔒 Locked</span>
+        </div>
+        <div class="card-title">Data Transformation</div>
+        <div class="skills-row">
+          <span class="skill-pill">CASE WHEN</span>
+          <span class="skill-pill">CAST</span>
+          <span class="skill-pill">SUBSTR</span>
+        </div>
+        <div class="card-footer">
+          <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+          <div class="card-footer-right">
+            <div class="difficulty-dots">
+              <div class="diff-dot"></div>
+              <div class="diff-dot"></div>
+              <div class="diff-dot"></div>
+            </div>
+            <span class="card-counter">0/9</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 — Locked -->
+    <div class="module-card state-locked">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-num">10</span>
+          <span class="badge badge-locked">🔒 Locked</span>
+        </div>
+        <div class="card-title">The Final Pipeline</div>
+        <div class="skills-row">
+          <span class="skill-pill">CTEs</span>
+          <span class="skill-pill">UNION</span>
+          <span class="skill-pill">VIEWS</span>
+        </div>
+        <div class="card-footer">
+          <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+          <div class="card-footer-right">
+            <div class="difficulty-dots">
+              <div class="diff-dot"></div>
+              <div class="diff-dot"></div>
+              <div class="diff-dot"></div>
+            </div>
+            <span class="card-counter">0/16</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('themeIcon').textContent = next === 'dark' ? '☀' : '☾';
+}
+
+// Mode toggle interaction
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
