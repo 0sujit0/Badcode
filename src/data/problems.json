@@ -2,833 +2,4397 @@
   {
     "id": "L1_P1",
     "level": 1,
+    "type": "code",
     "title": "Customer Directory",
-    "story": "As a new data analyst, the first thing you need to do is explore our customer base. Retrieve <strong>all columns</strong> from the <code>Customers</code> table.",
-    "requiredConcept": "SELECT",
-    "expectedOutput": [{"id":1,"first_name":"John","last_name":"Doe","email":"john@example.com","registration_date":"2023-01-10"},{"id":2,"first_name":"Sarah","last_name":"Smith","email":"sarah.smith@example.com","registration_date":"2023-02-20"},{"id":3,"first_name":"Michael","last_name":"Johnson","email":"mjohnson@example.com","registration_date":"2023-03-05"},{"id":4,"first_name":"Emily","last_name":"Davis","email":"emily.d@example.com","registration_date":"2023-03-10"},{"id":5,"first_name":"David","last_name":"Wilson","email":"dwilson@example.com","registration_date":"2023-04-01"},{"id":6,"first_name":"Jessica","last_name":"Taylor","email":"jtaylor@example.com","registration_date":"2023-04-15"},{"id":7,"first_name":"Chris","last_name":"Anderson","email":"canderson@example.com","registration_date":"2023-05-01"},{"id":8,"first_name":"Sophie","last_name":"Martinez","email":"smartinez@example.com","registration_date":"2023-05-15"},{"id":9,"first_name":"Isabella","last_name":"Garcia","email":"igarcia@example.com","registration_date":"2023-06-01"}],
+    "requiredConcept": "SELECT *",
+    "starterQuery": "SELECT ",
+    "story": "Welcome to ShopKart. You've just been hired as a data analyst, and your first task is simple: get familiar with the data. Retrieve <strong>all columns</strong> from the <code>Customers</code> table.",
+    "pipelineCallout": "Notice the pipeline sidebar? SQL starts at FROM — it needs to know which table to look at before it can show you anything. You write SELECT first, but the database reads FROM first.",
     "hints": [
-      "Use the SELECT keyword followed by the columns you want.",
-      "The asterisk (*) is a wildcard that selects all columns.",
-      "Try running: SELECT * FROM Customers;"
+      "Use the SELECT keyword followed by * to get all columns.",
+      "Make sure you specify the table using FROM Customers.",
+      "SELECT * FROM Customers;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 1,
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john@example.com",
+        "registration_date": "2023-01-10"
+      },
+      {
+        "id": 2,
+        "first_name": "Sarah",
+        "last_name": "Smith",
+        "email": "sarah.smith@example.com",
+        "registration_date": "2023-02-20"
+      },
+      {
+        "id": 3,
+        "first_name": "Michael",
+        "last_name": "Johnson",
+        "email": "mjohnson@example.com",
+        "registration_date": "2023-03-05"
+      },
+      {
+        "id": 4,
+        "first_name": "Emily",
+        "last_name": "Davis",
+        "email": "emily.d@example.com",
+        "registration_date": "2023-03-10"
+      },
+      {
+        "id": 5,
+        "first_name": "David",
+        "last_name": "Wilson",
+        "email": "dwilson@example.com",
+        "registration_date": "2023-04-01"
+      },
+      {
+        "id": 6,
+        "first_name": "Jessica",
+        "last_name": "Taylor",
+        "email": "jtaylor@example.com",
+        "registration_date": "2023-04-15"
+      },
+      {
+        "id": 7,
+        "first_name": "Chris",
+        "last_name": "Anderson",
+        "email": "canderson@example.com",
+        "registration_date": "2023-05-01"
+      },
+      {
+        "id": 8,
+        "first_name": "Sophie",
+        "last_name": "Martinez",
+        "email": "smartinez@example.com",
+        "registration_date": "2023-05-15"
+      },
+      {
+        "id": 9,
+        "first_name": "Isabella",
+        "last_name": "Garcia",
+        "email": "igarcia@example.com",
+        "registration_date": "2023-06-01"
+      },
+      {
+        "id": 10,
+        "first_name": "Alex",
+        "last_name": "Patel",
+        "email": null,
+        "registration_date": "2023-07-01"
+      }
     ]
   },
   {
     "id": "L1_P2",
     "level": 1,
+    "type": "code",
     "title": "Product Catalog",
-    "story": "The warehouse manager needs a list of all products. Retrieve <strong>all columns</strong> from the <code>Products</code> table.",
-    "requiredConcept": "SELECT",
-    "expectedOutput": [{"id":1,"name":"Laptop","category":"Electronics","price":1200,"stock":20},{"id":2,"name":"Wireless Mouse","category":"Electronics","price":25,"stock":150},{"id":3,"name":"Mechanical Keyboard","category":"Electronics","price":89.99,"stock":50},{"id":4,"name":"Coffee Mug","category":"Home","price":12.5,"stock":300},{"id":5,"name":"Desk Lamp","category":"Home","price":45,"stock":75},{"id":6,"name":"Laptop Stand","category":"Accessories","price":35,"stock":120},{"id":7,"name":"Bluetooth Speaker","category":"Electronics","price":55,"stock":200},{"id":8,"name":"Notebook","category":"Office","price":5,"stock":500},{"id":9,"name":"Keyboard","category":"Electronics","price":70,"stock":100}],
+    "requiredConcept": "SELECT *",
+    "story": "The warehouse manager just pinged you: \"Can you pull everything we have in the system?\" Retrieve <strong>all columns</strong> from the <code>Products</code> table.",
     "hints": [
-      "Similar to the previous lesson, use SELECT *.",
-      "Make sure you are targeting the Products table this time.",
-      "Try: SELECT * FROM Products;"
+      "This is just like the previous query, but targeting a different table.",
+      "SELECT * FROM Products;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 1,
+        "name": "Laptop",
+        "category": "Electronics",
+        "price": 1200,
+        "stock": 20
+      },
+      {
+        "id": 2,
+        "name": "Wireless Mouse",
+        "category": "Electronics",
+        "price": 25,
+        "stock": 150
+      },
+      {
+        "id": 3,
+        "name": "Mechanical Keyboard",
+        "category": "Electronics",
+        "price": 89.99,
+        "stock": 50
+      },
+      {
+        "id": 4,
+        "name": "Coffee Mug",
+        "category": "Home",
+        "price": 12.5,
+        "stock": 300
+      },
+      {
+        "id": 5,
+        "name": "Desk Lamp",
+        "category": "Home",
+        "price": 45,
+        "stock": 75
+      },
+      {
+        "id": 6,
+        "name": "Laptop Stand",
+        "category": "Accessories",
+        "price": 35,
+        "stock": 120
+      },
+      {
+        "id": 7,
+        "name": "Bluetooth Speaker",
+        "category": "Electronics",
+        "price": 55,
+        "stock": 200
+      },
+      {
+        "id": 8,
+        "name": "Notebook",
+        "category": "Office",
+        "price": 5,
+        "stock": 500
+      },
+      {
+        "id": 9,
+        "name": "Keyboard",
+        "category": "Electronics",
+        "price": 70,
+        "stock": 100
+      },
+      {
+        "id": 10,
+        "name": "Webcam",
+        "category": "Electronics",
+        "price": 39.99,
+        "stock": null
+      }
     ]
   },
   {
     "id": "L1_P3",
     "level": 1,
+    "type": "code",
     "title": "Customer Contact List",
-    "story": "The marketing team only needs customer names. Return only the <code>first_name</code> and <code>last_name</code> columns from <code>Customers</code>.",
-    "requiredConcept": "SELECT",
-    "expectedOutput": [{"first_name":"John","last_name":"Doe"},{"first_name":"Sarah","last_name":"Smith"},{"first_name":"Michael","last_name":"Johnson"},{"first_name":"Emily","last_name":"Davis"},{"first_name":"David","last_name":"Wilson"},{"first_name":"Jessica","last_name":"Taylor"},{"first_name":"Chris","last_name":"Anderson"},{"first_name":"Sophie","last_name":"Martinez"},{"first_name":"Isabella","last_name":"Garcia"}],
+    "requiredConcept": "first_name",
+    "story": "Marketing doesn't need the full customer record — just names. Return only <code>first_name</code> and <code>last_name</code> from <code>Customers</code>. This is your first time choosing specific columns instead of using <code>*</code>.",
     "hints": [
-      "Instead of *, list the columns separated by a comma.",
-      "Column names are first_name and last_name.",
+      "List the column names after SELECT, separated by a comma.",
       "SELECT first_name, last_name FROM Customers;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "last_name": "Doe"
+      },
+      {
+        "first_name": "Sarah",
+        "last_name": "Smith"
+      },
+      {
+        "first_name": "Michael",
+        "last_name": "Johnson"
+      },
+      {
+        "first_name": "Emily",
+        "last_name": "Davis"
+      },
+      {
+        "first_name": "David",
+        "last_name": "Wilson"
+      },
+      {
+        "first_name": "Jessica",
+        "last_name": "Taylor"
+      },
+      {
+        "first_name": "Chris",
+        "last_name": "Anderson"
+      },
+      {
+        "first_name": "Sophie",
+        "last_name": "Martinez"
+      },
+      {
+        "first_name": "Isabella",
+        "last_name": "Garcia"
+      },
+      {
+        "first_name": "Alex",
+        "last_name": "Patel"
+      }
     ]
   },
   {
     "id": "L1_P4",
     "level": 1,
-    "title": "Order Ledger",
-    "story": "Let's look at what's been happening in sales. Retrieve <strong>all columns</strong> from the <code>Orders</code> table.",
-    "requiredConcept": "SELECT",
-    "expectedOutput": [{"id":101,"customer_id":1,"product_id":1,"order_date":"2023-05-01","status":"Delivered","amount":1200},{"id":102,"customer_id":2,"product_id":2,"order_date":"2023-05-02","status":"Processing","amount":45},{"id":103,"customer_id":2,"product_id":4,"order_date":"2023-05-03","status":"Delivered","amount":12.5},{"id":104,"customer_id":3,"product_id":5,"order_date":"2023-05-04","status":"Shipped","amount":45},{"id":105,"customer_id":4,"product_id":3,"order_date":"2023-05-05","status":"Delivered","amount":89.99},{"id":106,"customer_id":5,"product_id":6,"order_date":"2023-05-06","status":"Processing","amount":35},{"id":107,"customer_id":1,"product_id":7,"order_date":"2023-05-07","status":"Delivered","amount":55},{"id":108,"customer_id":6,"product_id":8,"order_date":"2023-05-08","status":"Cancelled","amount":5},{"id":109,"customer_id":2,"product_id":9,"order_date":"2023-05-09","status":"Delivered","amount":70},{"id":110,"customer_id":7,"product_id":2,"order_date":"2023-05-10","status":"Shipped","amount":25},{"id":111,"customer_id":8,"product_id":4,"order_date":"2023-05-11","status":"Delivered","amount":12.5},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":113,"customer_id":3,"product_id":3,"order_date":"2023-05-13","status":"Delivered","amount":89.99},{"id":114,"customer_id":4,"product_id":2,"order_date":"2023-05-14","status":"Shipped","amount":25},{"id":115,"customer_id":5,"product_id":5,"order_date":"2023-05-15","status":"Delivered","amount":45},{"id":116,"customer_id":9,"product_id":7,"order_date":"2023-05-16","status":"Delivered","amount":55},{"id":117,"customer_id":2,"product_id":1,"order_date":"2023-05-17","status":"Delivered","amount":1200},{"id":118,"customer_id":6,"product_id":6,"order_date":"2023-05-18","status":"Cancelled","amount":35},{"id":119,"customer_id":7,"product_id":3,"order_date":"2023-05-19","status":"Processing","amount":89.99},{"id":120,"customer_id":8,"product_id":9,"order_date":"2023-05-25","status":"Delivered","amount":70}],
+    "type": "code",
+    "title": "Employee Overview",
+    "requiredConcept": "department",
+    "story": "Management wants a quick staff snapshot. Return <code>first_name</code>, <code>last_name</code>, and <code>department</code> from the <code>Employees</code> table.",
     "hints": [
-      "Select everything from the Orders table.",
-      "The command structure is always SELECT ... FROM ...",
-      "SELECT * FROM Orders;"
+      "You just need to list all three columns after SELECT.",
+      "SELECT first_name, last_name, department FROM Employees;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "Alice",
+        "last_name": "Brown",
+        "department": "Sales"
+      },
+      {
+        "first_name": "Bob",
+        "last_name": "Thompson",
+        "department": "Engineering"
+      },
+      {
+        "first_name": "Charlie",
+        "last_name": "Davis",
+        "department": "Marketing"
+      },
+      {
+        "first_name": "Diana",
+        "last_name": "Price",
+        "department": "Sales"
+      },
+      {
+        "first_name": "Evan",
+        "last_name": "Wright",
+        "department": "Engineering"
+      },
+      {
+        "first_name": "Fiona",
+        "last_name": "Clark",
+        "department": "Engineering"
+      }
     ]
   },
   {
     "id": "L1_P5",
     "level": 1,
-    "title": "Employee Overview",
-    "story": "Management wants a simple staff list. Return <code>first_name</code>, <code>last_name</code>, and <code>department</code> from the <code>Employees</code> table.",
-    "requiredConcept": "SELECT",
-    "expectedOutput": [{"first_name":"Alice","last_name":"Brown","department":"Sales"},{"first_name":"Bob","last_name":"Thompson","department":"Engineering"},{"first_name":"Charlie","last_name":"Davis","department":"Marketing"},{"first_name":"Diana","last_name":"Price","department":"Sales"},{"first_name":"Evan","last_name":"Wright","department":"Engineering"}],
+    "type": "code",
+    "title": "Unique Categories",
+    "requiredConcept": "DISTINCT",
+    "story": "The head of merchandising asks: \"How many product categories do we actually carry?\" Use <code>DISTINCT</code> to retrieve each category <strong>only once</strong> from the <code>Products</code> table.",
     "hints": [
-      "Select the three specific columns requested.",
-      "Separate the column names with commas.",
-      "SELECT first_name, last_name, department FROM Employees;"
+      "Put the DISTINCT keyword immediately after SELECT and before the column name.",
+      "SELECT DISTINCT category FROM Products;"
+    ],
+    "expectedOutput": [
+      {
+        "category": "Electronics"
+      },
+      {
+        "category": "Home"
+      },
+      {
+        "category": "Accessories"
+      },
+      {
+        "category": "Office"
+      }
     ]
   },
   {
     "id": "L1_P6",
     "level": 1,
-    "title": "Unique Categories",
-    "story": "How many product categories does ShopKart carry? Use <code>DISTINCT</code> to retrieve each category <strong>only once</strong> from the <code>Products</code> table.",
+    "type": "code",
+    "title": "Unique Departments",
     "requiredConcept": "DISTINCT",
-    "expectedOutput": [{"category":"Electronics"},{"category":"Home"},{"category":"Accessories"},{"category":"Office"}],
+    "story": "HR wants a clean list of departments that exist in the company. Use <code>DISTINCT</code> on the <code>Employees</code> table to list every department — no repeats.",
     "hints": [
-      "DISTINCT eliminates duplicate values from the result.",
-      "Place DISTINCT immediately after SELECT.",
-      "SELECT DISTINCT category FROM Products;"
+      "Remember, DISTINCT removes duplicate rows from your results.",
+      "SELECT DISTINCT department FROM Employees;"
+    ],
+    "expectedOutput": [
+      {
+        "department": "Sales"
+      },
+      {
+        "department": "Engineering"
+      },
+      {
+        "department": "Marketing"
+      }
     ]
   },
   {
     "id": "L1_P7",
     "level": 1,
+    "type": "code",
     "title": "Friendly Column Names",
-    "story": "The stakeholder report needs friendlier column headers. Select <code>first_name</code>, <code>last_name</code>, and <code>email</code> from <code>Customers</code> and alias them as <code>first</code>, <code>last</code>, and <code>contact</code>.",
     "requiredConcept": "AS",
-    "expectedOutput": [{"first":"John","last":"Doe","contact":"john@example.com"},{"first":"Sarah","last":"Smith","contact":"sarah.smith@example.com"},{"first":"Michael","last":"Johnson","contact":"mjohnson@example.com"},{"first":"Emily","last":"Davis","contact":"emily.d@example.com"},{"first":"David","last":"Wilson","contact":"dwilson@example.com"},{"first":"Jessica","last":"Taylor","contact":"jtaylor@example.com"},{"first":"Chris","last":"Anderson","contact":"canderson@example.com"},{"first":"Sophie","last":"Martinez","contact":"smartinez@example.com"},{"first":"Isabella","last":"Garcia","contact":"igarcia@example.com"}],
+    "story": "You're building a stakeholder report, and the column names look too technical. Select <code>first_name</code>, <code>last_name</code>, and <code>email</code> from <code>Customers</code> and alias them as <code>first</code>, <code>last</code>, and <code>contact</code>. Use the <code>AS</code> keyword.",
     "hints": [
-      "Use the AS keyword after each column name to give it an alias.",
-      "Syntax: SELECT column AS alias, ...",
+      "Use the format: column_name AS new_name",
+      "You need to alias all three columns requested.",
       "SELECT first_name AS first, last_name AS last, email AS contact FROM Customers;"
+    ],
+    "expectedOutput": [
+      {
+        "first": "John",
+        "last": "Doe",
+        "contact": "john@example.com"
+      },
+      {
+        "first": "Sarah",
+        "last": "Smith",
+        "contact": "sarah.smith@example.com"
+      },
+      {
+        "first": "Michael",
+        "last": "Johnson",
+        "contact": "mjohnson@example.com"
+      },
+      {
+        "first": "Emily",
+        "last": "Davis",
+        "contact": "emily.d@example.com"
+      },
+      {
+        "first": "David",
+        "last": "Wilson",
+        "contact": "dwilson@example.com"
+      },
+      {
+        "first": "Jessica",
+        "last": "Taylor",
+        "contact": "jtaylor@example.com"
+      },
+      {
+        "first": "Chris",
+        "last": "Anderson",
+        "contact": "canderson@example.com"
+      },
+      {
+        "first": "Sophie",
+        "last": "Martinez",
+        "contact": "smartinez@example.com"
+      },
+      {
+        "first": "Isabella",
+        "last": "Garcia",
+        "contact": "igarcia@example.com"
+      },
+      {
+        "first": "Alex",
+        "last": "Patel",
+        "contact": null
+      }
     ]
   },
   {
     "id": "L1_P8",
     "level": 1,
+    "type": "code",
     "title": "Full Name Column",
-    "story": "Build a single <code>full_name</code> column by combining <code>first_name</code> and <code>last_name</code> with a space between them. Use the <code>||</code> concatenation operator.",
     "requiredConcept": "||",
-    "expectedOutput": [{"full_name":"John Doe"},{"full_name":"Sarah Smith"},{"full_name":"Michael Johnson"},{"full_name":"Emily Davis"},{"full_name":"David Wilson"},{"full_name":"Jessica Taylor"},{"full_name":"Chris Anderson"},{"full_name":"Sophie Martinez"},{"full_name":"Isabella Garcia"}],
+    "story": "The customer-facing team wants a single <strong>full_name</strong> column — not two separate columns. Concatenate <code>first_name</code> and <code>last_name</code> with a space between them using the <code>||</code> operator.",
     "hints": [
-      "In SQLite, the || operator joins two strings together.",
-      "Add a space between them: first_name || ' ' || last_name",
+      "In SQLite, || glues text together. To add a space, use: column1 || ' ' || column2",
+      "Don't forget to alias the resulting column as full_name using the AS keyword.",
       "SELECT first_name || ' ' || last_name AS full_name FROM Customers;"
+    ],
+    "expectedOutput": [
+      {
+        "full_name": "John Doe"
+      },
+      {
+        "full_name": "Sarah Smith"
+      },
+      {
+        "full_name": "Michael Johnson"
+      },
+      {
+        "full_name": "Emily Davis"
+      },
+      {
+        "full_name": "David Wilson"
+      },
+      {
+        "full_name": "Jessica Taylor"
+      },
+      {
+        "full_name": "Chris Anderson"
+      },
+      {
+        "full_name": "Sophie Martinez"
+      },
+      {
+        "full_name": "Isabella Garcia"
+      },
+      {
+        "full_name": "Alex Patel"
+      }
     ]
   },
   {
     "id": "L2_P1",
     "level": 2,
+    "type": "code",
     "title": "Processing Orders",
-    "story": "The logistics team needs to know which orders are still <strong>Processing</strong>. Filter the <code>Orders</code> table where the <code>status</code> is 'Processing'.",
     "requiredConcept": "WHERE",
-    "expectedOutput": [{"id":102,"customer_id":2,"product_id":2,"order_date":"2023-05-02","status":"Processing","amount":45},{"id":106,"customer_id":5,"product_id":6,"order_date":"2023-05-06","status":"Processing","amount":35},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":119,"customer_id":7,"product_id":3,"order_date":"2023-05-19","status":"Processing","amount":89.99}],
+    "story": "The logistics team is triaging today's workload. They need all orders that are still <strong>Processing</strong>. Filter the <code>Orders</code> table where <code>status</code> equals 'Processing'.",
+    "pipelineCallout": "Look at the pipeline — WHERE just appeared between FROM and SELECT. The database filters rows BEFORE it picks columns. That's why WHERE can see every column in the table, even ones you didn't SELECT.",
     "hints": [
-      "Use the WHERE clause to filter rows.",
-      "String values like 'Processing' must be enclosed in single quotes.",
+      "Use SELECT * FROM Orders, then add a WHERE clause.",
+      "Make sure you put 'Processing' in quotes since it is text.",
       "SELECT * FROM Orders WHERE status = 'Processing';"
+    ],
+    "expectedOutput": [
+      {
+        "id": 102,
+        "customer_id": 2,
+        "product_id": 2,
+        "order_date": "2023-05-02",
+        "status": "Processing",
+        "amount": 45
+      },
+      {
+        "id": 106,
+        "customer_id": 5,
+        "product_id": 6,
+        "order_date": "2023-05-06",
+        "status": "Processing",
+        "amount": 35
+      },
+      {
+        "id": 112,
+        "customer_id": 1,
+        "product_id": 1,
+        "order_date": "2023-05-12",
+        "status": "Processing",
+        "amount": 1200
+      },
+      {
+        "id": 119,
+        "customer_id": 7,
+        "product_id": 3,
+        "order_date": "2023-05-19",
+        "status": "Processing",
+        "amount": 89.99
+      }
     ]
   },
   {
     "id": "L2_P2",
     "level": 2,
+    "type": "code",
     "title": "Electronics Inventory",
-    "story": "Find all products that belong to the <strong>Electronics</strong> category.",
     "requiredConcept": "WHERE",
-    "expectedOutput": [{"id":1,"name":"Laptop","category":"Electronics","price":1200,"stock":20},{"id":2,"name":"Wireless Mouse","category":"Electronics","price":25,"stock":150},{"id":3,"name":"Mechanical Keyboard","category":"Electronics","price":89.99,"stock":50},{"id":7,"name":"Bluetooth Speaker","category":"Electronics","price":55,"stock":200},{"id":9,"name":"Keyboard","category":"Electronics","price":70,"stock":100}],
+    "story": "The electronics buyer wants to audit their section. Find all products in the <strong>Electronics</strong> category.",
     "hints": [
-      "Filter the Products table.",
-      "Use WHERE category = 'Electronics'.",
+      "Filter the Products table based on the category column.",
       "SELECT * FROM Products WHERE category = 'Electronics';"
+    ],
+    "expectedOutput": [
+      {
+        "id": 1,
+        "name": "Laptop",
+        "category": "Electronics",
+        "price": 1200,
+        "stock": 20
+      },
+      {
+        "id": 2,
+        "name": "Wireless Mouse",
+        "category": "Electronics",
+        "price": 25,
+        "stock": 150
+      },
+      {
+        "id": 3,
+        "name": "Mechanical Keyboard",
+        "category": "Electronics",
+        "price": 89.99,
+        "stock": 50
+      },
+      {
+        "id": 7,
+        "name": "Bluetooth Speaker",
+        "category": "Electronics",
+        "price": 55,
+        "stock": 200
+      },
+      {
+        "id": 9,
+        "name": "Keyboard",
+        "category": "Electronics",
+        "price": 70,
+        "stock": 100
+      },
+      {
+        "id": 10,
+        "name": "Webcam",
+        "category": "Electronics",
+        "price": 39.99,
+        "stock": null
+      }
     ]
   },
   {
     "id": "L2_P3",
     "level": 2,
+    "type": "code",
     "title": "High Value Orders",
-    "story": "We need to track significant sales. Find all orders where the <code>amount</code> is <strong>greater than 500</strong>.",
-    "requiredConcept": "WHERE",
-    "expectedOutput": [{"id":101,"customer_id":1,"product_id":1,"order_date":"2023-05-01","status":"Delivered","amount":1200},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":117,"customer_id":2,"product_id":1,"order_date":"2023-05-17","status":"Delivered","amount":1200}],
+    "requiredConcept": ">",
+    "story": "Finance flagged a threshold: any order above ₹500 needs a second review. Find all orders where <code>amount</code> is <strong>greater than 500</strong>.",
     "hints": [
-      "Use the greater than operator (>).",
-      "Numbers should not have quotes.",
+      "Use the > symbol in your WHERE clause.",
+      "Since 500 is a number, you don't need quotes around it.",
       "SELECT * FROM Orders WHERE amount > 500;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 101,
+        "customer_id": 1,
+        "product_id": 1,
+        "order_date": "2023-05-01",
+        "status": "Delivered",
+        "amount": 1200
+      },
+      {
+        "id": 112,
+        "customer_id": 1,
+        "product_id": 1,
+        "order_date": "2023-05-12",
+        "status": "Processing",
+        "amount": 1200
+      },
+      {
+        "id": 117,
+        "customer_id": 2,
+        "product_id": 1,
+        "order_date": "2023-05-17",
+        "status": "Delivered",
+        "amount": 1200
+      }
     ]
   },
   {
     "id": "L2_P4",
     "level": 2,
+    "type": "code",
     "title": "Low Stock Alert",
-    "story": "Alert the stock manager! Find products where the <code>stock</code> is <strong>less than 30</strong>.",
-    "requiredConcept": "WHERE",
-    "expectedOutput": [{"id":1,"name":"Laptop","category":"Electronics","price":1200,"stock":20}],
+    "requiredConcept": "<",
+    "story": "The stock manager's dashboard just lit up red. Find all products where <code>stock</code> is <strong>less than 30</strong> so we can trigger reorders.",
     "hints": [
-      "Use the less than operator (<).",
-      "Check the Products table.",
+      "Filter the Products table where stock < 30",
       "SELECT * FROM Products WHERE stock < 30;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 1,
+        "name": "Laptop",
+        "category": "Electronics",
+        "price": 1200,
+        "stock": 20
+      }
     ]
   },
   {
     "id": "L2_P5",
     "level": 2,
+    "type": "code",
     "title": "Active Orders",
-    "story": "Find all orders that have <strong>NOT</strong> been 'Delivered'.",
-    "requiredConcept": "WHERE",
-    "expectedOutput": [{"id":102,"customer_id":2,"product_id":2,"order_date":"2023-05-02","status":"Processing","amount":45},{"id":104,"customer_id":3,"product_id":5,"order_date":"2023-05-04","status":"Shipped","amount":45},{"id":106,"customer_id":5,"product_id":6,"order_date":"2023-05-06","status":"Processing","amount":35},{"id":108,"customer_id":6,"product_id":8,"order_date":"2023-05-08","status":"Cancelled","amount":5},{"id":110,"customer_id":7,"product_id":2,"order_date":"2023-05-10","status":"Shipped","amount":25},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":114,"customer_id":4,"product_id":2,"order_date":"2023-05-14","status":"Shipped","amount":25},{"id":118,"customer_id":6,"product_id":6,"order_date":"2023-05-18","status":"Cancelled","amount":35},{"id":119,"customer_id":7,"product_id":3,"order_date":"2023-05-19","status":"Processing","amount":89.99}],
+    "requiredConcept": "<>",
+    "story": "Operations wants everything that's still in motion. Find all orders that have <strong>NOT</strong> been 'Delivered'. Use the <code>&lt;&gt;</code> operator.",
     "hints": [
-      "The 'not equal' operator is (<>).",
-      "Filter status in the Orders table.",
+      "The <> operator means \"not equal to\".",
+      "You can also use != which does the exact same thing in SQLite.",
       "SELECT * FROM Orders WHERE status <> 'Delivered';"
+    ],
+    "expectedOutput": [
+      {
+        "id": 102,
+        "customer_id": 2,
+        "product_id": 2,
+        "order_date": "2023-05-02",
+        "status": "Processing",
+        "amount": 45
+      },
+      {
+        "id": 104,
+        "customer_id": 3,
+        "product_id": 5,
+        "order_date": "2023-05-04",
+        "status": "Shipped",
+        "amount": 45
+      },
+      {
+        "id": 106,
+        "customer_id": 5,
+        "product_id": 6,
+        "order_date": "2023-05-06",
+        "status": "Processing",
+        "amount": 35
+      },
+      {
+        "id": 108,
+        "customer_id": 6,
+        "product_id": 8,
+        "order_date": "2023-05-08",
+        "status": "Cancelled",
+        "amount": 5
+      },
+      {
+        "id": 110,
+        "customer_id": 7,
+        "product_id": 2,
+        "order_date": "2023-05-10",
+        "status": "Shipped",
+        "amount": 25
+      },
+      {
+        "id": 112,
+        "customer_id": 1,
+        "product_id": 1,
+        "order_date": "2023-05-12",
+        "status": "Processing",
+        "amount": 1200
+      },
+      {
+        "id": 114,
+        "customer_id": 4,
+        "product_id": 2,
+        "order_date": "2023-05-14",
+        "status": "Shipped",
+        "amount": 25
+      },
+      {
+        "id": 118,
+        "customer_id": 6,
+        "product_id": 6,
+        "order_date": "2023-05-18",
+        "status": "Cancelled",
+        "amount": 35
+      },
+      {
+        "id": 119,
+        "customer_id": 7,
+        "product_id": 3,
+        "order_date": "2023-05-19",
+        "status": "Processing",
+        "amount": 89.99
+      }
     ]
   },
   {
     "id": "L2_P6",
     "level": 2,
+    "type": "code",
     "title": "Pricey Electronics",
-    "story": "The sales team wants Electronics products that are worth promoting as premium items. Find all products in the <strong>Electronics</strong> category with a <code>price</code> <strong>greater than 50</strong>. Use <code>AND</code> to combine both conditions.",
     "requiredConcept": "AND",
-    "expectedOutput": [{"id":1,"name":"Laptop","category":"Electronics","price":1200,"stock":20},{"id":3,"name":"Mechanical Keyboard","category":"Electronics","price":89.99,"stock":50},{"id":7,"name":"Bluetooth Speaker","category":"Electronics","price":55,"stock":200},{"id":9,"name":"Keyboard","category":"Electronics","price":70,"stock":100}],
+    "story": "The sales team wants to build a \"Premium Electronics\" campaign page. Find all products in the <strong>Electronics</strong> category with a <code>price</code> <strong>greater than 50</strong>. You'll need <code>AND</code> to combine both conditions.",
     "hints": [
-      "Use AND between two conditions in the WHERE clause.",
-      "Both conditions must be true for a row to be returned.",
+      "Chain your conditions: WHERE condition1 AND condition2",
       "SELECT * FROM Products WHERE category = 'Electronics' AND price > 50;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 1,
+        "name": "Laptop",
+        "category": "Electronics",
+        "price": 1200,
+        "stock": 20
+      },
+      {
+        "id": 3,
+        "name": "Mechanical Keyboard",
+        "category": "Electronics",
+        "price": 89.99,
+        "stock": 50
+      },
+      {
+        "id": 7,
+        "name": "Bluetooth Speaker",
+        "category": "Electronics",
+        "price": 55,
+        "stock": 200
+      },
+      {
+        "id": 9,
+        "name": "Keyboard",
+        "category": "Electronics",
+        "price": 70,
+        "stock": 100
+      }
     ]
   },
   {
     "id": "L2_P7",
     "level": 2,
+    "type": "code",
     "title": "Shipments in Motion",
-    "story": "Operations needs to see all orders that are either in transit or were cancelled. Find all orders with status <strong>'Shipped'</strong> OR <strong>'Cancelled'</strong>.",
     "requiredConcept": "OR",
-    "expectedOutput": [{"id":104,"customer_id":3,"product_id":5,"order_date":"2023-05-04","status":"Shipped","amount":45},{"id":108,"customer_id":6,"product_id":8,"order_date":"2023-05-08","status":"Cancelled","amount":5},{"id":110,"customer_id":7,"product_id":2,"order_date":"2023-05-10","status":"Shipped","amount":25},{"id":114,"customer_id":4,"product_id":2,"order_date":"2023-05-14","status":"Shipped","amount":25},{"id":118,"customer_id":6,"product_id":6,"order_date":"2023-05-18","status":"Cancelled","amount":35}],
+    "story": "The shipping partner wants a status update. Find all orders with status <strong>'Shipped'</strong> OR <strong>'Cancelled'</strong> — they handle both outbound and return logistics.",
     "hints": [
-      "Use OR to return rows where at least one condition is true.",
-      "Each condition needs its own column reference.",
+      "Chain your conditions: WHERE condition1 OR condition2",
+      "Remember you have to repeat the column name: status = X OR status = Y, not status = X OR Y.",
       "SELECT * FROM Orders WHERE status = 'Shipped' OR status = 'Cancelled';"
+    ],
+    "expectedOutput": [
+      {
+        "id": 104,
+        "customer_id": 3,
+        "product_id": 5,
+        "order_date": "2023-05-04",
+        "status": "Shipped",
+        "amount": 45
+      },
+      {
+        "id": 108,
+        "customer_id": 6,
+        "product_id": 8,
+        "order_date": "2023-05-08",
+        "status": "Cancelled",
+        "amount": 5
+      },
+      {
+        "id": 110,
+        "customer_id": 7,
+        "product_id": 2,
+        "order_date": "2023-05-10",
+        "status": "Shipped",
+        "amount": 25
+      },
+      {
+        "id": 114,
+        "customer_id": 4,
+        "product_id": 2,
+        "order_date": "2023-05-14",
+        "status": "Shipped",
+        "amount": 25
+      },
+      {
+        "id": 118,
+        "customer_id": 6,
+        "product_id": 6,
+        "order_date": "2023-05-18",
+        "status": "Cancelled",
+        "amount": 35
+      }
     ]
   },
   {
     "id": "L2_P8",
     "level": 2,
+    "type": "code",
     "title": "Keyboard Products",
-    "story": "A customer wants to see all keyboard-related products. Use <code>LIKE</code> to find every product whose <code>name</code> contains the word <strong>'Key'</strong>.",
     "requiredConcept": "LIKE",
-    "expectedOutput": [{"id":3,"name":"Mechanical Keyboard","category":"Electronics","price":89.99,"stock":50},{"id":9,"name":"Keyboard","category":"Electronics","price":70,"stock":100}],
+    "story": "A corporate buyer just called: \"Show me everything keyboard-related.\" Use <code>LIKE</code> to find every product whose <code>name</code> contains <strong>'Key'</strong>.",
     "hints": [
-      "LIKE uses % as a wildcard that matches any sequence of characters.",
-      "To find 'Key' anywhere in a string, wrap it with %.",
+      "The LIKE operator uses % as a wildcard. To find a word anywhere in a string, use %word%.",
+      "Use LIKE '%Key%'",
       "SELECT * FROM Products WHERE name LIKE '%Key%';"
+    ],
+    "expectedOutput": [
+      {
+        "id": 3,
+        "name": "Mechanical Keyboard",
+        "category": "Electronics",
+        "price": 89.99,
+        "stock": 50
+      },
+      {
+        "id": 9,
+        "name": "Keyboard",
+        "category": "Electronics",
+        "price": 70,
+        "stock": 100
+      }
     ]
   },
   {
     "id": "L2_P9",
     "level": 2,
+    "type": "code",
     "title": "Bulk Non-Electronics",
-    "story": "Find all products that are <strong>NOT</strong> in the Electronics category and have <code>stock</code> greater than <strong>100</strong>. These are our high-volume non-tech items.",
     "requiredConcept": "AND",
-    "expectedOutput": [{"id":4,"name":"Coffee Mug","category":"Home","price":12.5,"stock":300},{"id":6,"name":"Laptop Stand","category":"Accessories","price":35,"stock":120},{"id":8,"name":"Notebook","category":"Office","price":5,"stock":500}],
+    "story": "The wholesale team focuses on high-volume, non-tech products. Find all products that are <strong>NOT</strong> in the Electronics category <strong>AND</strong> have <code>stock</code> greater than <strong>100</strong>.",
     "hints": [
-      "Use <> or != to negate equality.",
-      "Combine both conditions with AND.",
+      "Use both the <> and AND operators in your WHERE clause.",
       "SELECT * FROM Products WHERE category <> 'Electronics' AND stock > 100;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 4,
+        "name": "Coffee Mug",
+        "category": "Home",
+        "price": 12.5,
+        "stock": 300
+      },
+      {
+        "id": 6,
+        "name": "Laptop Stand",
+        "category": "Accessories",
+        "price": 35,
+        "stock": 120
+      },
+      {
+        "id": 8,
+        "name": "Notebook",
+        "category": "Office",
+        "price": 5,
+        "stock": 500
+      }
+    ]
+  },
+  {
+    "id": "L2_P10",
+    "level": 2,
+    "type": "code",
+    "title": "Ghost Emails",
+    "requiredConcept": "IS NULL",
+    "story": "You're about to send a mass email campaign, and someone warns you: \"Not every customer has an email on file.\" Find all customers whose <code>email</code> is <strong>NULL</strong>.",
+    "pipelineCallout": "Try writing WHERE email = NULL first. It returns zero rows. That's not a bug — NULL isn't a value you can compare with =. NULL means \"unknown.\" Use IS NULL instead. This is one of the most important lessons in SQL.",
+    "hints": [
+      "You cannot use email = NULL. You must use IS NULL.",
+      "SELECT * FROM Customers WHERE email IS NULL;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 10,
+        "first_name": "Alex",
+        "last_name": "Patel",
+        "email": null,
+        "registration_date": "2023-07-01"
+      }
+    ]
+  },
+  {
+    "id": "L2_P11",
+    "level": 2,
+    "type": "code",
+    "title": "Verified Contacts",
+    "requiredConcept": "IS NOT NULL",
+    "story": "Now find the opposite — all customers who <strong>DO</strong> have an email. Use <code>IS NOT NULL</code>. These are the ones safe to include in the campaign.",
+    "hints": [
+      "Filter using WHERE email IS NOT NULL.",
+      "SELECT * FROM Customers WHERE email IS NOT NULL;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 1,
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john@example.com",
+        "registration_date": "2023-01-10"
+      },
+      {
+        "id": 2,
+        "first_name": "Sarah",
+        "last_name": "Smith",
+        "email": "sarah.smith@example.com",
+        "registration_date": "2023-02-20"
+      },
+      {
+        "id": 3,
+        "first_name": "Michael",
+        "last_name": "Johnson",
+        "email": "mjohnson@example.com",
+        "registration_date": "2023-03-05"
+      },
+      {
+        "id": 4,
+        "first_name": "Emily",
+        "last_name": "Davis",
+        "email": "emily.d@example.com",
+        "registration_date": "2023-03-10"
+      },
+      {
+        "id": 5,
+        "first_name": "David",
+        "last_name": "Wilson",
+        "email": "dwilson@example.com",
+        "registration_date": "2023-04-01"
+      },
+      {
+        "id": 6,
+        "first_name": "Jessica",
+        "last_name": "Taylor",
+        "email": "jtaylor@example.com",
+        "registration_date": "2023-04-15"
+      },
+      {
+        "id": 7,
+        "first_name": "Chris",
+        "last_name": "Anderson",
+        "email": "canderson@example.com",
+        "registration_date": "2023-05-01"
+      },
+      {
+        "id": 8,
+        "first_name": "Sophie",
+        "last_name": "Martinez",
+        "email": "smartinez@example.com",
+        "registration_date": "2023-05-15"
+      },
+      {
+        "id": 9,
+        "first_name": "Isabella",
+        "last_name": "Garcia",
+        "email": "igarcia@example.com",
+        "registration_date": "2023-06-01"
+      }
     ]
   },
   {
     "id": "L3_P1",
     "level": 3,
+    "type": "code",
     "title": "Newest Orders",
-    "story": "The CEO wants to see our latest activity. Sort all orders by <code>order_date</code> in descending order (newest first).",
     "requiredConcept": "ORDER BY",
-    "expectedOutput": [{"id":120,"customer_id":8,"product_id":9,"order_date":"2023-05-25","status":"Delivered","amount":70},{"id":119,"customer_id":7,"product_id":3,"order_date":"2023-05-19","status":"Processing","amount":89.99},{"id":118,"customer_id":6,"product_id":6,"order_date":"2023-05-18","status":"Cancelled","amount":35},{"id":117,"customer_id":2,"product_id":1,"order_date":"2023-05-17","status":"Delivered","amount":1200},{"id":116,"customer_id":9,"product_id":7,"order_date":"2023-05-16","status":"Delivered","amount":55},{"id":115,"customer_id":5,"product_id":5,"order_date":"2023-05-15","status":"Delivered","amount":45},{"id":114,"customer_id":4,"product_id":2,"order_date":"2023-05-14","status":"Shipped","amount":25},{"id":113,"customer_id":3,"product_id":3,"order_date":"2023-05-13","status":"Delivered","amount":89.99},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":111,"customer_id":8,"product_id":4,"order_date":"2023-05-11","status":"Delivered","amount":12.5},{"id":110,"customer_id":7,"product_id":2,"order_date":"2023-05-10","status":"Shipped","amount":25},{"id":109,"customer_id":2,"product_id":9,"order_date":"2023-05-09","status":"Delivered","amount":70},{"id":108,"customer_id":6,"product_id":8,"order_date":"2023-05-08","status":"Cancelled","amount":5},{"id":107,"customer_id":1,"product_id":7,"order_date":"2023-05-07","status":"Delivered","amount":55},{"id":106,"customer_id":5,"product_id":6,"order_date":"2023-05-06","status":"Processing","amount":35},{"id":105,"customer_id":4,"product_id":3,"order_date":"2023-05-05","status":"Delivered","amount":89.99},{"id":104,"customer_id":3,"product_id":5,"order_date":"2023-05-04","status":"Shipped","amount":45},{"id":103,"customer_id":2,"product_id":4,"order_date":"2023-05-03","status":"Delivered","amount":12.5},{"id":102,"customer_id":2,"product_id":2,"order_date":"2023-05-02","status":"Processing","amount":45},{"id":101,"customer_id":1,"product_id":1,"order_date":"2023-05-01","status":"Delivered","amount":1200}],
+    "story": "The CEO's Monday morning question: \"What's our latest activity?\" Sort all orders by <code>order_date</code> in <strong>descending</strong> order — newest first.",
+    "pipelineCallout": "ORDER BY just appeared at the bottom of the pipeline. It runs AFTER SELECT. That's why you CAN use column aliases in ORDER BY — the alias already exists by then.",
     "hints": [
-      "Add ORDER BY at the end of your query.",
-      "Use DESC for descending order.",
+      "Add ORDER BY column_name DESC at the end of your query.",
       "SELECT * FROM Orders ORDER BY order_date DESC;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 120,
+        "customer_id": 8,
+        "product_id": 9,
+        "order_date": "2023-05-25",
+        "status": "Delivered",
+        "amount": 70
+      },
+      {
+        "id": 119,
+        "customer_id": 7,
+        "product_id": 3,
+        "order_date": "2023-05-19",
+        "status": "Processing",
+        "amount": 89.99
+      },
+      {
+        "id": 118,
+        "customer_id": 6,
+        "product_id": 6,
+        "order_date": "2023-05-18",
+        "status": "Cancelled",
+        "amount": 35
+      },
+      {
+        "id": 117,
+        "customer_id": 2,
+        "product_id": 1,
+        "order_date": "2023-05-17",
+        "status": "Delivered",
+        "amount": 1200
+      },
+      {
+        "id": 116,
+        "customer_id": 9,
+        "product_id": 7,
+        "order_date": "2023-05-16",
+        "status": "Delivered",
+        "amount": 55
+      },
+      {
+        "id": 115,
+        "customer_id": 5,
+        "product_id": 5,
+        "order_date": "2023-05-15",
+        "status": "Delivered",
+        "amount": 45
+      },
+      {
+        "id": 114,
+        "customer_id": 4,
+        "product_id": 2,
+        "order_date": "2023-05-14",
+        "status": "Shipped",
+        "amount": 25
+      },
+      {
+        "id": 113,
+        "customer_id": 3,
+        "product_id": 3,
+        "order_date": "2023-05-13",
+        "status": "Delivered",
+        "amount": 89.99
+      },
+      {
+        "id": 112,
+        "customer_id": 1,
+        "product_id": 1,
+        "order_date": "2023-05-12",
+        "status": "Processing",
+        "amount": 1200
+      },
+      {
+        "id": 111,
+        "customer_id": 8,
+        "product_id": 4,
+        "order_date": "2023-05-11",
+        "status": "Delivered",
+        "amount": 12.5
+      },
+      {
+        "id": 110,
+        "customer_id": 7,
+        "product_id": 2,
+        "order_date": "2023-05-10",
+        "status": "Shipped",
+        "amount": 25
+      },
+      {
+        "id": 109,
+        "customer_id": 2,
+        "product_id": 9,
+        "order_date": "2023-05-09",
+        "status": "Delivered",
+        "amount": 70
+      },
+      {
+        "id": 108,
+        "customer_id": 6,
+        "product_id": 8,
+        "order_date": "2023-05-08",
+        "status": "Cancelled",
+        "amount": 5
+      },
+      {
+        "id": 107,
+        "customer_id": 1,
+        "product_id": 7,
+        "order_date": "2023-05-07",
+        "status": "Delivered",
+        "amount": 55
+      },
+      {
+        "id": 106,
+        "customer_id": 5,
+        "product_id": 6,
+        "order_date": "2023-05-06",
+        "status": "Processing",
+        "amount": 35
+      },
+      {
+        "id": 105,
+        "customer_id": 4,
+        "product_id": 3,
+        "order_date": "2023-05-05",
+        "status": "Delivered",
+        "amount": 89.99
+      },
+      {
+        "id": 104,
+        "customer_id": 3,
+        "product_id": 5,
+        "order_date": "2023-05-04",
+        "status": "Shipped",
+        "amount": 45
+      },
+      {
+        "id": 103,
+        "customer_id": 2,
+        "product_id": 4,
+        "order_date": "2023-05-03",
+        "status": "Delivered",
+        "amount": 12.5
+      },
+      {
+        "id": 102,
+        "customer_id": 2,
+        "product_id": 2,
+        "order_date": "2023-05-02",
+        "status": "Processing",
+        "amount": 45
+      },
+      {
+        "id": 101,
+        "customer_id": 1,
+        "product_id": 1,
+        "order_date": "2023-05-01",
+        "status": "Delivered",
+        "amount": 1200
+      }
     ]
   },
   {
     "id": "L3_P2",
     "level": 3,
+    "type": "code",
     "title": "Top Expensive Products",
-    "story": "Show me the <strong>Top 3</strong> most expensive products in our catalog. Include only the <code>name</code> and <code>price</code>.",
     "requiredConcept": "LIMIT",
-    "expectedOutput": [{"name":"Laptop","price":1200},{"name":"Mechanical Keyboard","price":89.99},{"name":"Keyboard","price":70}],
+    "story": "The premium product page needs content. Show the <strong>Top 3</strong> most expensive products — include only <code>name</code> and <code>price</code>. You'll need ORDER BY and LIMIT together.",
     "hints": [
-      "Combine ORDER BY price DESC with the LIMIT clause.",
-      "Make sure you select only name and price.",
+      "Sort by price DESC and add LIMIT 3 at the very end.",
       "SELECT name, price FROM Products ORDER BY price DESC LIMIT 3;"
+    ],
+    "expectedOutput": [
+      {
+        "name": "Laptop",
+        "price": 1200
+      },
+      {
+        "name": "Mechanical Keyboard",
+        "price": 89.99
+      },
+      {
+        "name": "Keyboard",
+        "price": 70
+      }
     ]
   },
   {
     "id": "L3_P3",
     "level": 3,
+    "type": "code",
     "title": "Selected Customers",
-    "story": "A special promotion is running for our first three customers. Find all orders placed by <code>customer_id</code> <strong>1, 2, or 3</strong>.",
     "requiredConcept": "IN",
-    "expectedOutput": [{"id":101,"customer_id":1,"product_id":1,"order_date":"2023-05-01","status":"Delivered","amount":1200},{"id":102,"customer_id":2,"product_id":2,"order_date":"2023-05-02","status":"Processing","amount":45},{"id":103,"customer_id":2,"product_id":4,"order_date":"2023-05-03","status":"Delivered","amount":12.5},{"id":104,"customer_id":3,"product_id":5,"order_date":"2023-05-04","status":"Shipped","amount":45},{"id":107,"customer_id":1,"product_id":7,"order_date":"2023-05-07","status":"Delivered","amount":55},{"id":109,"customer_id":2,"product_id":9,"order_date":"2023-05-09","status":"Delivered","amount":70},{"id":112,"customer_id":1,"product_id":1,"order_date":"2023-05-12","status":"Processing","amount":1200},{"id":113,"customer_id":3,"product_id":3,"order_date":"2023-05-13","status":"Delivered","amount":89.99},{"id":117,"customer_id":2,"product_id":1,"order_date":"2023-05-17","status":"Delivered","amount":1200}],
+    "story": "A loyalty promotion targets our earliest customers. Find all orders placed by <code>customer_id</code> <strong>1, 2, or 3</strong>. Use the <code>IN</code> operator — it's cleaner than chaining three OR conditions.",
     "hints": [
-      "Instead of using multiple OR statements, use the IN keyword.",
-      "The syntax is WHERE column IN (val1, val2, ...).",
+      "Use: WHERE customer_id IN (1, 2, 3)",
       "SELECT * FROM Orders WHERE customer_id IN (1, 2, 3);"
+    ],
+    "expectedOutput": [
+      {
+        "id": 101,
+        "customer_id": 1,
+        "product_id": 1,
+        "order_date": "2023-05-01",
+        "status": "Delivered",
+        "amount": 1200
+      },
+      {
+        "id": 102,
+        "customer_id": 2,
+        "product_id": 2,
+        "order_date": "2023-05-02",
+        "status": "Processing",
+        "amount": 45
+      },
+      {
+        "id": 103,
+        "customer_id": 2,
+        "product_id": 4,
+        "order_date": "2023-05-03",
+        "status": "Delivered",
+        "amount": 12.5
+      },
+      {
+        "id": 104,
+        "customer_id": 3,
+        "product_id": 5,
+        "order_date": "2023-05-04",
+        "status": "Shipped",
+        "amount": 45
+      },
+      {
+        "id": 107,
+        "customer_id": 1,
+        "product_id": 7,
+        "order_date": "2023-05-07",
+        "status": "Delivered",
+        "amount": 55
+      },
+      {
+        "id": 109,
+        "customer_id": 2,
+        "product_id": 9,
+        "order_date": "2023-05-09",
+        "status": "Delivered",
+        "amount": 70
+      },
+      {
+        "id": 112,
+        "customer_id": 1,
+        "product_id": 1,
+        "order_date": "2023-05-12",
+        "status": "Processing",
+        "amount": 1200
+      },
+      {
+        "id": 113,
+        "customer_id": 3,
+        "product_id": 3,
+        "order_date": "2023-05-13",
+        "status": "Delivered",
+        "amount": 89.99
+      },
+      {
+        "id": 117,
+        "customer_id": 2,
+        "product_id": 1,
+        "order_date": "2023-05-17",
+        "status": "Delivered",
+        "amount": 1200
+      }
     ]
   },
   {
     "id": "L3_P4",
     "level": 3,
+    "type": "code",
     "title": "Mid Range Products",
-    "story": "Find products with a price <strong>between 50 and 500</strong>.",
     "requiredConcept": "BETWEEN",
-    "expectedOutput": [{"id":3,"name":"Mechanical Keyboard","category":"Electronics","price":89.99,"stock":50},{"id":7,"name":"Bluetooth Speaker","category":"Electronics","price":55,"stock":200},{"id":9,"name":"Keyboard","category":"Electronics","price":70,"stock":100}],
+    "story": "The \"Sweet Spot\" collection features products that aren't too cheap, aren't too expensive. Find products with a price <strong>between 50 and 500</strong>. <code>BETWEEN</code> is inclusive on both ends.",
     "hints": [
-      "The BETWEEN operator is inclusive.",
-      "Syntax is WHERE price BETWEEN 50 AND 500.",
+      "Use: WHERE price BETWEEN 50 AND 500",
       "SELECT * FROM Products WHERE price BETWEEN 50 AND 500;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 3,
+        "name": "Mechanical Keyboard",
+        "category": "Electronics",
+        "price": 89.99,
+        "stock": 50
+      },
+      {
+        "id": 7,
+        "name": "Bluetooth Speaker",
+        "category": "Electronics",
+        "price": 55,
+        "stock": 200
+      },
+      {
+        "id": 9,
+        "name": "Keyboard",
+        "category": "Electronics",
+        "price": 70,
+        "stock": 100
+      }
     ]
   },
   {
     "id": "L3_P5",
     "level": 3,
+    "type": "code",
     "title": "Preview Orders",
-    "story": "Quick check! Return only the <strong>5 most recent</strong> orders.",
     "requiredConcept": "LIMIT",
-    "expectedOutput": [{"id":120,"customer_id":8,"product_id":9,"order_date":"2023-05-25","status":"Delivered","amount":70},{"id":119,"customer_id":7,"product_id":3,"order_date":"2023-05-19","status":"Processing","amount":89.99},{"id":118,"customer_id":6,"product_id":6,"order_date":"2023-05-18","status":"Cancelled","amount":35},{"id":117,"customer_id":2,"product_id":1,"order_date":"2023-05-17","status":"Delivered","amount":1200},{"id":116,"customer_id":9,"product_id":7,"order_date":"2023-05-16","status":"Delivered","amount":55}],
+    "story": "Quick sanity check before a meeting: pull just the <strong>5 most recent</strong> orders. Combine <code>ORDER BY</code> with <code>LIMIT</code>.",
     "hints": [
-      "First sort by date descending.",
-      "Then apply LIMIT 5.",
+      "Sort by order_date descending, then take the top 5.",
       "SELECT * FROM Orders ORDER BY order_date DESC LIMIT 5;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 120,
+        "customer_id": 8,
+        "product_id": 9,
+        "order_date": "2023-05-25",
+        "status": "Delivered",
+        "amount": 70
+      },
+      {
+        "id": 119,
+        "customer_id": 7,
+        "product_id": 3,
+        "order_date": "2023-05-19",
+        "status": "Processing",
+        "amount": 89.99
+      },
+      {
+        "id": 118,
+        "customer_id": 6,
+        "product_id": 6,
+        "order_date": "2023-05-18",
+        "status": "Cancelled",
+        "amount": 35
+      },
+      {
+        "id": 117,
+        "customer_id": 2,
+        "product_id": 1,
+        "order_date": "2023-05-17",
+        "status": "Delivered",
+        "amount": 1200
+      },
+      {
+        "id": 116,
+        "customer_id": 9,
+        "product_id": 7,
+        "order_date": "2023-05-16",
+        "status": "Delivered",
+        "amount": 55
+      }
     ]
   },
   {
     "id": "L3_P6",
     "level": 3,
+    "type": "code",
     "title": "Department Roster",
-    "story": "HR wants employees sorted <strong>alphabetically by department</strong>, then by <strong>salary highest first</strong> within each department. Sort by two columns.",
     "requiredConcept": "ORDER BY",
-    "expectedOutput": [{"id":5,"first_name":"Evan","last_name":"Wright","department":"Engineering","role":"Lead","salary":110000,"hire_date":"2022-08-01"},{"id":2,"first_name":"Bob","last_name":"Thompson","department":"Engineering","role":"Developer","salary":85000,"hire_date":"2022-06-15"},{"id":3,"first_name":"Charlie","last_name":"Davis","department":"Marketing","role":"Specialist","salary":65000,"hire_date":"2020-11-20"},{"id":1,"first_name":"Alice","last_name":"Brown","department":"Sales","role":"Manager","salary":95000,"hire_date":"2021-03-01"},{"id":4,"first_name":"Diana","last_name":"Price","department":"Sales","role":"Representative","salary":55000,"hire_date":"2023-01-10"}],
+    "story": "HR wants a clean org chart export. Sort employees <strong>alphabetically by department</strong> (A→Z), then within each department by <strong>salary highest first</strong> (DESC). This is your first multi-column ORDER BY.",
     "hints": [
-      "You can ORDER BY multiple columns separated by commas.",
-      "The first column is the primary sort, the second is a tiebreaker.",
+      "Separate multiple sorting columns with a comma: ORDER BY col1 ASC, col2 DESC",
       "SELECT * FROM Employees ORDER BY department ASC, salary DESC;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 5,
+        "first_name": "Evan",
+        "last_name": "Wright",
+        "department": "Engineering",
+        "role": "Lead",
+        "salary": 110000,
+        "hire_date": "2022-08-01"
+      },
+      {
+        "id": 2,
+        "first_name": "Bob",
+        "last_name": "Thompson",
+        "department": "Engineering",
+        "role": "Developer",
+        "salary": 85000,
+        "hire_date": "2022-06-15"
+      },
+      {
+        "id": 6,
+        "first_name": "Fiona",
+        "last_name": "Clark",
+        "department": "Engineering",
+        "role": "Developer",
+        "salary": 85000,
+        "hire_date": "2023-03-15"
+      },
+      {
+        "id": 3,
+        "first_name": "Charlie",
+        "last_name": "Davis",
+        "department": "Marketing",
+        "role": "Specialist",
+        "salary": 65000,
+        "hire_date": "2020-11-20"
+      },
+      {
+        "id": 1,
+        "first_name": "Alice",
+        "last_name": "Brown",
+        "department": "Sales",
+        "role": "Manager",
+        "salary": 95000,
+        "hire_date": "2021-03-01"
+      },
+      {
+        "id": 4,
+        "first_name": "Diana",
+        "last_name": "Price",
+        "department": "Sales",
+        "role": "Representative",
+        "salary": 55000,
+        "hire_date": "2023-01-10"
+      }
     ]
   },
   {
     "id": "L3_P7",
     "level": 3,
+    "type": "code",
     "title": "Excluding Early Customers",
-    "story": "For a targeted campaign, exclude orders from the first three customers. Return all orders where <code>customer_id</code> is <strong>NOT IN</strong> (1, 2, 3).",
     "requiredConcept": "NOT IN",
-    "expectedOutput": [{"id":105,"customer_id":4,"product_id":3,"order_date":"2023-05-05","status":"Delivered","amount":89.99},{"id":106,"customer_id":5,"product_id":6,"order_date":"2023-05-06","status":"Processing","amount":35},{"id":108,"customer_id":6,"product_id":8,"order_date":"2023-05-08","status":"Cancelled","amount":5},{"id":110,"customer_id":7,"product_id":2,"order_date":"2023-05-10","status":"Shipped","amount":25},{"id":111,"customer_id":8,"product_id":4,"order_date":"2023-05-11","status":"Delivered","amount":12.5},{"id":114,"customer_id":4,"product_id":2,"order_date":"2023-05-14","status":"Shipped","amount":25},{"id":115,"customer_id":5,"product_id":5,"order_date":"2023-05-15","status":"Delivered","amount":45},{"id":116,"customer_id":9,"product_id":7,"order_date":"2023-05-16","status":"Delivered","amount":55},{"id":118,"customer_id":6,"product_id":6,"order_date":"2023-05-18","status":"Cancelled","amount":35},{"id":119,"customer_id":7,"product_id":3,"order_date":"2023-05-19","status":"Processing","amount":89.99},{"id":120,"customer_id":8,"product_id":9,"order_date":"2023-05-25","status":"Delivered","amount":70}],
+    "story": "For a \"new customer\" campaign, we need to exclude the original three. Return all orders where <code>customer_id</code> is <strong>NOT IN (1, 2, 3)</strong>.",
     "hints": [
-      "NOT IN excludes rows matching any value in the list.",
-      "It's the inverse of IN.",
+      "Similar to the IN operator, just put NOT in front of it.",
       "SELECT * FROM Orders WHERE customer_id NOT IN (1, 2, 3);"
+    ],
+    "expectedOutput": [
+      {
+        "id": 105,
+        "customer_id": 4,
+        "product_id": 3,
+        "order_date": "2023-05-05",
+        "status": "Delivered",
+        "amount": 89.99
+      },
+      {
+        "id": 106,
+        "customer_id": 5,
+        "product_id": 6,
+        "order_date": "2023-05-06",
+        "status": "Processing",
+        "amount": 35
+      },
+      {
+        "id": 108,
+        "customer_id": 6,
+        "product_id": 8,
+        "order_date": "2023-05-08",
+        "status": "Cancelled",
+        "amount": 5
+      },
+      {
+        "id": 110,
+        "customer_id": 7,
+        "product_id": 2,
+        "order_date": "2023-05-10",
+        "status": "Shipped",
+        "amount": 25
+      },
+      {
+        "id": 111,
+        "customer_id": 8,
+        "product_id": 4,
+        "order_date": "2023-05-11",
+        "status": "Delivered",
+        "amount": 12.5
+      },
+      {
+        "id": 114,
+        "customer_id": 4,
+        "product_id": 2,
+        "order_date": "2023-05-14",
+        "status": "Shipped",
+        "amount": 25
+      },
+      {
+        "id": 115,
+        "customer_id": 5,
+        "product_id": 5,
+        "order_date": "2023-05-15",
+        "status": "Delivered",
+        "amount": 45
+      },
+      {
+        "id": 116,
+        "customer_id": 9,
+        "product_id": 7,
+        "order_date": "2023-05-16",
+        "status": "Delivered",
+        "amount": 55
+      },
+      {
+        "id": 118,
+        "customer_id": 6,
+        "product_id": 6,
+        "order_date": "2023-05-18",
+        "status": "Cancelled",
+        "amount": 35
+      },
+      {
+        "id": 119,
+        "customer_id": 7,
+        "product_id": 3,
+        "order_date": "2023-05-19",
+        "status": "Processing",
+        "amount": 89.99
+      },
+      {
+        "id": 120,
+        "customer_id": 8,
+        "product_id": 9,
+        "order_date": "2023-05-25",
+        "status": "Delivered",
+        "amount": 70
+      }
     ]
   },
   {
     "id": "L3_P8",
     "level": 3,
+    "type": "code",
     "title": "Page 2 of Products",
-    "story": "Your product page shows 3 items at a time. Retrieve the <strong>second page</strong> — that's products 4 through 6 ordered by <code>id</code>. Use <code>LIMIT</code> with <code>OFFSET</code>.",
     "requiredConcept": "OFFSET",
-    "expectedOutput": [{"id":4,"name":"Coffee Mug","category":"Home","price":12.5,"stock":300},{"id":5,"name":"Desk Lamp","category":"Home","price":45,"stock":75},{"id":6,"name":"Laptop Stand","category":"Accessories","price":35,"stock":120}],
+    "story": "Your product listing shows 3 items per page. The user clicked \"Next.\" Retrieve the <strong>second page</strong> — that's products 4 through 6, ordered by <code>id</code>. Use <code>LIMIT 3 OFFSET 3</code>.",
+    "pipelineCallout": "LIMIT runs dead last in the pipeline. That means the database processes ALL rows through every step, THEN cuts the window. It's not a performance shortcut — it's a display control.",
     "hints": [
-      "OFFSET skips a number of rows before returning results.",
-      "To skip the first 3 rows: LIMIT 3 OFFSET 3.",
+      "OFFSET skips the first N rows before returning the remaining ones.",
       "SELECT * FROM Products ORDER BY id LIMIT 3 OFFSET 3;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 4,
+        "name": "Coffee Mug",
+        "category": "Home",
+        "price": 12.5,
+        "stock": 300
+      },
+      {
+        "id": 5,
+        "name": "Desk Lamp",
+        "category": "Home",
+        "price": 45,
+        "stock": 75
+      },
+      {
+        "id": 6,
+        "name": "Laptop Stand",
+        "category": "Accessories",
+        "price": 35,
+        "stock": 120
+      }
     ]
   },
   {
     "id": "L4_P1",
     "level": 4,
+    "type": "code",
     "title": "Total Orders",
-    "story": "How many total orders have been placed so far? Use <code>COUNT</code>.",
     "requiredConcept": "COUNT",
-    "expectedOutput": [{"COUNT(*)":20}],
+    "story": "The board meeting is tomorrow. First question they'll ask: \"How many total orders have we received?\" Use <code>COUNT(*)</code>.",
+    "pipelineCallout": "Two new steps just appeared in your pipeline: GROUP BY and HAVING. They sit between WHERE and SELECT. This is the key to understanding why HAVING exists — it filters AFTER grouping.",
     "hints": [
-      "Use the COUNT(*) function.",
-      "Select this from the Orders table.",
+      "Just select COUNT(*) from the table.",
       "SELECT COUNT(*) FROM Orders;"
+    ],
+    "expectedOutput": [
+      {
+        "COUNT(*)": 20
+      }
     ]
   },
   {
     "id": "L4_P2",
     "level": 4,
+    "type": "code",
     "title": "Total Revenue",
-    "story": "Calculate the <code>SUM</code> of all order amounts.",
     "requiredConcept": "SUM",
-    "expectedOutput": [{"SUM(amount)":4429.97}],
+    "story": "Next board question: \"What's our total revenue?\" Calculate the <code>SUM</code> of all order amounts.",
     "hints": [
-      "Use the SUM() function and pass 'amount' as the argument.",
-      "SELECT SUM(amount) FROM Orders;",
-      "Remember that numbers might look different depending on seed data."
+      "Pass the amount column to the SUM function.",
+      "SELECT SUM(amount) FROM Orders;"
+    ],
+    "expectedOutput": [
+      {
+        "SUM(amount)": 4404.97
+      }
     ]
   },
   {
     "id": "L4_P3",
     "level": 4,
+    "type": "code",
     "title": "Average Product Price",
-    "story": "What is the average price of all the products we sell?",
     "requiredConcept": "AVG",
-    "expectedOutput": [{"AVG(price)":166.3877777777778}],
+    "story": "The pricing team is benchmarking: \"What's the average price across our entire catalog?\" Use <code>AVG</code>.",
     "hints": [
-      "Use the AVG() function on the price column in the Products table.",
-      "SELECT AVG(price) FROM Products;",
-      "SQLite does not automatically round results unless you ask it to."
+      "Pass the price column to the AVG function.",
+      "SELECT AVG(price) FROM Products;"
+    ],
+    "expectedOutput": [
+      {
+        "AVG(price)": 157.748
+      }
     ]
   },
   {
     "id": "L4_P4",
     "level": 4,
-    "title": "Orders Per Customer",
-    "story": "Count how many orders each customer has placed. Show <code>customer_id</code> and the count.",
-    "requiredConcept": "GROUP BY",
-    "expectedOutput": [{"customer_id":1,"COUNT(*)":3},{"customer_id":2,"COUNT(*)":4},{"customer_id":3,"COUNT(*)":2},{"customer_id":4,"COUNT(*)":2},{"customer_id":5,"COUNT(*)":2},{"customer_id":6,"COUNT(*)":2},{"customer_id":7,"COUNT(*)":2},{"customer_id":8,"COUNT(*)":2},{"customer_id":9,"COUNT(*)":1}],
+    "type": "code",
+    "title": "Price Extremes",
+    "requiredConcept": "MAX",
+    "story": "One slide, two numbers: what's the <strong>cheapest</strong> and <strong>most expensive</strong> product? Return both using <code>MIN</code> and <code>MAX</code> in a single query.",
     "hints": [
-      "You need to use GROUP BY at the end of the query.",
-      "Group specifically by customer_id.",
-      "SELECT customer_id, COUNT(*) FROM Orders GROUP BY customer_id;"
+      "You can use multiple aggregate functions in the same SELECT statement.",
+      "SELECT MIN(price), MAX(price) FROM Products;"
+    ],
+    "expectedOutput": [
+      {
+        "MIN(price)": 5,
+        "MAX(price)": 1200
+      }
     ]
   },
   {
     "id": "L4_P5",
     "level": 4,
-    "title": "High Value Customers",
-    "story": "Find <code>customer_id</code>s of people who have placed <strong>more than 1 order</strong>. Use <code>HAVING</code>.",
-    "requiredConcept": "HAVING",
-    "expectedOutput": [{"customer_id":1},{"customer_id":2},{"customer_id":3},{"customer_id":4},{"customer_id":5},{"customer_id":6},{"customer_id":7},{"customer_id":8}],
+    "type": "code",
+    "title": "Orders Per Customer",
+    "requiredConcept": "GROUP BY",
+    "story": "Customer success wants to see engagement levels. Count how many orders <strong>each customer</strong> has placed. Show <code>customer_id</code> and the count. This is your first <code>GROUP BY</code>.",
     "hints": [
-      "HAVING is used to filter groups whereas WHERE filters rows.",
-      "Use GROUP BY customer_id first, then HAVING COUNT(*) > 1.",
-      "SELECT customer_id FROM Orders GROUP BY customer_id HAVING COUNT(*) > 1;"
+      "When using GROUP BY, whatever you group by should also be in your SELECT list.",
+      "SELECT customer_id, COUNT(*) FROM Orders GROUP BY customer_id;"
+    ],
+    "expectedOutput": [
+      {
+        "customer_id": 1,
+        "order_count": 3
+      },
+      {
+        "customer_id": 2,
+        "order_count": 4
+      },
+      {
+        "customer_id": 3,
+        "order_count": 2
+      },
+      {
+        "customer_id": 4,
+        "order_count": 2
+      },
+      {
+        "customer_id": 5,
+        "order_count": 2
+      },
+      {
+        "customer_id": 6,
+        "order_count": 2
+      },
+      {
+        "customer_id": 7,
+        "order_count": 2
+      },
+      {
+        "customer_id": 8,
+        "order_count": 2
+      },
+      {
+        "customer_id": 9,
+        "order_count": 1
+      }
     ]
   },
   {
     "id": "L4_P6",
     "level": 4,
-    "title": "Price Extremes",
-    "story": "What is the <strong>cheapest</strong> and <strong>most expensive</strong> product in our catalog? Return both values in a single query using <code>MIN</code> and <code>MAX</code>.",
-    "requiredConcept": "MIN",
-    "expectedOutput": [{"MIN(price)":5,"MAX(price)":1200}],
+    "type": "code",
+    "title": "Revenue by Product",
+    "requiredConcept": "GROUP BY",
+    "story": "Which products generate the most money? Show each <code>product_id</code> and its total revenue (<code>SUM(amount)</code>), sorted <strong>highest first</strong>. GROUP BY + SUM + ORDER BY in one query.",
     "hints": [
-      "MIN() and MAX() work just like SUM() and AVG().",
-      "You can use multiple aggregate functions in one SELECT.",
-      "SELECT MIN(price), MAX(price) FROM Products;"
+      "Remember the pipeline order. GROUP BY comes before ORDER BY.",
+      "SELECT product_id, SUM(amount) AS total_revenue FROM Orders GROUP BY product_id ORDER BY total_revenue DESC;"
+    ],
+    "expectedOutput": [
+      {
+        "product_id": 1,
+        "total_revenue": 3600
+      },
+      {
+        "product_id": 3,
+        "total_revenue": 269.96999999999997
+      },
+      {
+        "product_id": 9,
+        "total_revenue": 140
+      },
+      {
+        "product_id": 7,
+        "total_revenue": 110
+      },
+      {
+        "product_id": 2,
+        "total_revenue": 95
+      },
+      {
+        "product_id": 5,
+        "total_revenue": 90
+      },
+      {
+        "product_id": 6,
+        "total_revenue": 70
+      },
+      {
+        "product_id": 4,
+        "total_revenue": 25
+      },
+      {
+        "product_id": 8,
+        "total_revenue": 5
+      }
     ]
   },
   {
     "id": "L4_P7",
     "level": 4,
+    "type": "code",
     "title": "Unique Products Sold",
-    "story": "How many <strong>distinct products</strong> have ever been ordered? A product ordered multiple times should only count once. Use <code>COUNT(DISTINCT ...)</code>.",
-    "requiredConcept": "DISTINCT",
-    "expectedOutput": [{"unique_products":9}],
+    "requiredConcept": "COUNT",
+    "story": "\"How many distinct products have actually been ordered?\" A product ordered five times should count once. Use <code>COUNT(DISTINCT product_id)</code>.",
     "hints": [
-      "Combine COUNT and DISTINCT inside the same function call.",
-      "Syntax: COUNT(DISTINCT column_name).",
-      "SELECT COUNT(DISTINCT product_id) AS unique_products FROM Orders;"
+      "Use COUNT(DISTINCT column_name) to only count unique values.",
+      "SELECT COUNT(DISTINCT product_id) FROM Orders;"
+    ],
+    "expectedOutput": [
+      {
+        "unique_products": 9
+      }
     ]
   },
   {
     "id": "L4_P8",
     "level": 4,
-    "title": "Revenue by Product",
-    "story": "Which products generate the most revenue? Show each <code>product_id</code> and its total revenue, sorted highest first.",
-    "requiredConcept": "GROUP BY",
-    "expectedOutput": [{"product_id":1,"total_revenue":3600},{"product_id":3,"total_revenue":269.97},{"product_id":9,"total_revenue":140},{"product_id":7,"total_revenue":110},{"product_id":2,"total_revenue":95},{"product_id":5,"total_revenue":90},{"product_id":6,"total_revenue":70},{"product_id":4,"total_revenue":25},{"product_id":8,"total_revenue":5}],
+    "type": "code",
+    "title": "High Value Customers",
+    "requiredConcept": "HAVING",
+    "story": "Find customers who have placed <strong>more than 1 order</strong>. You can't use WHERE here — you need to filter on the result of COUNT, which means filtering a <em>group</em>, not a <em>row</em>. That's what <code>HAVING</code> is for.",
+    "pipelineCallout": "This is the moment the pipeline pays for itself. Look at the sidebar: WHERE is at Step 2 (filters rows). HAVING is at Step 4 (filters groups). They're NOT interchangeable.",
     "hints": [
-      "GROUP BY product_id, then SUM the amount column.",
-      "Use an alias for the sum: SUM(amount) AS total_revenue.",
-      "SELECT product_id, SUM(amount) AS total_revenue FROM Orders GROUP BY product_id ORDER BY total_revenue DESC;"
+      "HAVING comes right after your GROUP BY clause.",
+      "SELECT customer_id FROM Orders GROUP BY customer_id HAVING COUNT(*) > 1;"
+    ],
+    "expectedOutput": [
+      {
+        "customer_id": 1
+      },
+      {
+        "customer_id": 2
+      },
+      {
+        "customer_id": 3
+      },
+      {
+        "customer_id": 4
+      },
+      {
+        "customer_id": 5
+      },
+      {
+        "customer_id": 6
+      },
+      {
+        "customer_id": 7
+      },
+      {
+        "customer_id": 8
+      }
     ]
+  },
+  {
+    "id": "L4_P9",
+    "level": 4,
+    "type": "code",
+    "title": "The NULL Trap",
+    "requiredConcept": "COUNT",
+    "story": "Here's a sneaky one. Run two queries on the <code>Customers</code> table at once by returning two columns. The first column is <code>COUNT(*)</code>. The second column is <code>COUNT(email)</code>. Look at the result. Do they return the same number? If not — <strong>why?</strong>",
+    "hints": [
+      "Just select both COUNT aggregates as separate columns.",
+      "Because Alex Patel has a NULL email, COUNT(email) ignores that row, but COUNT(*) counts it.",
+      "SELECT COUNT(*), COUNT(email) FROM Customers;"
+    ],
+    "expectedOutput": [
+      {
+        "total_rows": 10,
+        "emails_present": 9
+      }
+    ]
+  },
+  {
+    "id": "L4_P10",
+    "level": 4,
+    "type": "arrange_pipeline",
+    "title": "Pipeline Check: Aggregates",
+    "requiredConcept": "",
+    "story": "<strong>This is not a coding problem.</strong> You'll see a query and arrange its execution steps in the correct order. Drag the steps into the order the database actually runs them.",
+    "query": "SELECT category, AVG(price) AS avg_price\nFROM Products\nWHERE stock > 0\nGROUP BY category\nHAVING AVG(price) > 100\nORDER BY avg_price DESC\nLIMIT 3",
+    "scrambled": [
+      "LIMIT 3",
+      "SELECT category, AVG(price)",
+      "GROUP BY category",
+      "ORDER BY avg_price DESC",
+      "HAVING AVG(price) > 100",
+      "FROM Products",
+      "WHERE stock > 0"
+    ],
+    "correct": [
+      "FROM Products",
+      "WHERE stock > 0",
+      "GROUP BY category",
+      "HAVING AVG(price) > 100",
+      "SELECT category, AVG(price)",
+      "ORDER BY avg_price DESC",
+      "LIMIT 3"
+    ],
+    "debrief": "WHERE filters rows (stock > 0) before grouping. HAVING filters groups (avg_price > 100) after grouping. ORDER BY uses the alias avg_price — it works because SELECT already created it."
   },
   {
     "id": "L5_P1",
     "level": 5,
+    "type": "code",
     "title": "Customer Orders",
-    "story": "We need the customer names for each order. <code>JOIN</code> the <strong>Customers</strong> and <strong>Orders</strong> tables. Show order <code>id</code> and customer <code>first_name</code>.",
     "requiredConcept": "JOIN",
-    "expectedOutput": [{"id":101,"first_name":"John"},{"id":102,"first_name":"Sarah"},{"id":103,"first_name":"Sarah"},{"id":104,"first_name":"Michael"},{"id":105,"first_name":"Emily"},{"id":106,"first_name":"David"},{"id":107,"first_name":"John"},{"id":108,"first_name":"Jessica"},{"id":109,"first_name":"Sarah"},{"id":110,"first_name":"Chris"},{"id":111,"first_name":"Sophie"},{"id":112,"first_name":"John"},{"id":113,"first_name":"Michael"},{"id":114,"first_name":"Emily"},{"id":115,"first_name":"David"},{"id":116,"first_name":"Isabella"},{"id":117,"first_name":"Sarah"},{"id":118,"first_name":"Jessica"},{"id":119,"first_name":"Chris"},{"id":120,"first_name":"Sophie"}],
+    "story": "So far you've only queried one table at a time. Real analysis connects tables. <strong>JOIN</strong> the <code>Customers</code> and <code>Orders</code> tables to show each order's <code>id</code> alongside the customer's <code>first_name</code>.",
+    "pipelineCallout": "Look at the pipeline — FROM just became \"FROM / JOIN\". The JOIN happens as part of building the source table. By the time WHERE runs, the two tables are already merged.",
     "hints": [
-      "Join on the common column: customer_id in Orders and id in Customers.",
-      "Use INNER JOIN or just JOIN.",
+      "Use the ON keyword to specify how the tables link: Orders.customer_id = Customers.id",
       "SELECT Orders.id, Customers.first_name FROM Orders JOIN Customers ON Orders.customer_id = Customers.id;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 101,
+        "first_name": "John"
+      },
+      {
+        "id": 102,
+        "first_name": "Sarah"
+      },
+      {
+        "id": 103,
+        "first_name": "Sarah"
+      },
+      {
+        "id": 104,
+        "first_name": "Michael"
+      },
+      {
+        "id": 105,
+        "first_name": "Emily"
+      },
+      {
+        "id": 106,
+        "first_name": "David"
+      },
+      {
+        "id": 107,
+        "first_name": "John"
+      },
+      {
+        "id": 108,
+        "first_name": "Jessica"
+      },
+      {
+        "id": 109,
+        "first_name": "Sarah"
+      },
+      {
+        "id": 110,
+        "first_name": "Chris"
+      },
+      {
+        "id": 111,
+        "first_name": "Sophie"
+      },
+      {
+        "id": 112,
+        "first_name": "John"
+      },
+      {
+        "id": 113,
+        "first_name": "Michael"
+      },
+      {
+        "id": 114,
+        "first_name": "Emily"
+      },
+      {
+        "id": 115,
+        "first_name": "David"
+      },
+      {
+        "id": 116,
+        "first_name": "Isabella"
+      },
+      {
+        "id": 117,
+        "first_name": "Sarah"
+      },
+      {
+        "id": 118,
+        "first_name": "Jessica"
+      },
+      {
+        "id": 119,
+        "first_name": "Chris"
+      },
+      {
+        "id": 120,
+        "first_name": "Sophie"
+      }
     ]
   },
   {
     "id": "L5_P2",
     "level": 5,
+    "type": "code",
     "title": "Order Product Names",
-    "story": "Which product was purchased in each order? JOIN <strong>Orders</strong> and <strong>Products</strong> to show order <code>id</code> and product <code>name</code>.",
     "requiredConcept": "JOIN",
-    "expectedOutput": [{"id":101,"name":"Laptop"},{"id":102,"name":"Wireless Mouse"},{"id":103,"name":"Coffee Mug"},{"id":104,"name":"Desk Lamp"},{"id":105,"name":"Mechanical Keyboard"},{"id":106,"name":"Laptop Stand"},{"id":107,"name":"Bluetooth Speaker"},{"id":108,"name":"Notebook"},{"id":109,"name":"Keyboard"},{"id":110,"name":"Wireless Mouse"},{"id":111,"name":"Coffee Mug"},{"id":112,"name":"Laptop"},{"id":113,"name":"Mechanical Keyboard"},{"id":114,"name":"Wireless Mouse"},{"id":115,"name":"Desk Lamp"},{"id":116,"name":"Bluetooth Speaker"},{"id":117,"name":"Laptop"},{"id":118,"name":"Laptop Stand"},{"id":119,"name":"Mechanical Keyboard"},{"id":120,"name":"Keyboard"}],
+    "story": "Which product was in each order? JOIN <code>Orders</code> and <code>Products</code> to show order <code>id</code> and product <code>name</code>.",
     "hints": [
-      "Join on product_id in Orders and id in Products.",
-      "Orders is your main table.",
+      "Link them using Orders.product_id and Products.id.",
       "SELECT Orders.id, Products.name FROM Orders JOIN Products ON Orders.product_id = Products.id;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 101,
+        "name": "Laptop"
+      },
+      {
+        "id": 102,
+        "name": "Wireless Mouse"
+      },
+      {
+        "id": 103,
+        "name": "Coffee Mug"
+      },
+      {
+        "id": 104,
+        "name": "Desk Lamp"
+      },
+      {
+        "id": 105,
+        "name": "Mechanical Keyboard"
+      },
+      {
+        "id": 106,
+        "name": "Laptop Stand"
+      },
+      {
+        "id": 107,
+        "name": "Bluetooth Speaker"
+      },
+      {
+        "id": 108,
+        "name": "Notebook"
+      },
+      {
+        "id": 109,
+        "name": "Keyboard"
+      },
+      {
+        "id": 110,
+        "name": "Wireless Mouse"
+      },
+      {
+        "id": 111,
+        "name": "Coffee Mug"
+      },
+      {
+        "id": 112,
+        "name": "Laptop"
+      },
+      {
+        "id": 113,
+        "name": "Mechanical Keyboard"
+      },
+      {
+        "id": 114,
+        "name": "Wireless Mouse"
+      },
+      {
+        "id": 115,
+        "name": "Desk Lamp"
+      },
+      {
+        "id": 116,
+        "name": "Bluetooth Speaker"
+      },
+      {
+        "id": 117,
+        "name": "Laptop"
+      },
+      {
+        "id": 118,
+        "name": "Laptop Stand"
+      },
+      {
+        "id": 119,
+        "name": "Mechanical Keyboard"
+      },
+      {
+        "id": 120,
+        "name": "Keyboard"
+      }
     ]
   },
   {
     "id": "L5_P3",
     "level": 5,
+    "type": "code",
     "title": "Order Details Dashboard",
-    "story": "The dashboard needs a detailed view. Show <code>first_name</code> (from Customers), product <code>name</code>, and order <code>amount</code>.",
     "requiredConcept": "JOIN",
-    "expectedOutput": [{"first_name":"John","name":"Laptop","amount":1200},{"first_name":"Sarah","name":"Wireless Mouse","amount":45},{"first_name":"Sarah","name":"Coffee Mug","amount":12.5},{"first_name":"Michael","name":"Desk Lamp","amount":45},{"first_name":"Emily","name":"Mechanical Keyboard","amount":89.99},{"first_name":"David","name":"Laptop Stand","amount":35},{"first_name":"John","name":"Bluetooth Speaker","amount":55},{"first_name":"Jessica","name":"Notebook","amount":5},{"first_name":"Sarah","name":"Keyboard","amount":70},{"first_name":"Chris","name":"Wireless Mouse","amount":25},{"first_name":"Sophie","name":"Coffee Mug","amount":12.5},{"first_name":"John","name":"Laptop","amount":1200},{"first_name":"Michael","name":"Mechanical Keyboard","amount":89.99},{"first_name":"Emily","name":"Wireless Mouse","amount":25},{"first_name":"David","name":"Desk Lamp","amount":45},{"first_name":"Isabella","name":"Bluetooth Speaker","amount":55},{"first_name":"Sarah","name":"Laptop","amount":1200},{"first_name":"Jessica","name":"Laptop Stand","amount":35},{"first_name":"Chris","name":"Mechanical Keyboard","amount":89.99},{"first_name":"Sophie","name":"Keyboard","amount":70}],
+    "story": "The operations dashboard needs the full picture. Show <code>first_name</code> (from Customers), product <code>name</code> (from Products), and order <code>amount</code> — all in one query. This requires joining <strong>three tables</strong>: Customers → Orders → Products.",
     "hints": [
-      "You need to chain two JOIN statements.",
-      "JOIN Customers ON ... JOIN Products ON ...",
+      "You can chain JOINs: FROM A JOIN B ON ... JOIN C ON ...",
       "SELECT Customers.first_name, Products.name, Orders.amount FROM Orders JOIN Customers ON Orders.customer_id = Customers.id JOIN Products ON Orders.product_id = Products.id;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "name": "Laptop",
+        "amount": 1200
+      },
+      {
+        "first_name": "Sarah",
+        "name": "Wireless Mouse",
+        "amount": 45
+      },
+      {
+        "first_name": "Sarah",
+        "name": "Coffee Mug",
+        "amount": 12.5
+      },
+      {
+        "first_name": "Michael",
+        "name": "Desk Lamp",
+        "amount": 45
+      },
+      {
+        "first_name": "Emily",
+        "name": "Mechanical Keyboard",
+        "amount": 89.99
+      },
+      {
+        "first_name": "David",
+        "name": "Laptop Stand",
+        "amount": 35
+      },
+      {
+        "first_name": "John",
+        "name": "Bluetooth Speaker",
+        "amount": 55
+      },
+      {
+        "first_name": "Jessica",
+        "name": "Notebook",
+        "amount": 5
+      },
+      {
+        "first_name": "Sarah",
+        "name": "Keyboard",
+        "amount": 70
+      },
+      {
+        "first_name": "Chris",
+        "name": "Wireless Mouse",
+        "amount": 25
+      },
+      {
+        "first_name": "Sophie",
+        "name": "Coffee Mug",
+        "amount": 12.5
+      },
+      {
+        "first_name": "John",
+        "name": "Laptop",
+        "amount": 1200
+      },
+      {
+        "first_name": "Michael",
+        "name": "Mechanical Keyboard",
+        "amount": 89.99
+      },
+      {
+        "first_name": "Emily",
+        "name": "Wireless Mouse",
+        "amount": 25
+      },
+      {
+        "first_name": "David",
+        "name": "Desk Lamp",
+        "amount": 45
+      },
+      {
+        "first_name": "Isabella",
+        "name": "Bluetooth Speaker",
+        "amount": 55
+      },
+      {
+        "first_name": "Sarah",
+        "name": "Laptop",
+        "amount": 1200
+      },
+      {
+        "first_name": "Jessica",
+        "name": "Laptop Stand",
+        "amount": 35
+      },
+      {
+        "first_name": "Chris",
+        "name": "Mechanical Keyboard",
+        "amount": 89.99
+      },
+      {
+        "first_name": "Sophie",
+        "name": "Keyboard",
+        "amount": 70
+      }
     ]
   },
   {
     "id": "L5_P4",
     "level": 5,
+    "type": "code",
     "title": "Customer Purchase History",
-    "story": "Show a history of what each customer has bought. Select <code>first_name</code> and product <code>name</code>.",
     "requiredConcept": "JOIN",
-    "expectedOutput": [{"first_name":"John","name":"Laptop"},{"first_name":"Sarah","name":"Wireless Mouse"},{"first_name":"Sarah","name":"Coffee Mug"},{"first_name":"Michael","name":"Desk Lamp"},{"first_name":"Emily","name":"Mechanical Keyboard"},{"first_name":"David","name":"Laptop Stand"},{"first_name":"John","name":"Bluetooth Speaker"},{"first_name":"Jessica","name":"Notebook"},{"first_name":"Sarah","name":"Keyboard"},{"first_name":"Chris","name":"Wireless Mouse"},{"first_name":"Sophie","name":"Coffee Mug"},{"first_name":"John","name":"Laptop"},{"first_name":"Michael","name":"Mechanical Keyboard"},{"first_name":"Emily","name":"Wireless Mouse"},{"first_name":"David","name":"Desk Lamp"},{"first_name":"Isabella","name":"Bluetooth Speaker"},{"first_name":"Sarah","name":"Laptop"},{"first_name":"Jessica","name":"Laptop Stand"},{"first_name":"Chris","name":"Mechanical Keyboard"},{"first_name":"Sophie","name":"Keyboard"}],
+    "story": "Build a clean purchase history: show <code>first_name</code> and product <code>name</code> for every order. Similar to the dashboard, but focused on the customer-to-product relationship.",
     "hints": [
-      "Similar to the previous query, but only select two columns.",
-      "Chain JOINs on the Orders table.",
+      "Join Orders, Customers, and Products just like the previous query, but select different columns.",
       "SELECT Customers.first_name, Products.name FROM Orders JOIN Customers ON Orders.customer_id = Customers.id JOIN Products ON Orders.product_id = Products.id;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "name": "Laptop"
+      },
+      {
+        "first_name": "Sarah",
+        "name": "Wireless Mouse"
+      },
+      {
+        "first_name": "Sarah",
+        "name": "Coffee Mug"
+      },
+      {
+        "first_name": "Michael",
+        "name": "Desk Lamp"
+      },
+      {
+        "first_name": "Emily",
+        "name": "Mechanical Keyboard"
+      },
+      {
+        "first_name": "David",
+        "name": "Laptop Stand"
+      },
+      {
+        "first_name": "John",
+        "name": "Bluetooth Speaker"
+      },
+      {
+        "first_name": "Jessica",
+        "name": "Notebook"
+      },
+      {
+        "first_name": "Sarah",
+        "name": "Keyboard"
+      },
+      {
+        "first_name": "Chris",
+        "name": "Wireless Mouse"
+      },
+      {
+        "first_name": "Sophie",
+        "name": "Coffee Mug"
+      },
+      {
+        "first_name": "John",
+        "name": "Laptop"
+      },
+      {
+        "first_name": "Michael",
+        "name": "Mechanical Keyboard"
+      },
+      {
+        "first_name": "Emily",
+        "name": "Wireless Mouse"
+      },
+      {
+        "first_name": "David",
+        "name": "Desk Lamp"
+      },
+      {
+        "first_name": "Isabella",
+        "name": "Bluetooth Speaker"
+      },
+      {
+        "first_name": "Sarah",
+        "name": "Laptop"
+      },
+      {
+        "first_name": "Jessica",
+        "name": "Laptop Stand"
+      },
+      {
+        "first_name": "Chris",
+        "name": "Mechanical Keyboard"
+      },
+      {
+        "first_name": "Sophie",
+        "name": "Keyboard"
+      }
     ]
   },
   {
     "id": "L5_P5",
     "level": 5,
+    "type": "code",
     "title": "Potential Customers",
-    "story": "We might have users who registered but never placed an order. Find the <code>first_name</code> of customers who have no entries in the <code>Orders</code> table.",
     "requiredConcept": "LEFT JOIN",
-    "expectedOutput": [],
+    "story": "This is the most important JOIN problem in the entire curriculum. Some customers registered but never bought anything. Find their <code>first_name</code>. Use a <code>LEFT JOIN</code> between Customers and Orders, then filter for rows where the order side is <strong>NULL</strong>.",
     "hints": [
-      "Use a LEFT JOIN from Customers to Orders.",
-      "Then filter for where the order ID is NULL.",
+      "LEFT JOIN keeps all rows from the left table. Then use WHERE Orders.id IS NULL to find the orphans.",
       "SELECT Customers.first_name FROM Customers LEFT JOIN Orders ON Customers.id = Orders.customer_id WHERE Orders.id IS NULL;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "Alex"
+      }
     ]
   },
   {
     "id": "L5_P6",
     "level": 5,
+    "type": "code",
     "title": "Delivered Order Report",
-    "story": "Finance needs a report of all <strong>Delivered</strong> orders with customer names. JOIN <code>Orders</code> and <code>Customers</code>, filter for Delivered status, and show <code>first_name</code>, <code>last_name</code>, <code>amount</code>, and <code>order_date</code> sorted by date.",
-    "requiredConcept": "JOIN",
-    "expectedOutput": [{"first_name":"John","last_name":"Doe","amount":1200,"order_date":"2023-05-01"},{"first_name":"Sarah","last_name":"Smith","amount":12.5,"order_date":"2023-05-03"},{"first_name":"Emily","last_name":"Davis","amount":89.99,"order_date":"2023-05-05"},{"first_name":"John","last_name":"Doe","amount":55,"order_date":"2023-05-07"},{"first_name":"Sarah","last_name":"Smith","amount":70,"order_date":"2023-05-09"},{"first_name":"Sophie","last_name":"Martinez","amount":12.5,"order_date":"2023-05-11"},{"first_name":"Michael","last_name":"Johnson","amount":89.99,"order_date":"2023-05-13"},{"first_name":"David","last_name":"Wilson","amount":45,"order_date":"2023-05-15"},{"first_name":"Isabella","last_name":"Garcia","amount":55,"order_date":"2023-05-16"},{"first_name":"Sarah","last_name":"Smith","amount":1200,"order_date":"2023-05-17"},{"first_name":"Sophie","last_name":"Martinez","amount":70,"order_date":"2023-05-25"}],
+    "requiredConcept": "WHERE",
+    "story": "Finance needs a report. Show all <strong>Delivered</strong> orders with the customer's <code>first_name</code>, <code>last_name</code>, <code>amount</code>, and <code>order_date</code>. JOIN <code>Orders</code> and <code>Customers</code>, filter with WHERE, sort by date.",
     "hints": [
-      "JOIN Orders and Customers, then add a WHERE clause for the status.",
-      "You can use WHERE and JOIN together — WHERE goes after all JOINs.",
+      "Start with your JOIN, then add a WHERE clause, and finally ORDER BY.",
       "SELECT Customers.first_name, Customers.last_name, Orders.amount, Orders.order_date FROM Orders JOIN Customers ON Orders.customer_id = Customers.id WHERE Orders.status = 'Delivered' ORDER BY Orders.order_date;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "last_name": "Doe",
+        "amount": 1200,
+        "order_date": "2023-05-01"
+      },
+      {
+        "first_name": "Sarah",
+        "last_name": "Smith",
+        "amount": 12.5,
+        "order_date": "2023-05-03"
+      },
+      {
+        "first_name": "Emily",
+        "last_name": "Davis",
+        "amount": 89.99,
+        "order_date": "2023-05-05"
+      },
+      {
+        "first_name": "John",
+        "last_name": "Doe",
+        "amount": 55,
+        "order_date": "2023-05-07"
+      },
+      {
+        "first_name": "Sarah",
+        "last_name": "Smith",
+        "amount": 70,
+        "order_date": "2023-05-09"
+      },
+      {
+        "first_name": "Sophie",
+        "last_name": "Martinez",
+        "amount": 12.5,
+        "order_date": "2023-05-11"
+      },
+      {
+        "first_name": "Michael",
+        "last_name": "Johnson",
+        "amount": 89.99,
+        "order_date": "2023-05-13"
+      },
+      {
+        "first_name": "David",
+        "last_name": "Wilson",
+        "amount": 45,
+        "order_date": "2023-05-15"
+      },
+      {
+        "first_name": "Isabella",
+        "last_name": "Garcia",
+        "amount": 55,
+        "order_date": "2023-05-16"
+      },
+      {
+        "first_name": "Sarah",
+        "last_name": "Smith",
+        "amount": 1200,
+        "order_date": "2023-05-17"
+      },
+      {
+        "first_name": "Sophie",
+        "last_name": "Martinez",
+        "amount": 70,
+        "order_date": "2023-05-25"
+      }
     ]
   },
   {
     "id": "L5_P7",
     "level": 5,
+    "type": "code",
     "title": "Revenue by Category",
-    "story": "Which product category drives the most revenue? JOIN <code>Orders</code> and <code>Products</code>, then group by <code>category</code> to show the order count and total revenue per category. Sort by revenue descending.",
     "requiredConcept": "GROUP BY",
-    "expectedOutput": [{"category":"Electronics","num_orders":13,"category_revenue":4214.97},{"category":"Home","num_orders":4,"category_revenue":115},{"category":"Accessories","num_orders":2,"category_revenue":70},{"category":"Office","num_orders":1,"category_revenue":5}],
+    "story": "Which product category drives the most revenue? JOIN <code>Orders</code> and <code>Products</code>, then GROUP BY <code>category</code>. Show the order count (as <code>num_orders</code>) and total revenue per category (as <code>category_revenue</code>), sorted by revenue descending.",
     "hints": [
-      "JOIN Orders and Products on product_id, then GROUP BY Products.category.",
-      "Use COUNT(Orders.id) and SUM(Orders.amount) for the aggregates.",
+      "Combine joining tables with aggregate functions and grouping.",
       "SELECT Products.category, COUNT(Orders.id) AS num_orders, SUM(Orders.amount) AS category_revenue FROM Orders JOIN Products ON Orders.product_id = Products.id GROUP BY Products.category ORDER BY category_revenue DESC;"
+    ],
+    "expectedOutput": [
+      {
+        "category": "Electronics",
+        "num_orders": 13,
+        "category_revenue": 4214.97
+      },
+      {
+        "category": "Home",
+        "num_orders": 4,
+        "category_revenue": 115
+      },
+      {
+        "category": "Accessories",
+        "num_orders": 2,
+        "category_revenue": 70
+      },
+      {
+        "category": "Office",
+        "num_orders": 1,
+        "category_revenue": 5
+      }
     ]
   },
   {
     "id": "L5_P8",
     "level": 5,
+    "type": "code",
     "title": "Premium Deliveries",
-    "story": "Show all <strong>Delivered</strong> orders with customer name and product name, sorted by amount descending then by order id ascending. This is the full three-table JOIN in action.",
     "requiredConcept": "JOIN",
-    "expectedOutput": [{"first_name":"John","name":"Laptop","amount":1200},{"first_name":"Sarah","name":"Laptop","amount":1200},{"first_name":"Emily","name":"Mechanical Keyboard","amount":89.99},{"first_name":"Michael","name":"Mechanical Keyboard","amount":89.99},{"first_name":"Sarah","name":"Keyboard","amount":70},{"first_name":"Sophie","name":"Keyboard","amount":70},{"first_name":"John","name":"Bluetooth Speaker","amount":55},{"first_name":"Isabella","name":"Bluetooth Speaker","amount":55},{"first_name":"David","name":"Desk Lamp","amount":45},{"first_name":"Sarah","name":"Coffee Mug","amount":12.5},{"first_name":"Sophie","name":"Coffee Mug","amount":12.5}],
+    "story": "The full three-table JOIN under pressure. Show all <strong>Delivered</strong> orders with customer name (first_name) and product name, returning `first_name`, `name` (from products), and `amount`. Sort by <code>amount</code> descending, then by order <code>id</code> ascending as a tiebreaker.",
     "hints": [
-      "Chain two JOINs then add WHERE Orders.status = 'Delivered'.",
-      "Sort by Orders.amount DESC, Orders.id ASC to break ties consistently.",
+      "Three tables joined together, plus WHERE, plus multi-column ORDER BY.",
       "SELECT Customers.first_name, Products.name, Orders.amount FROM Orders JOIN Customers ON Orders.customer_id = Customers.id JOIN Products ON Orders.product_id = Products.id WHERE Orders.status = 'Delivered' ORDER BY Orders.amount DESC, Orders.id ASC;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "name": "Laptop",
+        "amount": 1200
+      },
+      {
+        "first_name": "Sarah",
+        "name": "Laptop",
+        "amount": 1200
+      },
+      {
+        "first_name": "Emily",
+        "name": "Mechanical Keyboard",
+        "amount": 89.99
+      },
+      {
+        "first_name": "Michael",
+        "name": "Mechanical Keyboard",
+        "amount": 89.99
+      },
+      {
+        "first_name": "Sarah",
+        "name": "Keyboard",
+        "amount": 70
+      },
+      {
+        "first_name": "Sophie",
+        "name": "Keyboard",
+        "amount": 70
+      },
+      {
+        "first_name": "John",
+        "name": "Bluetooth Speaker",
+        "amount": 55
+      },
+      {
+        "first_name": "Isabella",
+        "name": "Bluetooth Speaker",
+        "amount": 55
+      },
+      {
+        "first_name": "David",
+        "name": "Desk Lamp",
+        "amount": 45
+      },
+      {
+        "first_name": "Sarah",
+        "name": "Coffee Mug",
+        "amount": 12.5
+      },
+      {
+        "first_name": "Sophie",
+        "name": "Coffee Mug",
+        "amount": 12.5
+      }
     ]
+  },
+  {
+    "id": "L5_P9",
+    "level": 5,
+    "type": "code",
+    "title": "Department Colleagues",
+    "requiredConcept": "JOIN",
+    "story": "Here's something new: joining a table <strong>to itself</strong>. Find all pairs of employees who work in the <strong>same department</strong>. You'll alias the Employees table twice (e.g., <code>e1</code> and <code>e2</code>) and join them on <code>department</code>. Make sure you don't pair someone with themselves (e.g. <code>e1.id < e2.id</code>). Show <code>first_name</code> as employee1, <code>first_name</code> as employee2, and <code>department</code>.",
+    "pipelineCallout": "A self-join is still just a JOIN — the pipeline doesn't change. You're creating two copies of the same table and matching them.",
+    "hints": [
+      "FROM Employees e1 JOIN Employees e2 ON e1.department = e2.department AND e1.id < e2.id",
+      "SELECT e1.first_name AS employee1, e2.first_name AS employee2, e1.department FROM Employees e1 JOIN Employees e2 ON e1.department = e2.department AND e1.id < e2.id;"
+    ],
+    "expectedOutput": [
+      {
+        "employee1": "Alice",
+        "employee2": "Diana",
+        "department": "Sales"
+      },
+      {
+        "employee1": "Bob",
+        "employee2": "Evan",
+        "department": "Engineering"
+      },
+      {
+        "employee1": "Bob",
+        "employee2": "Fiona",
+        "department": "Engineering"
+      },
+      {
+        "employee1": "Evan",
+        "employee2": "Fiona",
+        "department": "Engineering"
+      }
+    ]
+  },
+  {
+    "id": "L5_P10",
+    "level": 5,
+    "type": "arrange_pipeline",
+    "title": "Pipeline Check: JOIN + Agg",
+    "requiredConcept": "",
+    "story": "Arrange the execution order for this query. You'll discover a subtle bug in this query — and learn why it matters in the debrief.",
+    "query": "SELECT c.first_name, COUNT(o.id) AS order_count\nFROM Customers c\nLEFT JOIN Orders o ON c.id = o.customer_id\nWHERE o.status <> 'Cancelled'\nGROUP BY c.first_name\nHAVING COUNT(o.id) >= 2\nORDER BY order_count DESC",
+    "scrambled": [
+      "SELECT c.first_name, COUNT(o.id)",
+      "FROM Customers c LEFT JOIN Orders o",
+      "GROUP BY c.first_name",
+      "HAVING COUNT(o.id) >= 2",
+      "ORDER BY order_count DESC",
+      "WHERE o.status <> 'Cancelled'"
+    ],
+    "correct": [
+      "FROM Customers c LEFT JOIN Orders o",
+      "WHERE o.status <> 'Cancelled'",
+      "GROUP BY c.first_name",
+      "HAVING COUNT(o.id) >= 2",
+      "SELECT c.first_name, COUNT(o.id)",
+      "ORDER BY order_count DESC"
+    ],
+    "debrief": "JOIN is part of FROM — it builds one combined table first. Here is the bug: WHERE on the LEFT JOIN result filters OUT the NULL rows LEFT JOIN created for customers with no orders."
   },
   {
     "id": "L6_P1",
     "level": 6,
-    "title": "Add a New Customer",
-    "story": "We have a walk-in! Insert a new customer named <strong>Rahul Sharma</strong> with email <code>r.sharma@example.com</code> and today's date <code>2023-10-25</code>.",
-    "requiredConcept": "INSERT",
-    "expectedOutput": { "affectedRows": 1 },
+    "type": "code",
+    "title": "Default Email",
+    "requiredConcept": "COALESCE",
+    "story": "Marketing needs a complete contact list to export. Some customers lack an email. Provide <code>first_name</code>, and use <strong>COALESCE</strong> on <code>email</code> to return \"no_email@placeholder.com\" if it's NULL.",
+    "pipelineCallout": "NULL affects almost every step of the pipeline. In SELECT, adding a number to NULL gives NULL. In WHERE, testing NULL = NULL is FALSE. In ORDER BY, NULLs typically float to the top or bottom depending on ASC/DESC.",
     "hints": [
-      "Use INSERT INTO Customers (first_name, last_name, email, registration_date) VALUES (...);",
-      "Strings must be in single quotes.",
-      "INSERT INTO Customers (first_name, last_name, email, registration_date) VALUES ('Rahul', 'Sharma', 'r.sharma@example.com', '2023-10-25');"
+      "COALESCE(column_name, fallback_value)",
+      "SELECT first_name, COALESCE(email, 'no_email@placeholder.com') AS email FROM Customers;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "email": "john@example.com"
+      },
+      {
+        "first_name": "Sarah",
+        "email": "sarah.smith@example.com"
+      },
+      {
+        "first_name": "Michael",
+        "email": "mjohnson@example.com"
+      },
+      {
+        "first_name": "Emily",
+        "email": "emily.d@example.com"
+      },
+      {
+        "first_name": "David",
+        "email": "dwilson@example.com"
+      },
+      {
+        "first_name": "Jessica",
+        "email": "jtaylor@example.com"
+      },
+      {
+        "first_name": "Chris",
+        "email": "canderson@example.com"
+      },
+      {
+        "first_name": "Sophie",
+        "email": "smartinez@example.com"
+      },
+      {
+        "first_name": "Isabella",
+        "email": "igarcia@example.com"
+      },
+      {
+        "first_name": "Alex",
+        "email": "no_email@placeholder.com"
+      }
     ]
   },
   {
     "id": "L6_P2",
     "level": 6,
-    "title": "New Product Arrival",
-    "story": "New inventory! Insert a <code>Gaming Headset</code> in the <code>Electronics</code> category for <code>99.99</code> with <code>40</code> in stock.",
-    "requiredConcept": "INSERT",
-    "expectedOutput": { "affectedRows": 1 },
+    "type": "code",
+    "title": "Safe Stock Count",
+    "requiredConcept": "COALESCE",
+    "story": "A new product has a NULL stock value instead of 0 because it's on backorder. Display product <code>name</code> and use <strong>COALESCE</strong> to show <code>0</code> whenever <code>stock</code> is NULL.",
     "hints": [
-      "Use INSERT INTO Products.",
-      "List name, category, price, stock.",
-      "INSERT INTO Products (name, category, price, stock) VALUES ('Gaming Headset', 'Electronics', 99.99, 40);"
+      "Wrap the stock column: COALESCE(stock, 0)",
+      "SELECT name, COALESCE(stock, 0) AS stock FROM Products;"
+    ],
+    "expectedOutput": [
+      {
+        "name": "Laptop",
+        "stock": 20
+      },
+      {
+        "name": "Wireless Mouse",
+        "stock": 150
+      },
+      {
+        "name": "Mechanical Keyboard",
+        "stock": 50
+      },
+      {
+        "name": "Coffee Mug",
+        "stock": 300
+      },
+      {
+        "name": "Desk Lamp",
+        "stock": 75
+      },
+      {
+        "name": "Laptop Stand",
+        "stock": 120
+      },
+      {
+        "name": "Bluetooth Speaker",
+        "stock": 200
+      },
+      {
+        "name": "Notebook",
+        "stock": 500
+      },
+      {
+        "name": "Keyboard",
+        "stock": 100
+      },
+      {
+        "name": "Webcam",
+        "stock": 0
+      }
     ]
   },
   {
     "id": "L6_P3",
     "level": 6,
-    "title": "Restock Inventory",
-    "story": "A shipment of Laptops arrived. Update the <code>stock</code> of the <strong>Laptop</strong> to <code>50</code>.",
-    "requiredConcept": "UPDATE",
-    "expectedOutput": { "affectedRows": 1 },
+    "type": "code",
+    "title": "NULL Arithmetic",
+    "requiredConcept": "+",
+    "story": "Attempt to add 10 to every product's <code>stock</code> (e.g., <code>stock + 10</code>). See what happens to the product with NULL stock when math gets involved.",
     "hints": [
-      "Use the UPDATE table SET column = value WHERE condition syntax.",
-      "UPDATE Products SET stock = 50 WHERE name = 'Laptop';",
-      "Always include a WHERE clause to avoid updating all rows!"
+      "Just select name and stock + 10 AS boosted_stock",
+      "NULL plus anything is always NULL. Arithmetic propagates NULLs.",
+      "SELECT name, stock + 10 AS boosted_stock FROM Products;"
+    ],
+    "expectedOutput": [
+      {
+        "name": "Laptop",
+        "boosted_stock": 30
+      },
+      {
+        "name": "Wireless Mouse",
+        "boosted_stock": 160
+      },
+      {
+        "name": "Mechanical Keyboard",
+        "boosted_stock": 60
+      },
+      {
+        "name": "Coffee Mug",
+        "boosted_stock": 310
+      },
+      {
+        "name": "Desk Lamp",
+        "boosted_stock": 85
+      },
+      {
+        "name": "Laptop Stand",
+        "boosted_stock": 130
+      },
+      {
+        "name": "Bluetooth Speaker",
+        "boosted_stock": 210
+      },
+      {
+        "name": "Notebook",
+        "boosted_stock": 510
+      },
+      {
+        "name": "Keyboard",
+        "boosted_stock": 110
+      },
+      {
+        "name": "Webcam",
+        "boosted_stock": null
+      }
     ]
   },
   {
     "id": "L6_P4",
     "level": 6,
-    "title": "Correct Order Amount",
-    "story": "Order 102 had a coupon we forgot to apply. Update its <code>amount</code> to <code>40.00</code>.",
-    "requiredConcept": "UPDATE",
-    "expectedOutput": { "affectedRows": 1 },
+    "type": "code",
+    "title": "Full Contact Card",
+    "requiredConcept": "COALESCE",
+    "story": "Build a contact card format like \"Name &lt;email&gt;\". Combine <code>first_name</code>, a space, <code>last_name</code>, and their email inside angle brackets. Handle NULL emails gracefully so the string doesn't become completely NULL.",
     "hints": [
-      "UPDATE Orders SET amount = 40.00 WHERE id = 102;",
-      "Filter by the order id.",
-      "SET amount = 40.00."
+      "You'll need both the string concatenation operator (||) and COALESCE.",
+      "SELECT first_name || ' ' || last_name || ' <' || COALESCE(email, 'no email') || '>' AS contact_card FROM Customers;"
+    ],
+    "expectedOutput": [
+      {
+        "contact_card": "John Doe <john@example.com>"
+      },
+      {
+        "contact_card": "Sarah Smith <sarah.smith@example.com>"
+      },
+      {
+        "contact_card": "Michael Johnson <mjohnson@example.com>"
+      },
+      {
+        "contact_card": "Emily Davis <emily.d@example.com>"
+      },
+      {
+        "contact_card": "David Wilson <dwilson@example.com>"
+      },
+      {
+        "contact_card": "Jessica Taylor <jtaylor@example.com>"
+      },
+      {
+        "contact_card": "Chris Anderson <canderson@example.com>"
+      },
+      {
+        "contact_card": "Sophie Martinez <smartinez@example.com>"
+      },
+      {
+        "contact_card": "Isabella Garcia <igarcia@example.com>"
+      },
+      {
+        "contact_card": "Alex Patel <no email>"
+      }
     ]
   },
   {
     "id": "L6_P5",
     "level": 6,
-    "title": "Remove Cancelled Orders",
-    "story": "Clean up the database. Delete all orders that have a <code>status</code> of <strong>Cancelled</strong>.",
-    "requiredConcept": "DELETE",
-    "expectedOutput": { "affectedRows": 2 },
+    "type": "code",
+    "title": "Complete Records Only",
+    "requiredConcept": "IS NOT NULL",
+    "story": "The data engineering team wants a clean extract of products for machine learning. Only include robust rows: find all products where <strong>BOTH</strong> <code>price</code> and <code>stock</code> are NOT NULL.",
     "hints": [
-      "Use DELETE FROM Orders WHERE status = 'Cancelled';",
-      "Be very careful with DELETE, there is no undo!",
-      "DELETE FROM Orders WHERE status = 'Cancelled';"
+      "Use the AND operator to chain two IS NOT NULL checks in your WHERE clause.",
+      "SELECT * FROM Products WHERE price IS NOT NULL AND stock IS NOT NULL;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 1,
+        "name": "Laptop",
+        "category": "Electronics",
+        "price": 1200,
+        "stock": 20
+      },
+      {
+        "id": 2,
+        "name": "Wireless Mouse",
+        "category": "Electronics",
+        "price": 25,
+        "stock": 150
+      },
+      {
+        "id": 3,
+        "name": "Mechanical Keyboard",
+        "category": "Electronics",
+        "price": 89.99,
+        "stock": 50
+      },
+      {
+        "id": 4,
+        "name": "Coffee Mug",
+        "category": "Home",
+        "price": 12.5,
+        "stock": 300
+      },
+      {
+        "id": 5,
+        "name": "Desk Lamp",
+        "category": "Home",
+        "price": 45,
+        "stock": 75
+      },
+      {
+        "id": 6,
+        "name": "Laptop Stand",
+        "category": "Accessories",
+        "price": 35,
+        "stock": 120
+      },
+      {
+        "id": 7,
+        "name": "Bluetooth Speaker",
+        "category": "Electronics",
+        "price": 55,
+        "stock": 200
+      },
+      {
+        "id": 8,
+        "name": "Notebook",
+        "category": "Office",
+        "price": 5,
+        "stock": 500
+      },
+      {
+        "id": 9,
+        "name": "Keyboard",
+        "category": "Electronics",
+        "price": 70,
+        "stock": 100
+      }
     ]
   },
   {
     "id": "L7_P1",
     "level": 7,
-    "title": "Email Prefix",
-    "story": "Extract the first 4 characters of every customer's email.",
-    "requiredConcept": "SUBSTR",
-    "expectedOutput": [{"email_prefix":"john"},{"email_prefix":"sara"},{"email_prefix":"mjoh"},{"email_prefix":"emil"},{"email_prefix":"dwil"},{"email_prefix":"jtay"},{"email_prefix":"cand"},{"email_prefix":"smar"},{"email_prefix":"igar"},{"email_prefix":"rahu"}],
+    "type": "code",
+    "title": "Add a New Customer",
+    "requiredConcept": "INSERT",
+    "story": "A VIP just signed up in person. Insert <strong>Rahul Sharma</strong> into the <code>Customers</code> table. Use ID 11, email \"r.sharma@example.com\", and registration_date \"2023-10-25\".",
+    "pipelineCallout": "DML operations have their own mini-pipeline logic. INSERT directly adds a row to the table. It bypasses SELECT entirely.",
+    "expectedOutput": [
+      {
+        "affectedRows": 1
+      }
+    ],
     "hints": [
-      "SQLite uses SUBSTR(column, start, length).",
-      "Note that indices start at 1.",
-      "SELECT SUBSTR(email, 1, 4) as email_prefix FROM Customers;"
+      "Use the INSERT INTO ... VALUES format.",
+      "Make sure string values are properly quoted.",
+      "INSERT INTO Customers (id, first_name, last_name, email, registration_date) VALUES (11, 'Rahul', 'Sharma', 'r.sharma@example.com', '2023-10-25');"
     ]
   },
   {
     "id": "L7_P2",
     "level": 7,
-    "title": "Find the @ Symbol",
-    "story": "Determine the character position of the '@' symbol in each email.",
-    "requiredConcept": "INSTR",
-    "expectedOutput": [{"at_position":5},{"at_position":12},{"at_position":9},{"at_position":8},{"at_position":8},{"at_position":8},{"at_position":10},{"at_position":10},{"at_position":8},{"at_position":9}],
+    "type": "code",
+    "title": "New Product Arrival",
+    "requiredConcept": "INSERT",
+    "story": "The warehouse just logged a new shipment. Insert a <strong>Gaming Headset</strong> into <code>Products</code> with ID 11, Category \"Electronics\", Price 99.99, and Stock 40.",
+    "expectedOutput": [
+      {
+        "affectedRows": 1
+      }
+    ],
     "hints": [
-      "Use the INSTR(string, substring) function.",
-      "SELECT INSTR(email, '@') as at_position FROM Customers;",
-      "Searching for a single character."
+      "Follow the same INSERT pattern as the previous problem.",
+      "Make sure numeric values do not have quotes.",
+      "INSERT INTO Products (id, name, category, price, stock) VALUES (11, 'Gaming Headset', 'Electronics', 99.99, 40);"
     ]
   },
   {
     "id": "L7_P3",
     "level": 7,
-    "title": "Email Username",
-    "story": "Extract the text *before* the '@' symbol in each email.",
-    "requiredConcept": "SUBSTR",
-    "expectedOutput": [{"username":"john"},{"username":"sarah.smith"},{"username":"mjohnson"},{"username":"emily.d"},{"username":"dwilson"},{"username":"jtaylor"},{"username":"canderson"},{"username":"smartinez"},{"username":"igarcia"},{"username":"r.sharma"}],
+    "type": "code",
+    "title": "Restock Inventory",
+    "requiredConcept": "UPDATE",
+    "story": "We just restocked laptops. <strong>UPDATE</strong> the <code>Products</code> table to set the <code>stock</code> of the <strong>Laptop</strong> to 50.",
+    "expectedOutput": [
+      {
+        "affectedRows": 1
+      }
+    ],
     "hints": [
-      "Combine SUBSTR and INSTR.",
-      "Start at 1, and go for (INSTR(email, '@') - 1) characters.",
-      "SELECT SUBSTR(email, 1, INSTR(email, '@') - 1) as username FROM Customers;"
+      "Use UPDATE table SET col = value WHERE condition.",
+      "Filter by name = 'Laptop'.",
+      "UPDATE Products SET stock = 50 WHERE name = 'Laptop';"
     ]
   },
   {
     "id": "L7_P4",
     "level": 7,
-    "title": "Customer Tenure",
-    "story": "How many days have passed since each customer registered? Use <code>julianday</code>.",
-    "requiredConcept": "julianday",
-    "expectedOutput": [{"first_name":"John","days_registered":1160}],
+    "type": "code",
+    "title": "Correct Order Amount",
+    "requiredConcept": "UPDATE",
+    "story": "Customer support caught a billing error on order 102. <strong>UPDATE</strong> <code>Orders</code> to set its <code>amount</code> to 40.00.",
+    "expectedOutput": [
+      {
+        "affectedRows": 1
+      }
+    ],
     "hints": [
-      "Use julianday('now') - julianday(registration_date).",
-      "The result depends on today's current date.",
-      "SELECT first_name, (julianday('2026-03-15') - julianday(registration_date)) as days_registered FROM Customers;"
+      "Identify the specific order using WHERE id = 102.",
+      "UPDATE Orders SET amount = 40.00 WHERE id = 102;"
     ]
   },
   {
     "id": "L7_P5",
     "level": 7,
-    "title": "Customer Email Domain",
-    "story": "Extract the email domain (everything after the '@').",
-    "requiredConcept": "SUBSTR",
-    "expectedOutput": [{"domain":"example.com"}],
+    "type": "code",
+    "title": "Price Hike",
+    "requiredConcept": "UPDATE",
+    "story": "Supplier costs went up. Increase the <code>price</code> by 10% for ALL products in the <strong>Electronics</strong> category. Remember that modifying a column based on its own value works perfectly in SQL.",
+    "expectedOutput": [
+      {
+        "affectedRows": 6
+      }
+    ],
+    "pipelineCallout": "Notice how UPDATE operates on sets. The WHERE clause acts exactly like Step 2 of the pipeline: it filters rows down to Electronics, then applies the change to all of them.",
     "hints": [
-      "Start at INSTR(email, '@') + 1.",
-      "You don't need a length argument for SUBSTR to go to the end.",
-      "SELECT SUBSTR(email, INSTR(email, '@') + 1) as domain FROM Customers;"
+      "Set the price to price * 1.1",
+      "Filter the category using WHERE.",
+      "UPDATE Products SET price = price * 1.1 WHERE category = 'Electronics';"
     ]
   },
   {
     "id": "L7_P6",
     "level": 7,
-    "title": "Uppercase Roster",
-    "story": "Generate a formatted name badge for each employee. Return a single column <code>upper_first</code> using <code>UPPER</code>, and <code>lower_last</code> using <code>LOWER</code> on their last name.",
-    "requiredConcept": "UPPER",
-    "expectedOutput": [{"upper_first":"ALICE","lower_last":"brown"},{"upper_first":"BOB","lower_last":"thompson"},{"upper_first":"CHARLIE","lower_last":"davis"},{"upper_first":"DIANA","lower_last":"price"},{"upper_first":"EVAN","lower_last":"wright"}],
+    "type": "code",
+    "title": "Remove Cancelled Orders",
+    "requiredConcept": "DELETE",
+    "story": "It's time for some database cleanup. <strong>DELETE</strong> all orders that have a status of 'Cancelled'.",
+    "expectedOutput": [
+      {
+        "affectedRows": 2
+      }
+    ],
     "hints": [
-      "UPPER() and LOWER() convert text case.",
-      "You can alias each column with AS.",
-      "SELECT UPPER(first_name) AS upper_first, LOWER(last_name) AS lower_last FROM Employees;"
+      "Use DELETE FROM table WHERE condition.",
+      "DELETE FROM Orders WHERE status = 'Cancelled';"
     ]
   },
   {
     "id": "L7_P7",
     "level": 7,
-    "title": "Name Length Ranking",
-    "story": "Which employee has the longest full name? Concatenate <code>first_name</code> and <code>last_name</code> with a space, compute its <code>LENGTH</code>, and sort longest first. Break ties alphabetically by full name.",
-    "requiredConcept": "LENGTH",
-    "expectedOutput": [{"full_name":"Charlie Davis","full_name_length":13},{"full_name":"Bob Thompson","full_name_length":12},{"full_name":"Alice Brown","full_name_length":11},{"full_name":"Diana Price","full_name_length":11},{"full_name":"Evan Wright","full_name_length":11}],
+    "type": "code",
+    "title": "Selective Cleanup",
+    "requiredConcept": "DELETE",
+    "story": "Data integrity check: sometimes products get deleted, leaving \"orphan\" orders. DELETE all orders whose <code>product_id</code> is <strong>NOT IN</strong> the current <code>Products</code> table. This previews Level 10's subquery logic.",
+    "expectedOutput": [
+      {
+        "affectedRows": 0
+      }
+    ],
     "hints": [
-      "Use LENGTH() on the concatenated string.",
-      "Build full_name first with ||, then pass it to LENGTH().",
-      "SELECT first_name || ' ' || last_name AS full_name, LENGTH(first_name || ' ' || last_name) AS full_name_length FROM Employees ORDER BY full_name_length DESC, full_name ASC;"
-    ]
-  },
-  {
-    "id": "L7_P8",
-    "level": 7,
-    "title": "Integer Price Tags",
-    "story": "For a quick price display, truncate each product's price to a whole number using <code>CAST</code>. Show <code>name</code>, <code>price</code>, and <code>price_int</code>. Order by price descending.",
-    "requiredConcept": "CAST",
-    "expectedOutput": [{"name":"Laptop","price":1200,"price_int":1200},{"name":"Gaming Headset","price":99.99,"price_int":99},{"name":"Mechanical Keyboard","price":89.99,"price_int":89},{"name":"Keyboard","price":70,"price_int":70},{"name":"Bluetooth Speaker","price":55,"price_int":55},{"name":"Desk Lamp","price":45,"price_int":45},{"name":"Laptop Stand","price":35,"price_int":35},{"name":"Wireless Mouse","price":25,"price_int":25},{"name":"Coffee Mug","price":12.5,"price_int":12},{"name":"Notebook","price":5,"price_int":5}],
-    "hints": [
-      "CAST(value AS INTEGER) truncates the decimal part.",
-      "This is different from ROUND — it always rounds down.",
-      "SELECT name, price, CAST(price AS INTEGER) AS price_int FROM Products ORDER BY price DESC;"
-    ]
-  },
-  {
-    "id": "L7_P9",
-    "level": 7,
-    "title": "Safe Email Display",
-    "story": "To prevent email harvesting, replace the <code>@</code> symbol in every customer's email with <code> [at] </code> (with spaces). Show <code>first_name</code> and <code>safe_email</code>.",
-    "requiredConcept": "REPLACE",
-    "expectedOutput": [{"first_name":"John","safe_email":"john [at] example.com"},{"first_name":"Sarah","safe_email":"sarah.smith [at] example.com"},{"first_name":"Michael","safe_email":"mjohnson [at] example.com"},{"first_name":"Emily","safe_email":"emily.d [at] example.com"},{"first_name":"David","safe_email":"dwilson [at] example.com"},{"first_name":"Jessica","safe_email":"jtaylor [at] example.com"},{"first_name":"Chris","safe_email":"canderson [at] example.com"},{"first_name":"Sophie","safe_email":"smartinez [at] example.com"},{"first_name":"Isabella","safe_email":"igarcia [at] example.com"},{"first_name":"Rahul","safe_email":"r.sharma [at] example.com"}],
-    "hints": [
-      "REPLACE(string, find, replacement) swaps every occurrence.",
-      "The replacement string here is ' [at] ' (with spaces).",
-      "SELECT first_name, REPLACE(email, '@', ' [at] ') AS safe_email FROM Customers;"
+      "You can use a subquery inside your WHERE clause: WHERE product_id NOT IN (SELECT id FROM Products)",
+      "DELETE FROM Orders WHERE product_id NOT IN (SELECT id FROM Products);"
     ]
   },
   {
     "id": "L8_P1",
     "level": 8,
-    "title": "Rank Products by Price",
-    "story": "Rank our products from most expensive to cheapest. Show name, price, and rank.",
-    "requiredConcept": "OVER",
-    "expectedOutput": [{"name":"Laptop","price":1200,"price_rank":1},{"name":"Gaming Headset","price":99.99,"price_rank":2},{"name":"Mechanical Keyboard","price":89.99,"price_rank":3},{"name":"Keyboard","price":70,"price_rank":4},{"name":"Bluetooth Speaker","price":55,"price_rank":5},{"name":"Desk Lamp","price":45,"price_rank":6},{"name":"Laptop Stand","price":35,"price_rank":7},{"name":"Wireless Mouse","price":25,"price_rank":8},{"name":"Coffee Mug","price":12.5,"price_rank":9},{"name":"Notebook","price":5,"price_rank":10}],
+    "type": "code",
+    "title": "Email Prefix",
+    "requiredConcept": "SUBSTR",
+    "story": "We want to hash parts of emails for security. To start, extract just the <strong>first 4 characters</strong> of each customer's email. Return <code>first_name</code> and use <code>SUBSTR()</code>. Exclude NULL emails.",
+    "pipelineCallout": "Functions work within an existing pipeline step. When you use SUBSTR in SELECT, it applies to each row as it passes through Step 5.",
     "hints": [
-      "Use the RANK() window function.",
-      "OVER(ORDER BY price DESC).",
-      "SELECT name, price, RANK() OVER(ORDER BY price DESC) as price_rank FROM Products;"
+      "SUBSTR(string_column, start_position, length)",
+      "In SQLite, SUBSTR uses a 1-based index, so start at 1.",
+      "SELECT first_name, SUBSTR(email, 1, 4) AS email_prefix FROM Customers WHERE email IS NOT NULL;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "email_prefix": "john"
+      },
+      {
+        "first_name": "Sarah",
+        "email_prefix": "sara"
+      },
+      {
+        "first_name": "Michael",
+        "email_prefix": "mjoh"
+      },
+      {
+        "first_name": "Emily",
+        "email_prefix": "emil"
+      },
+      {
+        "first_name": "David",
+        "email_prefix": "dwil"
+      },
+      {
+        "first_name": "Jessica",
+        "email_prefix": "jtay"
+      },
+      {
+        "first_name": "Chris",
+        "email_prefix": "cand"
+      },
+      {
+        "first_name": "Sophie",
+        "email_prefix": "smar"
+      },
+      {
+        "first_name": "Isabella",
+        "email_prefix": "igar"
+      },
+      {
+        "first_name": "Rahul",
+        "email_prefix": "r.sh"
+      }
     ]
   },
   {
     "id": "L8_P2",
     "level": 8,
-    "title": "Employee Salary Ranking",
-    "story": "Rank employees based on their <code>salary</code> across the whole company.",
-    "requiredConcept": "OVER",
-    "expectedOutput": [{"first_name":"Evan","salary":110000,"salary_rank":1},{"first_name":"Alice","salary":95000,"salary_rank":2},{"first_name":"Bob","salary":85000,"salary_rank":3},{"first_name":"Charlie","salary":65000,"salary_rank":4},{"first_name":"Diana","salary":55000,"salary_rank":5}],
+    "type": "code",
+    "title": "Find the @ Symbol",
+    "requiredConcept": "INSTR",
+    "story": "To split an email address, we first need to know where the \"@\" character is. Use <code>INSTR()</code> to find the exact position number of the \"@\" symbol in each email. Again, exclude NULLs.",
     "hints": [
-      "Use RANK() OVER(ORDER BY salary DESC).",
-      "Select from the Employees table.",
-      "SELECT first_name, salary, RANK() OVER(ORDER BY salary DESC) as salary_rank FROM Employees;"
+      "INSTR(string_column, '@') returns the position index.",
+      "SELECT first_name, INSTR(email, '@') AS at_position FROM Customers WHERE email IS NOT NULL;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "at_position": 5
+      },
+      {
+        "first_name": "Sarah",
+        "at_position": 12
+      },
+      {
+        "first_name": "Michael",
+        "at_position": 9
+      },
+      {
+        "first_name": "Emily",
+        "at_position": 8
+      },
+      {
+        "first_name": "David",
+        "at_position": 8
+      },
+      {
+        "first_name": "Jessica",
+        "at_position": 8
+      },
+      {
+        "first_name": "Chris",
+        "at_position": 10
+      },
+      {
+        "first_name": "Sophie",
+        "at_position": 10
+      },
+      {
+        "first_name": "Isabella",
+        "at_position": 8
+      },
+      {
+        "first_name": "Rahul",
+        "at_position": 9
+      }
     ]
   },
   {
     "id": "L8_P3",
     "level": 8,
-    "title": "Department Salary Leaderboard",
-    "story": "Rank employees by salary <strong>within their own departments</strong>.",
-    "requiredConcept": "OVER",
-    "expectedOutput": [{"first_name":"Evan","department":"Engineering","salary":110000,"dept_rank":1},{"first_name":"Bob","department":"Engineering","salary":85000,"dept_rank":2},{"first_name":"Charlie","department":"Marketing","salary":65000,"dept_rank":1},{"first_name":"Alice","department":"Sales","salary":95000,"dept_rank":1},{"first_name":"Diana","department":"Sales","salary":55000,"dept_rank":2}],
+    "type": "code",
+    "title": "Email Username",
+    "requiredConcept": "SUBSTR",
+    "story": "Now combine the previous two concepts! Extract just the <strong>username</strong> (everything before the \"@\" symbol) for each customer using <code>SUBSTR()</code> combined with <code>INSTR()</code>.",
     "hints": [
-      "You need PARTITION BY inside the OVER clause.",
-      "RANK() OVER(PARTITION BY department ORDER BY salary DESC).",
-      "SELECT first_name, department, salary, RANK() OVER(PARTITION BY department ORDER BY salary DESC) as dept_rank FROM Employees;"
+      "The length of the substring you want is the position of the '@' minus 1.",
+      "Use INSTR inside your SUBSTR call.",
+      "SELECT first_name, SUBSTR(email, 1, INSTR(email, '@') - 1) AS username FROM Customers WHERE email IS NOT NULL;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "username": "john"
+      },
+      {
+        "first_name": "Sarah",
+        "username": "sarah.smith"
+      },
+      {
+        "first_name": "Michael",
+        "username": "mjohnson"
+      },
+      {
+        "first_name": "Emily",
+        "username": "emily.d"
+      },
+      {
+        "first_name": "David",
+        "username": "dwilson"
+      },
+      {
+        "first_name": "Jessica",
+        "username": "jtaylor"
+      },
+      {
+        "first_name": "Chris",
+        "username": "canderson"
+      },
+      {
+        "first_name": "Sophie",
+        "username": "smartinez"
+      },
+      {
+        "first_name": "Isabella",
+        "username": "igarcia"
+      },
+      {
+        "first_name": "Rahul",
+        "username": "r.sharma"
+      }
     ]
   },
   {
     "id": "L8_P4",
     "level": 8,
-    "title": "Top Customers by Spending",
-    "story": "Find the top spending customers. First calculate total spending per customer in a <strong>CTE</strong>, then rank them.",
-    "requiredConcept": "CTE",
-    "expectedOutput": [{"customer_id":1,"total_spent":2455,"rank":1},{"customer_id":2,"total_spent":1327.5,"rank":2},{"customer_id":3,"total_spent":134.99,"rank":3},{"customer_id":4,"total_spent":114.99,"rank":4},{"customer_id":7,"total_spent":114.99,"rank":4},{"customer_id":8,"total_spent":82.5,"rank":6},{"customer_id":5,"total_spent":80,"rank":7},{"customer_id":9,"total_spent":55,"rank":8}],
+    "type": "code",
+    "title": "Customer Email Domain",
+    "requiredConcept": "SUBSTR",
+    "story": "Extract the <strong>domain</strong> (everything after the \"@\"). If you omit the third argument of SUBSTR, it grabs everything to the end of the string.",
     "hints": [
-      "Define the CTE with WITH spend_table AS (...).",
-      "In the main query, select from your spend_table and use RANK().",
-      "WITH CustomerSpend AS (SELECT customer_id, SUM(amount) as total_spent FROM Orders GROUP BY customer_id) SELECT customer_id, total_spent, RANK() OVER(ORDER BY total_spent DESC) as rank FROM CustomerSpend;"
+      "Start the substring at the index of the '@' plus 1.",
+      "SELECT first_name, SUBSTR(email, INSTR(email, '@') + 1) AS domain FROM Customers WHERE email IS NOT NULL;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "domain": "example.com"
+      },
+      {
+        "first_name": "Sarah",
+        "domain": "example.com"
+      },
+      {
+        "first_name": "Michael",
+        "domain": "example.com"
+      },
+      {
+        "first_name": "Emily",
+        "domain": "example.com"
+      },
+      {
+        "first_name": "David",
+        "domain": "example.com"
+      },
+      {
+        "first_name": "Jessica",
+        "domain": "example.com"
+      },
+      {
+        "first_name": "Chris",
+        "domain": "example.com"
+      },
+      {
+        "first_name": "Sophie",
+        "domain": "example.com"
+      },
+      {
+        "first_name": "Isabella",
+        "domain": "example.com"
+      },
+      {
+        "first_name": "Rahul",
+        "domain": "example.com"
+      }
     ]
   },
   {
     "id": "L8_P5",
     "level": 8,
-    "title": "Running Revenue",
-    "story": "Calculate the cumulative (running) total of revenue as it grows day by day.",
-    "requiredConcept": "OVER",
-    "expectedOutput": [{"order_date":"2023-05-01","amount":1200,"running_total":1200},{"order_date":"2023-05-02","amount":40,"running_total":1240},{"order_date":"2023-05-03","amount":12.5,"running_total":1252.5},{"order_date":"2023-05-04","amount":45,"running_total":1297.5},{"order_date":"2023-05-05","amount":89.99,"running_total":1387.49},{"order_date":"2023-05-06","amount":35,"running_total":1422.49},{"order_date":"2023-05-07","amount":55,"running_total":1477.49},{"order_date":"2023-05-09","amount":70,"running_total":1547.49},{"order_date":"2023-05-10","amount":25,"running_total":1572.49},{"order_date":"2023-05-11","amount":12.5,"running_total":1584.99},{"order_date":"2023-05-12","amount":1200,"running_total":2784.99},{"order_date":"2023-05-13","amount":89.99,"running_total":2874.98},{"order_date":"2023-05-14","amount":25,"running_total":2899.98},{"order_date":"2023-05-15","amount":45,"running_total":2944.98},{"order_date":"2023-05-16","amount":55,"running_total":2999.98},{"order_date":"2023-05-17","amount":1200,"running_total":4199.98},{"order_date":"2023-05-19","amount":89.99,"running_total":4289.97},{"order_date":"2023-05-25","amount":70,"running_total":4359.97}],
+    "type": "code",
+    "title": "Uppercase Roster",
+    "requiredConcept": "UPPER",
+    "story": "Formatting requirement for name badges: return employee <code>last_name</code> entirely in uppercase, and <code>first_name</code> entirely in lowercase. Use <code>UPPER()</code> and <code>LOWER()</code>.",
     "hints": [
-      "Use SUM(amount) OVER(ORDER BY order_date).",
-      "Window functions can perform cumulative sums.",
-      "SELECT order_date, amount, SUM(amount) OVER(ORDER BY order_date) as running_total FROM Orders;"
+      "Just wrap the columns in the respective functions.",
+      "SELECT UPPER(last_name) AS upper_last, LOWER(first_name) AS lower_first FROM Employees;"
+    ],
+    "expectedOutput": [
+      {
+        "upper_last": "BROWN",
+        "lower_first": "alice"
+      },
+      {
+        "upper_last": "THOMPSON",
+        "lower_first": "bob"
+      },
+      {
+        "upper_last": "DAVIS",
+        "lower_first": "charlie"
+      },
+      {
+        "upper_last": "PRICE",
+        "lower_first": "diana"
+      },
+      {
+        "upper_last": "WRIGHT",
+        "lower_first": "evan"
+      },
+      {
+        "upper_last": "CLARK",
+        "lower_first": "fiona"
+      }
     ]
   },
   {
     "id": "L8_P6",
     "level": 8,
-    "title": "Order Row Numbers",
-    "story": "Number each order chronologically using <code>ROW_NUMBER()</code>. Show the first 5 orders with their row number, date, and amount.",
-    "requiredConcept": "ROW_NUMBER",
-    "expectedOutput": [{"id":101,"order_date":"2023-05-01","amount":1200,"row_num":1},{"id":102,"order_date":"2023-05-02","amount":40,"row_num":2},{"id":103,"order_date":"2023-05-03","amount":12.5,"row_num":3},{"id":104,"order_date":"2023-05-04","amount":45,"row_num":4},{"id":105,"order_date":"2023-05-05","amount":89.99,"row_num":5}],
+    "type": "code",
+    "title": "Name Length Ranking",
+    "requiredConcept": "LENGTH",
+    "story": "Rank employees by the length of their full name (first + space + last). Use <code>LENGTH()</code> and <code>ORDER BY</code>. Return the concatenated full name and its length.",
     "hints": [
-      "ROW_NUMBER() always assigns a unique integer — no ties unlike RANK().",
-      "Use OVER(ORDER BY order_date) to define the ordering.",
-      "SELECT id, order_date, amount, ROW_NUMBER() OVER(ORDER BY order_date) AS row_num FROM Orders LIMIT 5;"
+      "Remember to generate the full name using || to measure its length correctly.",
+      "SELECT first_name || ' ' || last_name AS full_name, LENGTH(first_name || ' ' || last_name) AS name_length FROM Employees ORDER BY name_length DESC, full_name ASC;"
+    ],
+    "expectedOutput": [
+      {
+        "full_name": "Charlie Davis",
+        "name_length": 13
+      },
+      {
+        "full_name": "Bob Thompson",
+        "name_length": 12
+      },
+      {
+        "full_name": "Alice Brown",
+        "name_length": 11
+      },
+      {
+        "full_name": "Diana Price",
+        "name_length": 11
+      },
+      {
+        "full_name": "Evan Wright",
+        "name_length": 11
+      },
+      {
+        "full_name": "Fiona Clark",
+        "name_length": 11
+      }
     ]
   },
   {
     "id": "L8_P7",
     "level": 8,
-    "title": "Price Tiers",
-    "story": "Categorise every product into <strong>'Budget'</strong> (under $20), <strong>'Mid-range'</strong> ($20–$100), or <strong>'Premium'</strong> (over $100) using <code>CASE WHEN</code>. Show <code>name</code>, <code>price</code>, and <code>price_tier</code>, ordered by price ascending.",
-    "requiredConcept": "CASE",
-    "expectedOutput": [{"name":"Notebook","price":5,"price_tier":"Budget"},{"name":"Coffee Mug","price":12.5,"price_tier":"Budget"},{"name":"Wireless Mouse","price":25,"price_tier":"Mid-range"},{"name":"Laptop Stand","price":35,"price_tier":"Mid-range"},{"name":"Desk Lamp","price":45,"price_tier":"Mid-range"},{"name":"Bluetooth Speaker","price":55,"price_tier":"Mid-range"},{"name":"Keyboard","price":70,"price_tier":"Mid-range"},{"name":"Mechanical Keyboard","price":89.99,"price_tier":"Mid-range"},{"name":"Gaming Headset","price":99.99,"price_tier":"Mid-range"},{"name":"Laptop","price":1200,"price_tier":"Premium"}],
+    "type": "code",
+    "title": "Safe Email Display",
+    "requiredConcept": "REPLACE",
+    "story": "For a public forum, we need to hide actual email formats. Take the <code>email</code> column and use <code>REPLACE()</code> to swap out the \"@\" symbol with a safe \" [at] \".",
     "hints": [
-      "CASE WHEN condition THEN result ... ELSE fallback END.",
-      "You can chain multiple WHEN clauses.",
-      "SELECT name, price, CASE WHEN price < 20 THEN 'Budget' WHEN price BETWEEN 20 AND 100 THEN 'Mid-range' ELSE 'Premium' END AS price_tier FROM Products ORDER BY price ASC;"
+      "REPLACE(column_name, search_string, replacement_string)",
+      "SELECT first_name, REPLACE(email, '@', ' [at] ') AS safe_email FROM Customers WHERE email IS NOT NULL;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "safe_email": "john [at] example.com"
+      },
+      {
+        "first_name": "Sarah",
+        "safe_email": "sarah.smith [at] example.com"
+      },
+      {
+        "first_name": "Michael",
+        "safe_email": "mjohnson [at] example.com"
+      },
+      {
+        "first_name": "Emily",
+        "safe_email": "emily.d [at] example.com"
+      },
+      {
+        "first_name": "David",
+        "safe_email": "dwilson [at] example.com"
+      },
+      {
+        "first_name": "Jessica",
+        "safe_email": "jtaylor [at] example.com"
+      },
+      {
+        "first_name": "Chris",
+        "safe_email": "canderson [at] example.com"
+      },
+      {
+        "first_name": "Sophie",
+        "safe_email": "smartinez [at] example.com"
+      },
+      {
+        "first_name": "Isabella",
+        "safe_email": "igarcia [at] example.com"
+      },
+      {
+        "first_name": "Rahul",
+        "safe_email": "r.sharma [at] example.com"
+      }
     ]
   },
   {
     "id": "L8_P8",
     "level": 8,
-    "title": "Company Directory",
-    "story": "Combine customers and employees into a single directory using <code>UNION</code>. Show <code>name</code> (first_name) and <code>type</code> ('Customer' or 'Employee'). Sort alphabetically by name.",
-    "requiredConcept": "UNION",
-    "expectedOutput": [{"name":"Alice","type":"Employee"},{"name":"Bob","type":"Employee"},{"name":"Charlie","type":"Employee"},{"name":"Chris","type":"Customer"},{"name":"David","type":"Customer"},{"name":"Diana","type":"Employee"},{"name":"Emily","type":"Customer"},{"name":"Evan","type":"Employee"},{"name":"Isabella","type":"Customer"},{"name":"Jessica","type":"Customer"},{"name":"John","type":"Customer"},{"name":"Michael","type":"Customer"},{"name":"Rahul","type":"Customer"},{"name":"Sarah","type":"Customer"},{"name":"Sophie","type":"Customer"}],
+    "type": "code",
+    "title": "Integer Price Tags",
+    "requiredConcept": "CAST",
+    "story": "Marketing is doing a \"Round Dollar\" promotion. List <code>name</code> and <code>price</code> from Products, then use <code>CAST()</code> to turn the decimal <code>price</code> into an INTEGER, dropping the cents.",
     "hints": [
-      "UNION stacks two SELECT results and removes duplicates.",
-      "Both SELECT statements must have the same number of columns.",
-      "SELECT first_name AS name, 'Customer' AS type FROM Customers UNION SELECT first_name AS name, 'Employee' AS type FROM Employees ORDER BY name;"
+      "CAST(column_name AS type)",
+      "SELECT name, price, CAST(price AS INTEGER) AS price_int FROM Products ORDER BY price DESC;"
+    ],
+    "expectedOutput": [
+      {
+        "name": "Laptop",
+        "price": 1320,
+        "price_int": 1320
+      },
+      {
+        "name": "Gaming Headset",
+        "price": 109.989,
+        "price_int": 109
+      },
+      {
+        "name": "Mechanical Keyboard",
+        "price": 98.989,
+        "price_int": 98
+      },
+      {
+        "name": "Keyboard",
+        "price": 77,
+        "price_int": 77
+      },
+      {
+        "name": "Bluetooth Speaker",
+        "price": 60.50000000000001,
+        "price_int": 60
+      },
+      {
+        "name": "Desk Lamp",
+        "price": 45,
+        "price_int": 45
+      },
+      {
+        "name": "Webcam",
+        "price": 43.989000000000004,
+        "price_int": 43
+      },
+      {
+        "name": "Laptop Stand",
+        "price": 35,
+        "price_int": 35
+      },
+      {
+        "name": "Wireless Mouse",
+        "price": 27.500000000000004,
+        "price_int": 27
+      },
+      {
+        "name": "Coffee Mug",
+        "price": 12.5,
+        "price_int": 12
+      },
+      {
+        "name": "Notebook",
+        "price": 5,
+        "price_int": 5
+      }
     ]
   },
   {
     "id": "L8_P9",
     "level": 8,
-    "title": "Above-Average Earners",
-    "story": "Find all employees whose salary is <strong>above the company average</strong>. Use a <strong>subquery</strong> inside your WHERE clause to compute the average on the fly.",
-    "requiredConcept": "SELECT",
-    "expectedOutput": [{"first_name":"Evan","salary":110000},{"first_name":"Alice","salary":95000},{"first_name":"Bob","salary":85000}],
+    "type": "code",
+    "title": "Days Since Registration",
+    "requiredConcept": "julianday",
+    "story": "How old is each customer account relative to our reporting date? In SQLite, <code>julianday()</code> converts dates to fractional days. Subtract the registration date from <code>'2025-01-01'</code>, and CAST to INTEGER.",
     "hints": [
-      "A subquery is a SELECT inside parentheses used as a value.",
-      "Use (SELECT AVG(salary) FROM Employees) as the threshold.",
-      "SELECT first_name, salary FROM Employees WHERE salary > (SELECT AVG(salary) FROM Employees) ORDER BY salary DESC;"
+      "julianday('2025-01-01') - julianday(registration_date)",
+      "CAST the final result as an INTEGER to get whole days.",
+      "SELECT first_name, CAST(julianday('2025-01-01') - julianday(registration_date) AS INTEGER) AS days_since FROM Customers;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "days_since": 722
+      },
+      {
+        "first_name": "Sarah",
+        "days_since": 681
+      },
+      {
+        "first_name": "Michael",
+        "days_since": 668
+      },
+      {
+        "first_name": "Emily",
+        "days_since": 663
+      },
+      {
+        "first_name": "David",
+        "days_since": 641
+      },
+      {
+        "first_name": "Jessica",
+        "days_since": 627
+      },
+      {
+        "first_name": "Chris",
+        "days_since": 611
+      },
+      {
+        "first_name": "Sophie",
+        "days_since": 597
+      },
+      {
+        "first_name": "Isabella",
+        "days_since": 580
+      },
+      {
+        "first_name": "Alex",
+        "days_since": 550
+      },
+      {
+        "first_name": "Rahul",
+        "days_since": 434
+      }
     ]
+  },
+  {
+    "id": "L8_P10",
+    "level": 8,
+    "type": "code",
+    "title": "Tenure in Years",
+    "requiredConcept": "julianday",
+    "story": "This is deliberately hard. Calculate employee tenure in <strong>whole years</strong> relative to <code>'2025-01-01'</code>. Get the difference in days using <code>julianday()</code>, divide by 365.25 for leap years, and CAST to INTEGER. Return first, last, and years.",
+    "hints": [
+      "Follow the math logic step by step using parentheses.",
+      "CAST( (julianday('2025-01-01') - julianday(hire_date)) / 365.25 AS INTEGER)",
+      "SELECT first_name, last_name, CAST((julianday('2025-01-01') - julianday(hire_date)) / 365.25 AS INTEGER) AS tenure_years FROM Employees;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "Alice",
+        "last_name": "Brown",
+        "tenure_years": 3
+      },
+      {
+        "first_name": "Bob",
+        "last_name": "Thompson",
+        "tenure_years": 2
+      },
+      {
+        "first_name": "Charlie",
+        "last_name": "Davis",
+        "tenure_years": 4
+      },
+      {
+        "first_name": "Diana",
+        "last_name": "Price",
+        "tenure_years": 1
+      },
+      {
+        "first_name": "Evan",
+        "last_name": "Wright",
+        "tenure_years": 2
+      },
+      {
+        "first_name": "Fiona",
+        "last_name": "Clark",
+        "tenure_years": 1
+      }
+    ]
+  },
+  {
+    "id": "L9_P1",
+    "level": 9,
+    "type": "code",
+    "title": "Price Tiers",
+    "requiredConcept": "CASE",
+    "story": "Marketing needs to segment products by price. Return <code>name</code>, <code>price</code>, and a derived column called <code>price_tier</code>. Use <strong>CASE WHEN</strong>: if price < 50, \"Budget\". If price <= 500, \"Mid-range\". Else \"Premium\".",
+    "pipelineCallout": "CASE WHEN lives inside the SELECT step. It doesn't filter rows (that's WHERE) or group them (that's GROUP BY). It simply looks at a row when Step 5 is running and computes a new value for it on the fly.",
+    "hints": [
+      "CASE WHEN condition THEN result WHEN condition THEN result ELSE result END",
+      "SELECT name, price, CASE WHEN price < 50 THEN 'Budget' WHEN price <= 500 THEN 'Mid-range' ELSE 'Premium' END AS price_tier FROM Products;"
+    ],
+    "expectedOutput": [
+      {
+        "name": "Laptop",
+        "price": 1320,
+        "price_tier": "Premium"
+      },
+      {
+        "name": "Wireless Mouse",
+        "price": 27.500000000000004,
+        "price_tier": "Budget"
+      },
+      {
+        "name": "Mechanical Keyboard",
+        "price": 98.989,
+        "price_tier": "Mid-range"
+      },
+      {
+        "name": "Coffee Mug",
+        "price": 12.5,
+        "price_tier": "Budget"
+      },
+      {
+        "name": "Desk Lamp",
+        "price": 45,
+        "price_tier": "Budget"
+      },
+      {
+        "name": "Laptop Stand",
+        "price": 35,
+        "price_tier": "Budget"
+      },
+      {
+        "name": "Bluetooth Speaker",
+        "price": 60.50000000000001,
+        "price_tier": "Mid-range"
+      },
+      {
+        "name": "Notebook",
+        "price": 5,
+        "price_tier": "Budget"
+      },
+      {
+        "name": "Keyboard",
+        "price": 77,
+        "price_tier": "Mid-range"
+      },
+      {
+        "name": "Webcam",
+        "price": 43.989000000000004,
+        "price_tier": "Budget"
+      },
+      {
+        "name": "Gaming Headset",
+        "price": 109.989,
+        "price_tier": "Mid-range"
+      }
+    ]
+  },
+  {
+    "id": "L9_P2",
+    "level": 9,
+    "type": "code",
+    "title": "Order Status Labels",
+    "requiredConcept": "CASE",
+    "story": "The user-facing portal needs friendlier labels. Return <code>id</code>, <code>status</code>, and a <code>display_status</code> using CASE: Processing → \"In Progress\", Shipped → \"On Its Way\", Delivered → \"Completed\", Cancelled → \"Cancelled\". For anything else, return the raw status.",
+    "hints": [
+      "You can chain multiple WHEN clauses inside your CASE statement.",
+      "SELECT id, status, CASE WHEN status = 'Processing' THEN 'In Progress' WHEN status = 'Shipped' THEN 'On Its Way' WHEN status = 'Delivered' THEN 'Completed' WHEN status = 'Cancelled' THEN 'Cancelled' ELSE status END AS display_status FROM Orders;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 101,
+        "status": "Delivered",
+        "display_status": "Completed"
+      },
+      {
+        "id": 102,
+        "status": "Processing",
+        "display_status": "In Progress"
+      },
+      {
+        "id": 103,
+        "status": "Delivered",
+        "display_status": "Completed"
+      },
+      {
+        "id": 104,
+        "status": "Shipped",
+        "display_status": "On Its Way"
+      },
+      {
+        "id": 105,
+        "status": "Delivered",
+        "display_status": "Completed"
+      },
+      {
+        "id": 106,
+        "status": "Processing",
+        "display_status": "In Progress"
+      },
+      {
+        "id": 107,
+        "status": "Delivered",
+        "display_status": "Completed"
+      },
+      {
+        "id": 109,
+        "status": "Delivered",
+        "display_status": "Completed"
+      },
+      {
+        "id": 110,
+        "status": "Shipped",
+        "display_status": "On Its Way"
+      },
+      {
+        "id": 111,
+        "status": "Delivered",
+        "display_status": "Completed"
+      },
+      {
+        "id": 112,
+        "status": "Processing",
+        "display_status": "In Progress"
+      },
+      {
+        "id": 113,
+        "status": "Delivered",
+        "display_status": "Completed"
+      },
+      {
+        "id": 114,
+        "status": "Shipped",
+        "display_status": "On Its Way"
+      },
+      {
+        "id": 115,
+        "status": "Delivered",
+        "display_status": "Completed"
+      },
+      {
+        "id": 116,
+        "status": "Delivered",
+        "display_status": "Completed"
+      },
+      {
+        "id": 117,
+        "status": "Delivered",
+        "display_status": "Completed"
+      },
+      {
+        "id": 119,
+        "status": "Processing",
+        "display_status": "In Progress"
+      },
+      {
+        "id": 120,
+        "status": "Delivered",
+        "display_status": "Completed"
+      }
+    ]
+  },
+  {
+    "id": "L9_P3",
+    "level": 9,
+    "type": "code",
+    "title": "Salary Bands",
+    "requiredConcept": "CASE",
+    "story": "HR wants a headcount by experience level. Count employees in each salary band. Use CASE to create the <code>band</code>: < 50000 → \"Junior\", <= 80000 → \"Mid\", Else → \"Senior\". GROUP BY this new band. Show <code>band</code> and <code>headcount</code>.",
+    "hints": [
+      "You can either GROUP BY the CASE expression itself, or rely on the column alias depending on the SQL engine.",
+      "SELECT CASE WHEN salary < 50000 THEN 'Junior' WHEN salary <= 80000 THEN 'Mid' ELSE 'Senior' END AS band, COUNT(*) AS headcount FROM Employees GROUP BY band;"
+    ],
+    "expectedOutput": [
+      {
+        "band": "Mid",
+        "headcount": 2
+      },
+      {
+        "band": "Senior",
+        "headcount": 4
+      }
+    ]
+  },
+  {
+    "id": "L9_P4",
+    "level": 9,
+    "type": "code",
+    "title": "Company Directory",
+    "requiredConcept": "UNION",
+    "story": "We want a unified list of everyone in our system. Extract <code>first_name</code> as <code>name</code> from Customers, and attach a static string <strong>'Customer'</strong> as <code>type</code>. Do the same for Employees with <strong>'Employee'</strong>. Combine both queries using <strong>UNION</strong>. Sort alphabetically by name.",
+    "pipelineCallout": "UNION runs the full pipeline twice — once for the top query, once for the bottom query — then stacks the two results together, finally applying the bottom ORDER BY to the combined stack.",
+    "hints": [
+      "Query 1 UNION Query 2 ORDER BY ...",
+      "SELECT first_name AS name, 'Customer' AS type FROM Customers UNION SELECT first_name AS name, 'Employee' AS type FROM Employees ORDER BY name;"
+    ],
+    "expectedOutput": [
+      {
+        "name": "Alex",
+        "type": "Customer"
+      },
+      {
+        "name": "Alice",
+        "type": "Employee"
+      },
+      {
+        "name": "Bob",
+        "type": "Employee"
+      },
+      {
+        "name": "Charlie",
+        "type": "Employee"
+      },
+      {
+        "name": "Chris",
+        "type": "Customer"
+      },
+      {
+        "name": "David",
+        "type": "Customer"
+      },
+      {
+        "name": "Diana",
+        "type": "Employee"
+      },
+      {
+        "name": "Emily",
+        "type": "Customer"
+      },
+      {
+        "name": "Evan",
+        "type": "Employee"
+      },
+      {
+        "name": "Fiona",
+        "type": "Employee"
+      },
+      {
+        "name": "Isabella",
+        "type": "Customer"
+      },
+      {
+        "name": "Jessica",
+        "type": "Customer"
+      },
+      {
+        "name": "John",
+        "type": "Customer"
+      },
+      {
+        "name": "Michael",
+        "type": "Customer"
+      },
+      {
+        "name": "Rahul",
+        "type": "Customer"
+      },
+      {
+        "name": "Sarah",
+        "type": "Customer"
+      },
+      {
+        "name": "Sophie",
+        "type": "Customer"
+      }
+    ]
+  },
+  {
+    "id": "L9_P5",
+    "level": 9,
+    "type": "code",
+    "title": "All People, All Sources",
+    "requiredConcept": "UNION ALL",
+    "story": "Do the exact same thing as the previous query, but use <strong>UNION ALL</strong>. Notice if any rows change. UNION removes duplicates across the stacked tables; UNION ALL keeps every single row, even if they match perfectly.",
+    "hints": [
+      "Simply replace UNION with UNION ALL from your last answer.",
+      "SELECT first_name AS name, 'Customer' AS type FROM Customers UNION ALL SELECT first_name AS name, 'Employee' AS type FROM Employees ORDER BY name;"
+    ],
+    "expectedOutput": [
+      {
+        "name": "Alex",
+        "type": "Customer"
+      },
+      {
+        "name": "Alice",
+        "type": "Employee"
+      },
+      {
+        "name": "Bob",
+        "type": "Employee"
+      },
+      {
+        "name": "Charlie",
+        "type": "Employee"
+      },
+      {
+        "name": "Chris",
+        "type": "Customer"
+      },
+      {
+        "name": "David",
+        "type": "Customer"
+      },
+      {
+        "name": "Diana",
+        "type": "Employee"
+      },
+      {
+        "name": "Emily",
+        "type": "Customer"
+      },
+      {
+        "name": "Evan",
+        "type": "Employee"
+      },
+      {
+        "name": "Fiona",
+        "type": "Employee"
+      },
+      {
+        "name": "Isabella",
+        "type": "Customer"
+      },
+      {
+        "name": "Jessica",
+        "type": "Customer"
+      },
+      {
+        "name": "John",
+        "type": "Customer"
+      },
+      {
+        "name": "Michael",
+        "type": "Customer"
+      },
+      {
+        "name": "Rahul",
+        "type": "Customer"
+      },
+      {
+        "name": "Sarah",
+        "type": "Customer"
+      },
+      {
+        "name": "Sophie",
+        "type": "Customer"
+      }
+    ]
+  },
+  {
+    "id": "L9_P6",
+    "level": 9,
+    "type": "code",
+    "title": "Conditional Revenue Flag",
+    "requiredConcept": "CASE",
+    "story": "Finance wants a split metric from the Orders table: what's our total pipeline value for High Value (>200) vs Low Value (<=200) orders? Return two columns, `high_revenue` and `low_revenue`, by wrapping a CASE WHEN statement inside a SUM().",
+    "hints": [
+      "SUM(CASE WHEN condition THEN amount ELSE 0 END) AS metric_name",
+      "SELECT SUM(CASE WHEN amount > 200 THEN amount ELSE 0 END) AS high_revenue, SUM(CASE WHEN amount <= 200 THEN amount ELSE 0 END) AS low_revenue FROM Orders;"
+    ],
+    "expectedOutput": [
+      {
+        "high_revenue": 3600,
+        "low_revenue": 759.97
+      }
+    ]
+  },
+  {
+    "id": "L10_P1",
+    "level": 10,
+    "type": "code",
+    "title": "Above-Average Earners",
+    "requiredConcept": "SELECT",
+    "story": "Welcome to the capstone level. Let's start with a scalar subquery. Return <code>first_name</code> and <code>salary</code> for employees earning more than the company's average salary. Sort by salary descending.",
+    "pipelineCallout": "A subquery inside WHERE executes while Step 2 is running. It evaluates its own mini-pipeline to produce a single value, then passes that value back to the main WHERE filter.",
+    "hints": [
+      "Put another SELECT inside parentheses within your WHERE clause.",
+      "WHERE salary > (SELECT AVG(salary) FROM Employees)",
+      "SELECT first_name, salary FROM Employees WHERE salary > (SELECT AVG(salary) FROM Employees) ORDER BY salary DESC;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "Evan",
+        "salary": 110000
+      },
+      {
+        "first_name": "Alice",
+        "salary": 95000
+      },
+      {
+        "first_name": "Bob",
+        "salary": 85000
+      },
+      {
+        "first_name": "Fiona",
+        "salary": 85000
+      }
+    ]
+  },
+  {
+    "id": "L10_P2",
+    "level": 10,
+    "type": "code",
+    "title": "Most Expensive Product Buyer",
+    "requiredConcept": "SELECT",
+    "story": "Who ordered the most expensive item? Find the <code>first_name</code> and <code>last_name</code> from Customers (using DISTINCT) using a subquery inside the WHERE clause based on the `Orders` and `Products` tables.",
+    "hints": [
+      "WHERE product_id = (SELECT id FROM Products WHERE price = (SELECT MAX(price) FROM Products))",
+      "SELECT DISTINCT c.first_name, c.last_name FROM Customers c JOIN Orders o ON c.id = o.customer_id WHERE o.product_id = (SELECT id FROM Products WHERE price = (SELECT MAX(price) FROM Products));"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "last_name": "Doe"
+      },
+      {
+        "first_name": "Sarah",
+        "last_name": "Smith"
+      }
+    ]
+  },
+  {
+    "id": "L10_P3",
+    "level": 10,
+    "type": "code",
+    "title": "Customer Order Summary",
+    "requiredConcept": "WITH",
+    "story": "Let's clean things up using a CTE (Common Table Expression). Calculate the total spent per <code>customer_id</code> in a CTE named <code>cs</code>. Then write a main query that simply selects all columns from <code>cs</code>.",
+    "pipelineCallout": "A CTE runs completely first, acting as Step 0. The database executes it, stores it in memory as a virtual table, and then your main query's FROM step just reads from it like a normal table.",
+    "hints": [
+      "Use WITH cte_name AS (query) SELECT ...",
+      "WITH cs AS (SELECT customer_id, SUM(amount) AS total_spent FROM Orders GROUP BY customer_id) SELECT customer_id, total_spent FROM cs;"
+    ],
+    "expectedOutput": [
+      {
+        "customer_id": 1,
+        "total_spent": 2455
+      },
+      {
+        "customer_id": 2,
+        "total_spent": 1322.5
+      },
+      {
+        "customer_id": 3,
+        "total_spent": 134.99
+      },
+      {
+        "customer_id": 4,
+        "total_spent": 114.99
+      },
+      {
+        "customer_id": 5,
+        "total_spent": 80
+      },
+      {
+        "customer_id": 7,
+        "total_spent": 114.99
+      },
+      {
+        "customer_id": 8,
+        "total_spent": 82.5
+      },
+      {
+        "customer_id": 9,
+        "total_spent": 55
+      }
+    ]
+  },
+  {
+    "id": "L10_P4",
+    "level": 10,
+    "type": "code",
+    "title": "Rank Products by Price",
+    "requiredConcept": "RANK()",
+    "story": "Window functions! Rank all products from most to least expensive. Return <code>name</code>, <code>price</code>, and <code>RANK() OVER (ORDER BY price DESC)</code> as <code>price_rank</code>.",
+    "pipelineCallout": "Step 4½ is unlocked. Window functions execute after GROUP BY and HAVING, but right before the final SELECT projection. They can see the whole dataset but don't collapse it into single rows.",
+    "hints": [
+      "Follow the exact syntax in the prompt: RANK() OVER (ORDER BY price DESC)",
+      "SELECT name, price, RANK() OVER (ORDER BY price DESC) AS price_rank FROM Products;"
+    ],
+    "expectedOutput": [
+      {
+        "name": "Laptop",
+        "price": 1320,
+        "price_rank": 1
+      },
+      {
+        "name": "Gaming Headset",
+        "price": 109.989,
+        "price_rank": 2
+      },
+      {
+        "name": "Mechanical Keyboard",
+        "price": 98.989,
+        "price_rank": 3
+      },
+      {
+        "name": "Keyboard",
+        "price": 77,
+        "price_rank": 4
+      },
+      {
+        "name": "Bluetooth Speaker",
+        "price": 60.50000000000001,
+        "price_rank": 5
+      },
+      {
+        "name": "Desk Lamp",
+        "price": 45,
+        "price_rank": 6
+      },
+      {
+        "name": "Webcam",
+        "price": 43.989000000000004,
+        "price_rank": 7
+      },
+      {
+        "name": "Laptop Stand",
+        "price": 35,
+        "price_rank": 8
+      },
+      {
+        "name": "Wireless Mouse",
+        "price": 27.500000000000004,
+        "price_rank": 9
+      },
+      {
+        "name": "Coffee Mug",
+        "price": 12.5,
+        "price_rank": 10
+      },
+      {
+        "name": "Notebook",
+        "price": 5,
+        "price_rank": 11
+      }
+    ]
+  },
+  {
+    "id": "L10_P5",
+    "level": 10,
+    "type": "code",
+    "title": "Employee Salary Ranking",
+    "requiredConcept": "RANK()",
+    "story": "Rank employees by salary, highest first. Notice how Bob and Fiona, who both earn 85000, get the tied rank of 2. The next person gets rank 4. That's how <code>RANK()</code> works.",
+    "hints": [
+      "Apply RANK() OVER (ORDER BY salary DESC)",
+      "SELECT first_name, salary, RANK() OVER (ORDER BY salary DESC) AS salary_rank FROM Employees;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "Evan",
+        "salary": 110000,
+        "salary_rank": 1
+      },
+      {
+        "first_name": "Alice",
+        "salary": 95000,
+        "salary_rank": 2
+      },
+      {
+        "first_name": "Bob",
+        "salary": 85000,
+        "salary_rank": 3
+      },
+      {
+        "first_name": "Fiona",
+        "salary": 85000,
+        "salary_rank": 3
+      },
+      {
+        "first_name": "Charlie",
+        "salary": 65000,
+        "salary_rank": 5
+      },
+      {
+        "first_name": "Diana",
+        "salary": 55000,
+        "salary_rank": 6
+      }
+    ]
+  },
+  {
+    "id": "L10_P6",
+    "level": 10,
+    "type": "code",
+    "title": "Department Salary Leaderboard",
+    "requiredConcept": "PARTITION BY",
+    "story": "Rank employees by salary <strong>within each department</strong>. Return `first_name`, `department`, `salary`, and rank. Use <code>PARTITION BY department</code> inside the OVER clause.",
+    "hints": [
+      "RANK() OVER (PARTITION BY department ORDER BY salary DESC)",
+      "SELECT first_name, department, salary, RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS dept_rank FROM Employees;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "Evan",
+        "department": "Engineering",
+        "salary": 110000,
+        "dept_rank": 1
+      },
+      {
+        "first_name": "Bob",
+        "department": "Engineering",
+        "salary": 85000,
+        "dept_rank": 2
+      },
+      {
+        "first_name": "Fiona",
+        "department": "Engineering",
+        "salary": 85000,
+        "dept_rank": 2
+      },
+      {
+        "first_name": "Charlie",
+        "department": "Marketing",
+        "salary": 65000,
+        "dept_rank": 1
+      },
+      {
+        "first_name": "Alice",
+        "department": "Sales",
+        "salary": 95000,
+        "dept_rank": 1
+      },
+      {
+        "first_name": "Diana",
+        "department": "Sales",
+        "salary": 55000,
+        "dept_rank": 2
+      }
+    ]
+  },
+  {
+    "id": "L10_P7",
+    "level": 10,
+    "type": "code",
+    "title": "Order Row Numbers",
+    "requiredConcept": "ROW_NUMBER()",
+    "story": "Number each order chronologically using <code>ROW_NUMBER() OVER (ORDER BY order_date)</code>. Unlike RANK(), ROW_NUMBER() guarantees unique numbers even if dates tie.",
+    "hints": [
+      "SELECT id, order_date, amount, ROW_NUMBER() OVER (ORDER BY order_date) AS row_num FROM Orders;"
+    ],
+    "expectedOutput": [
+      {
+        "id": 101,
+        "order_date": "2023-05-01",
+        "amount": 1200,
+        "row_num": 1
+      },
+      {
+        "id": 102,
+        "order_date": "2023-05-02",
+        "amount": 40,
+        "row_num": 2
+      },
+      {
+        "id": 103,
+        "order_date": "2023-05-03",
+        "amount": 12.5,
+        "row_num": 3
+      },
+      {
+        "id": 104,
+        "order_date": "2023-05-04",
+        "amount": 45,
+        "row_num": 4
+      },
+      {
+        "id": 105,
+        "order_date": "2023-05-05",
+        "amount": 89.99,
+        "row_num": 5
+      },
+      {
+        "id": 106,
+        "order_date": "2023-05-06",
+        "amount": 35,
+        "row_num": 6
+      },
+      {
+        "id": 107,
+        "order_date": "2023-05-07",
+        "amount": 55,
+        "row_num": 7
+      },
+      {
+        "id": 109,
+        "order_date": "2023-05-09",
+        "amount": 70,
+        "row_num": 8
+      },
+      {
+        "id": 110,
+        "order_date": "2023-05-10",
+        "amount": 25,
+        "row_num": 9
+      },
+      {
+        "id": 111,
+        "order_date": "2023-05-11",
+        "amount": 12.5,
+        "row_num": 10
+      },
+      {
+        "id": 112,
+        "order_date": "2023-05-12",
+        "amount": 1200,
+        "row_num": 11
+      },
+      {
+        "id": 113,
+        "order_date": "2023-05-13",
+        "amount": 89.99,
+        "row_num": 12
+      },
+      {
+        "id": 114,
+        "order_date": "2023-05-14",
+        "amount": 25,
+        "row_num": 13
+      },
+      {
+        "id": 115,
+        "order_date": "2023-05-15",
+        "amount": 45,
+        "row_num": 14
+      },
+      {
+        "id": 116,
+        "order_date": "2023-05-16",
+        "amount": 55,
+        "row_num": 15
+      },
+      {
+        "id": 117,
+        "order_date": "2023-05-17",
+        "amount": 1200,
+        "row_num": 16
+      },
+      {
+        "id": 119,
+        "order_date": "2023-05-19",
+        "amount": 89.99,
+        "row_num": 17
+      },
+      {
+        "id": 120,
+        "order_date": "2023-05-25",
+        "amount": 70,
+        "row_num": 18
+      }
+    ]
+  },
+  {
+    "id": "L10_P8",
+    "level": 10,
+    "type": "code",
+    "title": "Running Revenue",
+    "requiredConcept": "SUM() OVER",
+    "story": "Compute a cumulative running total of revenue over time. Use <code>SUM(amount) OVER (ORDER BY order_date)</code> as <code>running_total</code>. This is the magic of window functions.",
+    "hints": [
+      "SELECT order_date, amount, SUM(amount) OVER (ORDER BY order_date) AS running_total FROM Orders;"
+    ],
+    "expectedOutput": [
+      {
+        "order_date": "2023-05-01",
+        "amount": 1200,
+        "running_total": 1200
+      },
+      {
+        "order_date": "2023-05-02",
+        "amount": 40,
+        "running_total": 1240
+      },
+      {
+        "order_date": "2023-05-03",
+        "amount": 12.5,
+        "running_total": 1252.5
+      },
+      {
+        "order_date": "2023-05-04",
+        "amount": 45,
+        "running_total": 1297.5
+      },
+      {
+        "order_date": "2023-05-05",
+        "amount": 89.99,
+        "running_total": 1387.49
+      },
+      {
+        "order_date": "2023-05-06",
+        "amount": 35,
+        "running_total": 1422.49
+      },
+      {
+        "order_date": "2023-05-07",
+        "amount": 55,
+        "running_total": 1477.49
+      },
+      {
+        "order_date": "2023-05-09",
+        "amount": 70,
+        "running_total": 1547.49
+      },
+      {
+        "order_date": "2023-05-10",
+        "amount": 25,
+        "running_total": 1572.49
+      },
+      {
+        "order_date": "2023-05-11",
+        "amount": 12.5,
+        "running_total": 1584.99
+      },
+      {
+        "order_date": "2023-05-12",
+        "amount": 1200,
+        "running_total": 2784.99
+      },
+      {
+        "order_date": "2023-05-13",
+        "amount": 89.99,
+        "running_total": 2874.98
+      },
+      {
+        "order_date": "2023-05-14",
+        "amount": 25,
+        "running_total": 2899.98
+      },
+      {
+        "order_date": "2023-05-15",
+        "amount": 45,
+        "running_total": 2944.98
+      },
+      {
+        "order_date": "2023-05-16",
+        "amount": 55,
+        "running_total": 2999.98
+      },
+      {
+        "order_date": "2023-05-17",
+        "amount": 1200,
+        "running_total": 4199.98
+      },
+      {
+        "order_date": "2023-05-19",
+        "amount": 89.99,
+        "running_total": 4289.97
+      },
+      {
+        "order_date": "2023-05-25",
+        "amount": 70,
+        "running_total": 4359.97
+      }
+    ]
+  },
+  {
+    "id": "L10_P9",
+    "level": 10,
+    "type": "arrange_pipeline",
+    "title": "Pipeline Check: CTE + Window",
+    "requiredConcept": "",
+    "story": "<strong>This is not a coding problem.</strong> Arrange the execution order for a complex query involving a CTE and a Window Function. This tests your understanding of Step 4½.",
+    "query": "WITH customer_spending AS (\n    SELECT customer_id, SUM(amount) AS total_spent\n    FROM Orders\n    GROUP BY customer_id\n)\nSELECT c.first_name, cs.total_spent,\n       RANK() OVER (ORDER BY cs.total_spent DESC) AS spending_rank\nFROM Customers c\nJOIN customer_spending cs ON c.id = cs.customer_id\nWHERE cs.total_spent > 100\nORDER BY spending_rank\nLIMIT 5",
+    "scrambled": [
+      "SELECT c.first_name, cs.total_spent, RANK() OVER (...)",
+      "CTE: SUM(amount) GROUP BY customer_id",
+      "FROM Customers JOIN customer_spending",
+      "LIMIT 5",
+      "WHERE cs.total_spent > 100",
+      "RANK() window function evaluates",
+      "ORDER BY spending_rank"
+    ],
+    "correct": [
+      "CTE: SUM(amount) GROUP BY customer_id",
+      "FROM Customers JOIN customer_spending",
+      "WHERE cs.total_spent > 100",
+      "RANK() window function evaluates",
+      "SELECT c.first_name, cs.total_spent, RANK() OVER (...)",
+      "ORDER BY spending_rank",
+      "LIMIT 5"
+    ],
+    "debrief": "The CTE runs its own mini-pipeline first. RANK() runs at Step 4½ — after WHERE filtered out customers below 100, but before SELECT. That's why `spending_rank` starts at 1 even though some customers were excluded."
+  },
+  {
+    "id": "L10_P10",
+    "level": 10,
+    "type": "code",
+    "title": "Top Customers by Spending",
+    "requiredConcept": "RANK",
+    "story": "The grand combination. Create a CTE that sums order amounts per customer. Then JOIN that CTE to the Customers table to rank them by total spending. Return <code>first_name</code>, <code>total_spent</code>, and <code>spending_rank</code>.",
+    "hints": [
+      "WITH cs AS (SELECT customer_id, SUM(amount) AS total_spent FROM Orders GROUP BY customer_id) SELECT c.first_name, cs.total_spent, RANK() OVER (ORDER BY cs.total_spent DESC) AS spending_rank FROM cs JOIN Customers c ON cs.customer_id = c.id ORDER BY spending_rank;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "John",
+        "total_spent": 2455,
+        "spending_rank": 1
+      },
+      {
+        "first_name": "Sarah",
+        "total_spent": 1322.5,
+        "spending_rank": 2
+      },
+      {
+        "first_name": "Michael",
+        "total_spent": 134.99,
+        "spending_rank": 3
+      },
+      {
+        "first_name": "Emily",
+        "total_spent": 114.99,
+        "spending_rank": 4
+      },
+      {
+        "first_name": "Chris",
+        "total_spent": 114.99,
+        "spending_rank": 4
+      },
+      {
+        "first_name": "Sophie",
+        "total_spent": 82.5,
+        "spending_rank": 6
+      },
+      {
+        "first_name": "David",
+        "total_spent": 80,
+        "spending_rank": 7
+      },
+      {
+        "first_name": "Isabella",
+        "total_spent": 55,
+        "spending_rank": 8
+      }
+    ]
+  },
+  {
+    "id": "L10_P11",
+    "level": 10,
+    "type": "code",
+    "title": "Rank vs Dense Rank",
+    "requiredConcept": "DENSE_RANK",
+    "story": "Apply both <code>RANK()</code> and <code>DENSE_RANK()</code> to employee salaries. See the difference? Bob and Fiona tie at 85k (rank 2). RANK gives the next person rank 4. DENSE_RANK gives them rank 3. There are no gaps in DENSE_RANK.",
+    "hints": [
+      "SELECT first_name, salary, RANK() OVER (ORDER BY salary DESC) AS rank, DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_rank FROM Employees;"
+    ],
+    "expectedOutput": [
+      {
+        "first_name": "Evan",
+        "salary": 110000,
+        "rank": 1,
+        "dense_rank": 1
+      },
+      {
+        "first_name": "Alice",
+        "salary": 95000,
+        "rank": 2,
+        "dense_rank": 2
+      },
+      {
+        "first_name": "Bob",
+        "salary": 85000,
+        "rank": 3,
+        "dense_rank": 3
+      },
+      {
+        "first_name": "Fiona",
+        "salary": 85000,
+        "rank": 3,
+        "dense_rank": 3
+      },
+      {
+        "first_name": "Charlie",
+        "salary": 65000,
+        "rank": 5,
+        "dense_rank": 4
+      },
+      {
+        "first_name": "Diana",
+        "salary": 55000,
+        "rank": 6,
+        "dense_rank": 5
+      }
+    ]
+  },
+  {
+    "id": "L10_P12",
+    "level": 10,
+    "type": "code",
+    "title": "Pipeline Check: Design Your Own",
+    "requiredConcept": "SELECT",
+    "story": "<strong>Final Problem.</strong> Write a query from scratch that uses at least 5 of the 8 pipeline steps (FROM, WHERE, GROUP BY, HAVING, Window, SELECT, ORDER BY, LIMIT). There is no exact expected output here. Test your query, make sure it runs, and verify it uses 5 steps. When you're confident, hit Run Query to complete badcode.",
+    "pipelineCallout": "You've reached the end. The training wheels are off. You now know exactly how a database executes your instructions beneath the surface.",
+    "hints": [
+      "A full query might look like: SELECT category, AVG(price) FROM Products WHERE stock > 0 GROUP BY category HAVING count(*) > 0 ORDER BY AVG(price) LIMIT 10;",
+      "Any valid query that runs without error will pass this open challenge."
+    ],
+    "expectedOutput": null
   }
 ]

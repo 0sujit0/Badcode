@@ -150,6 +150,8 @@ export function getAllLevelsProgress(problems) {
     6: { total: 0, completed: 0, withAssist: 0 },
     7: { total: 0, completed: 0, withAssist: 0 },
     8: { total: 0, completed: 0, withAssist: 0 },
+    9: { total: 0, completed: 0, withAssist: 0 },
+    10: { total: 0, completed: 0, withAssist: 0 },
   };
 
   problems.forEach(p => {

@@ -1,15 +1,44 @@
 import problems from '../data/problems.json';
 import { getProblemStatus, isLevelUnlocked } from '../store/progress.js';
 
-const LEVEL_OBJECTIVES = {
-  1: ['Retrieve data using SELECT', 'Avoid duplicates with DISTINCT', 'Rename columns using aliases', 'Combine text with concatenation'],
-  2: ['Filter rows with WHERE', 'Combine conditions with AND / OR', 'Match patterns using LIKE', 'Exclude results with NOT'],
-  3: ['Sort results with ORDER BY', 'Limit rows with LIMIT and OFFSET', 'Match sets with IN and BETWEEN'],
-  4: ['Count, sum, and average with aggregate functions', 'Group results with GROUP BY', 'Filter groups with HAVING'],
-  5: ['Combine tables with INNER JOIN', 'Find unmatched rows with LEFT JOIN', 'Join three tables in one query'],
-  6: ['Add records with INSERT', 'Modify records with UPDATE', 'Remove records with DELETE'],
-  7: ['Manipulate strings with SUBSTR, INSTR, REPLACE', 'Change case with UPPER / LOWER', 'Convert types with CAST'],
-  8: ['Rank rows with window functions', 'Build reusable queries with CTEs', 'Categorise data with CASE WHEN', 'Merge datasets with UNION'],
+const LEVEL_NAMES = {
+  1: 'The SELECT Statement',
+  2: 'The WHERE Clause',
+  3: 'Sorting & Limiting',
+  4: 'Grouping & Aggregation',
+  5: 'Multiple Tables',
+  6: 'Handling NULL Values',
+  7: 'Database Mutations (DML)',
+  8: 'Functions & Formatting',
+  9: 'Complex Logic',
+  10: 'Subqueries & Windows'
+};
+
+// SQL concepts shown as the H1 in the hero — 2 lines max via <br>
+const LEVEL_CONCEPTS_H1 = {
+  1: 'SELECT &amp; DISTINCT,<br>ALIASES, CONCAT',
+  2: 'WHERE, LIKE,<br>AND, OR, NOT',
+  3: 'ORDER BY, LIMIT,<br>IN &amp; BETWEEN',
+  4: 'COUNT, SUM, AVG,<br>GROUP BY &amp; HAVING',
+  5: 'INNER JOIN,<br>LEFT JOIN &amp; SELF JOIN',
+  6: 'COALESCE, IS NULL<br>&amp; NULL MATH',
+  7: 'INSERT, UPDATE<br>&amp; DELETE',
+  8: 'SUBSTR, UPPER,<br>REPLACE &amp; CAST',
+  9: 'CASE WHEN, UNION<br>&amp; UNION ALL',
+  10: 'WINDOW FUNCTIONS,<br>CTEs &amp; SUBQUERIES'
+};
+
+const LEVEL_DESCRIPTIONS = {
+  1: 'Retrieve and shape data from ShopKart\'s tables. Each mission unlocks the next.',
+  2: 'Filter, match, and exclude data from ShopKart\'s tables. Each mission unlocks the next.',
+  3: 'Sort, limit, and filter ranges of data. Each mission unlocks the next.',
+  4: 'Summarise and group data with aggregate functions. Each mission unlocks the next.',
+  5: 'Combine data across multiple tables. Each mission unlocks the next.',
+  6: 'Learn to handle missing data and the quirks of NULL logic.',
+  7: 'Add, modify, and remove records from the database.',
+  8: 'Transform text, format data, and work with dates.',
+  9: 'Build complex conditional logic and stack query results.',
+  10: 'Master the most powerful analytical tools in SQL.'
 };
 
 export default function LevelPage() {
@@ -21,21 +50,13 @@ export default function LevelPage() {
     return `<div class="container" style="padding-top:4rem;color:var(--text-secondary);">Level not found.</div>`;
   }
 
-  const levelNames = {
-    1: 'Foundations', 2: 'Querying Basics', 3: 'Filtering & Sorting',
-    4: 'Aggregation',  5: 'Joins',           6: 'Data Manipulation',
-    7: 'Functions',    8: 'Advanced SQL',
-  };
-
   const locked = !isLevelUnlocked(levelId, problems);
 
-  // Progress calculation
+  // Progress
   const completedCount = levelProblems.filter(p => getProblemStatus(p.id).completed).length;
   const total = levelProblems.length;
-  const pct = Math.round((completedCount / total) * 100);
 
-  // ─── Determine card state ────────────────────────────────────────
-  // Active = first non-completed unlocked problem
+  // Active = first non-completed problem
   let activeIndex = -1;
   for (let i = 0; i < levelProblems.length; i++) {
     if (!getProblemStatus(levelProblems[i].id).completed) {
@@ -43,284 +64,410 @@ export default function LevelPage() {
       break;
     }
   }
-  if (completedCount === total) activeIndex = -1; // all done
+  if (completedCount === total) activeIndex = -1;
 
-  // ─── Mission Cards ───────────────────────────────────────────────
+  // Animate progress ring on mount
+  const ringCircumference = 2 * Math.PI * 36; // r=36 → ~226.2
+  setTimeout(() => {
+    const ring = document.getElementById('lvl-progress-ring');
+    if (ring) {
+      const offset = ringCircumference - (completedCount / total) * ringCircumference;
+      ring.style.strokeDashoffset = offset;
+    }
+  }, 600);
+
+  // Skill chips: unique requiredConcept values in order
+  const conceptsLearned = new Set(
+    levelProblems.filter(p => getProblemStatus(p.id).completed).map(p => p.requiredConcept)
+  );
+  const allConcepts = [...new Set(levelProblems.map(p => p.requiredConcept))];
+  const skillChips = allConcepts.map(concept => {
+    const learned = conceptsLearned.has(concept);
+    return `
+      <div class="lvl-skill-chip ${learned ? 'chip-learned' : ''}">
+        <span class="chip-check">${learned ? '&#x2713;' : ''}</span>
+        ${concept}
+      </div>
+    `;
+  }).join('');
+
+  // Mission cards — vertical list
   const cards = levelProblems.map((p, i) => {
     const status = getProblemStatus(p.id);
     const isCompleted = status.completed;
     const isActive    = i === activeIndex;
-    const isLocked    = false;
+    const isFuture    = !isCompleted && !isActive; // upcoming, not yet accessible
     const cleanStory  = p.story.replace(/<[^>]*>?/gm, '');
 
-    /* ── Card variables for each state ── */
-    let cardBg         = 'var(--bg-card)';
-    let cardBorder     = '1px solid var(--border)';
-    let cardOpacity    = '1';
-    let badgeStyle     = `background:var(--bg-elevated);color:var(--text-muted);border:1px solid var(--border);`;
-    let titleStyle     = `color:var(--text-primary);`;
-    let descStyle      = `color:var(--text-secondary);`;
-    let glowStyle      = '';
-    let statusBadge    = '';
+    // Difficulty bars: first problem = 1, middle = 2, last = 3
+    const diffLevel = i === 0 ? 1 : i === total - 1 ? 3 : 2;
+    const diffBars = [1, 2, 3].map(n =>
+      `<span class="lvl-diff-bar ${n <= diffLevel ? 'bar-filled' : ''}"></span>`
+    ).join('');
 
+    // Number badge
+    let badgeContent = '';
+    let badgeClass = 'lvl-num-badge-future';
     if (isCompleted) {
-      cardBorder   = '1px solid rgba(74,222,128,0.25)';
-      badgeStyle   = `background:rgba(74,222,128,0.15);color:var(--success);border:1px solid rgba(74,222,128,0.3);`;
-      statusBadge  = `<span style="display:inline-flex;align-items:center;gap:0.3rem;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--success);background:rgba(74,222,128,0.1);padding:0.18rem 0.55rem;border-radius:999px;">
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Done
-      </span>`;
+      badgeContent = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+      badgeClass = 'lvl-num-badge-done';
     } else if (isActive) {
-      cardBg       = 'var(--bg-card)';
-      cardBorder   = '1px solid var(--border-accent)';
-      glowStyle    = 'box-shadow: 0 0 0 1px var(--border-accent), 0 8px 32px rgba(200,245,66,0.06);';
-      badgeStyle   = `background:var(--accent);color:var(--text-inverse);border:none;font-weight:800;`;
+      badgeContent = `${i + 1}`;
+      badgeClass = 'lvl-num-badge-active';
     } else {
-      /* locked */
-      cardOpacity  = '0.45';
+      badgeContent = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`;
+      badgeClass = 'lvl-num-badge-future';
     }
 
-    /* ── Number / check badge ── */
-    const badgeContent = isCompleted
-      ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>`
-      : isLocked
-        ? `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`
-        : `${i + 1}`;
-
-    /* ── CTA Button ── */
+    // CTA button
     let ctaBtn = '';
     if (isActive) {
-      ctaBtn = `<a href="#/lesson/${p.id}" onclick="event.stopPropagation()" style="
-        display:inline-flex;align-items:center;gap:0.35rem;
-        padding:0.45rem 1.1rem;border-radius:999px;
-        font-family:var(--font-sans);font-size:0.82rem;font-weight:700;
-        text-decoration:none;
-        background:var(--accent);color:var(--text-inverse);
-        transition:background 0.15s,transform 0.15s;
-      " onmouseenter="this.style.background='var(--accent-yellow-hover)';this.style.transform='scale(1.03)'"
-         onmouseleave="this.style.background='var(--accent)';this.style.transform='scale(1)'">
+      ctaBtn = `<a href="#/lesson/${p.id}" onclick="event.stopPropagation()" class="lvl-cta-btn lvl-cta-start">
         Start
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>`;
-    } else if (!isCompleted) {
-      ctaBtn = `<a href="#/lesson/${p.id}" onclick="event.stopPropagation()" style="
-        display:inline-flex;align-items:center;gap:0.35rem;
-        padding:0.45rem 1.1rem;border-radius:999px;
-        font-family:var(--font-sans);font-size:0.82rem;font-weight:700;
-        text-decoration:none;
-        background:transparent;color:var(--text-secondary);
-        border:1px solid var(--border-hover);
-        transition:border-color 0.15s,color 0.15s;
-      " onmouseenter="this.style.borderColor='var(--text-secondary)';this.style.color='var(--text-primary)'"
-         onmouseleave="this.style.borderColor='var(--border-hover)';this.style.color='var(--text-secondary)'">
-        Start
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>`;
     } else if (isCompleted) {
-      ctaBtn = `<a href="#/lesson/${p.id}" onclick="event.stopPropagation()" style="
-        display:inline-flex;align-items:center;gap:0.3rem;
-        padding:0.38rem 0.9rem;border-radius:999px;
-        font-family:var(--font-sans);font-size:0.78rem;font-weight:600;
-        text-decoration:none;
-        background:transparent;color:var(--text-secondary);
-        border:1px solid var(--border-hover);
-        transition:border-color 0.15s,color 0.15s;
-      " onmouseenter="this.style.borderColor='var(--text-secondary)';this.style.color='var(--text-primary)'"
-         onmouseleave="this.style.borderColor='var(--border-hover)';this.style.color='var(--text-secondary)'">
+      ctaBtn = `<a href="#/lesson/${p.id}" onclick="event.stopPropagation()" class="lvl-cta-btn lvl-cta-review">
         Review
+      </a>`;
+    } else {
+      // future — still clickable but looks locked
+      ctaBtn = `<a href="#/lesson/${p.id}" onclick="event.stopPropagation()" class="lvl-cta-btn lvl-cta-locked">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </a>`;
     }
 
-    /* ── Hover events (only non-locked) ── */
-    const hoverEvents = !isLocked ? `
-      onmouseenter="if(this.dataset.active!='true'){this.style.borderColor='var(--border-hover)';this.style.background='var(--bg-card-hover)';this.style.transform='translateY(-2px)';}"
-      onmouseleave="if(this.dataset.active!='true'){this.style.borderColor='${isCompleted ? 'rgba(74,222,128,0.25)' : 'var(--border)'}';this.style.background='var(--bg-card)';this.style.transform='translateY(0)';}"
+    let cardStateClass = '';
+    if (isActive) cardStateClass = 'lvl-card-active';
+    else if (isCompleted) cardStateClass = 'lvl-card-done';
+    else cardStateClass = 'lvl-card-future';
+
+    const hoverEvents = isActive ? `
+      onmouseenter="this.style.transform='translateX(4px)';this.style.borderColor='rgba(200,245,66,0.3)';"
+      onmouseleave="this.style.transform='';this.style.borderColor='';"
+    ` : isCompleted ? `
+      onmouseenter="this.style.borderColor='var(--border-hover)';"
+      onmouseleave="this.style.borderColor='';"
     ` : '';
-    const activeDataAttr = isActive ? `data-active="true"` : '';
 
     return `
       <div
-        ${activeDataAttr}
-        style="
-          background:${cardBg};
-          border:${cardBorder};
-          ${glowStyle}
-          border-radius:14px;
-          padding:1.5rem 1.75rem;
-          display:flex;flex-direction:column;gap:1.1rem;
-          cursor:${isLocked ? 'default' : 'pointer'};
-          opacity:${cardOpacity};
-          transition:border-color 0.2s,background 0.2s,transform 0.2s,box-shadow 0.2s;
-          animation:fadeUp 0.4s ease ${i * 60}ms both;
-          position:relative;overflow:hidden;
-        "
-        ${!isLocked ? `onclick="window.location.hash='#/lesson/${p.id}'"` : ''}
+        class="lvl-mission-card ${cardStateClass}"
+        style="animation: fadeUp 0.35s cubic-bezier(0.22,1,0.36,1) ${300 + i * 80}ms both;"
+        onclick="window.location.hash='#/lesson/${p.id}'"
         ${hoverEvents}
       >
-        ${isActive ? `<div style="
-          position:absolute;top:0;left:0;right:0;height:2px;
-          background:var(--accent);
-          border-radius:14px 14px 0 0;
-        "></div>` : ''}
+        ${isActive ? '<div class="lvl-card-stripe"></div>' : ''}
+        ${isCompleted ? '<div class="lvl-card-stripe lvl-card-stripe-done"></div>' : ''}
 
-        <!-- Row 1: badge + status -->
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <div style="
-            width:28px;height:28px;border-radius:50%;
-            ${badgeStyle}
-            display:flex;align-items:center;justify-content:center;
-            font-family:var(--font-mono);font-size:0.78rem;font-weight:700;
-            flex-shrink:0;
-          ">${badgeContent}</div>
-          ${statusBadge}
+        <!-- Number badge -->
+        <div class="lvl-num-badge ${badgeClass}">${badgeContent}</div>
+
+        <!-- Body -->
+        <div class="lvl-card-body">
+          <div class="lvl-card-title">${p.title}</div>
+          <div class="lvl-card-desc">${cleanStory}</div>
+          <div class="lvl-card-tags">
+            <span class="lvl-concept-tag ${isActive ? 'tag-active' : ''}">${p.requiredConcept}</span>
+          </div>
         </div>
 
-        <!-- Row 2: title + description -->
-        <div style="flex:1;">
-          <h3 style="
-            font-family:var(--font-sans);font-size:0.95rem;font-weight:600;
-            ${titleStyle}
-            margin-bottom:0.45rem;line-height:1.35;letter-spacing:-0.01em;
-          ">${p.title}</h3>
-          <p style="
-            ${descStyle}font-size:0.83rem;line-height:1.6;
-            display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
-          ">${cleanStory}</p>
-        </div>
-
-        <!-- Row 3: concept tag + CTA -->
-        <div style="
-          display:flex;align-items:center;justify-content:space-between;
-          padding-top:0.9rem;border-top:1px solid var(--border);
-          margin-top:auto;
-        ">
-          <code style="
-            font-family:var(--font-mono);font-size:0.72rem;font-weight:600;
-            color:${isActive ? '#1A2200' : 'var(--text-muted)'};
-            background:${isActive ? '#C8F542' : 'transparent'};
-            padding:0.18rem ${isActive ? '0.5rem' : '0'};border-radius:${isActive ? '4px' : '0'};
-            ${isActive ? 'border:1px solid #B0D930;' : ''}
-          ">${isActive ? '' : '#'}${p.requiredConcept}</code>
+        <!-- Action -->
+        <div class="lvl-card-action">
+          <div class="lvl-diff-bars">${diffBars}</div>
           ${ctaBtn}
         </div>
       </div>
     `;
   }).join('');
 
-  // ─── Progress segments ───────────────────────────────────────────
-  const segments = levelProblems.map((p, i) => {
-    const done = getProblemStatus(p.id).completed;
-    return `<div style="
-      flex:1;height:3px;border-radius:2px;
-      background:${done ? 'var(--accent)' : i === activeIndex ? 'rgba(200,245,66,0.25)' : 'var(--border)'};
-      transition:background 0.3s ${i * 60}ms;
-    "></div>`;
-  }).join('');
-
   return `
     <style>
-      @keyframes fadeUp {
-        from { opacity:0; transform:translateY(14px); }
-        to   { opacity:1; transform:translateY(0); }
+      /* ─── Level Page Redesign ─── */
+      @keyframes ring-fill {
+        from { stroke-dashoffset: ${ringCircumference}; }
       }
-      @keyframes subtlePulse {
-        0%,100% { box-shadow: 0 0 0 1px var(--border-accent), 0 8px 32px rgba(200,245,66,0.06); }
-        50%      { box-shadow: 0 0 0 1px var(--border-accent), 0 8px 40px rgba(200,245,66,0.14); }
+
+      /* Hero */
+      .lvl-hero {
+        margin-top: 2.5rem; margin-bottom: 0;
+        animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both;
       }
-      [data-active="true"] { animation: fadeUp 0.4s ease both, subtlePulse 3s ease 1s infinite !important; }
+      .lvl-hero-inner {
+        display: flex; align-items: flex-start; justify-content: space-between;
+        gap: 2rem; margin-bottom: 28px;
+      }
+      .lvl-hero-content { flex: 1; }
+      .lvl-level-tag {
+        font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
+        letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
+        display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+      }
+      .lvl-level-tag::before {
+        content: ''; width: 14px; height: 2px; background: var(--accent); display: block;
+      }
+      .lvl-hero h1 {
+        font-family: var(--font-mono) !important;
+        font-size: clamp(1.5rem, 3.5vw, 2.1rem) !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.04em !important;
+        line-height: 1.15 !important;
+        color: var(--text-primary) !important;
+        margin-bottom: 8px;
+      }
+      .lvl-hero-desc {
+        font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;
+        max-width: 460px;
+      }
+
+      /* Progress ring */
+      .lvl-ring-wrap {
+        flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 6px;
+      }
+      .lvl-ring { position: relative; width: 88px; height: 88px; }
+      .lvl-ring svg { transform: rotate(-90deg); }
+      .lvl-ring-bg { fill: none; stroke: var(--bg-elevated); stroke-width: 6; }
+      .lvl-ring-fill {
+        fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round;
+        stroke-dasharray: ${ringCircumference.toFixed(1)};
+        stroke-dashoffset: ${ringCircumference.toFixed(1)};
+        transition: stroke-dashoffset 1.5s cubic-bezier(0.22,1,0.36,1);
+      }
+      .lvl-ring-text {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        font-family: var(--font-mono);
+      }
+      .lvl-ring-num { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
+      .lvl-ring-label { font-size: 0.58rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+      /* Skills row — attached to header */
+      .lvl-skills-row {
+        display: flex; gap: 7px; flex-wrap: wrap;
+        padding: 0 0 24px 0;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 28px;
+        animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.15s both;
+        opacity: 0;
+      }
+      .lvl-skill-chip {
+        font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500;
+        padding: 5px 12px; border-radius: 999px;
+        background: var(--bg-elevated); color: var(--text-muted);
+        border: 1px solid var(--border);
+        display: flex; align-items: center; gap: 6px;
+        transition: all 0.25s;
+      }
+      .lvl-skill-chip.chip-learned {
+        background: var(--accent-tint); border-color: var(--border-accent); color: var(--accent);
+      }
+      .chip-check {
+        width: 13px; height: 13px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 8px; flex-shrink: 0;
+      }
+      .chip-learned .chip-check { background: var(--accent); color: var(--text-inverse); }
+      .lvl-skill-chip:not(.chip-learned) .chip-check { border: 1.5px solid var(--text-muted); }
+
+      /* Section label */
+      .lvl-section-label {
+        font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+        letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);
+        margin-bottom: 12px;
+      }
+
+      /* Mission cards — vertical list */
+      .lvl-missions-list { display: flex; flex-direction: column; gap: 8px; }
+      .lvl-mission-card {
+        display: grid;
+        grid-template-columns: 36px 1fr auto;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 18px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        cursor: pointer; position: relative; overflow: hidden;
+        transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      }
+      .lvl-card-stripe {
+        position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+        background: var(--accent);
+      }
+      .lvl-card-stripe-done { background: var(--success); opacity: 0.5; }
+      .lvl-card-active { border-color: var(--border-accent); }
+      .lvl-card-done { border-color: var(--success-border); }
+      .lvl-card-future .lvl-card-body,
+      .lvl-card-future .lvl-card-action { opacity: 0.45; }
+      .lvl-card-future .lvl-num-badge { opacity: 0.45; }
+
+      /* Number badge */
+      .lvl-num-badge {
+        width: 36px; height: 36px; border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        font-family: var(--font-mono); font-weight: 700; font-size: 0.82rem;
+        flex-shrink: 0; transition: all 0.2s;
+      }
+      .lvl-num-badge-active {
+        background: var(--accent); color: var(--text-inverse);
+        animation: badge-glow 3s ease-in-out infinite;
+      }
+      @keyframes badge-glow {
+        0%,100% { box-shadow: 0 0 16px var(--accent-tint-strong); }
+        50% { box-shadow: 0 0 24px rgba(200,255,0,0.25); }
+      }
+      .lvl-num-badge-done {
+        background: var(--accent-tint); color: var(--accent); border: 1px solid var(--border-accent);
+      }
+      .lvl-num-badge-future {
+        background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border);
+      }
+
+      /* Card body */
+      .lvl-card-body { min-width: 0; }
+      .lvl-card-title {
+        font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+        color: var(--text-primary); margin-bottom: 3px; letter-spacing: -0.02em;
+      }
+      .lvl-card-desc {
+        font-size: 12.5px; color: var(--text-secondary); line-height: 1.5;
+        display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+        margin-bottom: 6px;
+      }
+      .lvl-card-tags { display: flex; gap: 5px; }
+      .lvl-concept-tag {
+        font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
+        padding: 2px 8px; border-radius: 4px;
+        background: var(--bg-elevated); color: var(--text-muted);
+        border: 1px solid var(--border);
+      }
+      .lvl-concept-tag.tag-active {
+        background: var(--accent); color: var(--text-inverse); border-color: var(--accent);
+      }
+
+      /* Card action */
+      .lvl-card-action {
+        display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;
+      }
+      .lvl-diff-bars { display: flex; gap: 3px; align-items: flex-end; }
+      .lvl-diff-bar {
+        width: 3px; height: 14px; border-radius: 2px; background: var(--bg-elevated);
+      }
+      .lvl-diff-bar.bar-filled { background: var(--accent); opacity: 0.7; }
+
+      .lvl-cta-btn {
+        font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+        padding: 7px 16px; border-radius: var(--radius-sm);
+        text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
+        white-space: nowrap; transition: all 0.15s; border: none; cursor: pointer;
+      }
+      .lvl-cta-start { background: var(--accent); color: var(--text-inverse); }
+      .lvl-cta-start:hover { background: var(--accent-yellow-hover); transform: translateX(2px); }
+      .lvl-cta-review {
+        background: transparent; color: var(--text-secondary);
+        border: 1px solid var(--border-hover);
+      }
+      .lvl-cta-review:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+      .lvl-cta-locked {
+        background: var(--bg-elevated); color: var(--text-muted);
+        border: 1px solid var(--border); cursor: default; width: 36px;
+        justify-content: center; padding: 7px;
+      }
+
+      /* ─── Light mode overrides ─── */
+      [data-theme="light"] .lvl-mission-card {
+        border-color: transparent;
+        box-shadow: var(--shadow-card);
+      }
+      [data-theme="light"] .lvl-mission-card.lvl-card-active {
+        box-shadow: var(--shadow-card-active);
+        border-color: transparent;
+      }
+      [data-theme="light"] .lvl-mission-card.lvl-card-done {
+        border-color: transparent;
+      }
+      [data-theme="light"] .lvl-mission-card.lvl-card-future {
+        box-shadow: none;
+        background: var(--bg-card-locked);
+      }
+      [data-theme="light"] .lvl-skill-chip.chip-learned {
+        background: var(--accent); color: #FFFFFF;
+        border-color: var(--accent);
+      }
+      [data-theme="light"] .lvl-skill-chip.chip-learned .chip-check {
+        background: #FFFFFF; color: var(--accent);
+      }
+      [data-theme="light"] .lvl-skill-chip:not(.chip-learned) {
+        background: var(--bg-card); color: var(--text-muted);
+        border: 1px solid rgba(0,0,0,0.08);
+      }
+
+      /* Lock gate banner */
+      .lvl-lock-gate {
+        margin-bottom: 2rem;
+        background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.2);
+        border-radius: var(--radius-lg); padding: 1.25rem 1.5rem;
+        display: flex; align-items: center; gap: 1rem;
+        animation: fadeUp 0.4s ease both;
+      }
+      .lvl-lock-icon {
+        width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+        background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.25);
+        display: flex; align-items: center; justify-content: center;
+      }
+
+      /* All complete banner */
+      .lvl-complete-banner {
+        margin-top: 2.5rem;
+        background: var(--success-tint); border: 1px solid var(--success-border);
+        border-radius: var(--radius-lg); padding: 1.5rem 2rem;
+        display: flex; align-items: center; gap: 1rem;
+        animation: fadeUp 0.5s ease both;
+      }
+      .lvl-complete-icon {
+        width: 36px; height: 36px; border-radius: 50%;
+        background: var(--success-dim); border: 1px solid var(--success-border);
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      }
+
+      /* Responsive */
+      @media (max-width: 640px) {
+        .lvl-hero-inner { flex-direction: column; gap: 1.5rem; }
+        .lvl-ring-wrap { flex-direction: row; align-self: flex-start; gap: 1rem; align-items: center; }
+        .lvl-mission-card { grid-template-columns: 36px 1fr; gap: 10px; padding: 14px 14px; }
+        .lvl-card-action { display: none; }
+        .lvl-card-desc { -webkit-line-clamp: 2; }
+      }
     </style>
 
-    <div class="container" style="padding-top:2.5rem;padding-bottom:6rem;">
+    <div class="container" style="padding-top: 0; padding-bottom: 6rem;">
 
-      <!-- Back link -->
-      <a href="#/dashboard" style="
-        display:inline-flex;align-items:center;gap:0.4rem;
-        text-decoration:none;
-        color:var(--text-muted);
-        font-size:0.8rem;font-weight:500;
-        margin-bottom:2.5rem;
-        transition:color 0.15s;
-      " onmouseenter="this.style.color='var(--text-secondary)'"
-         onmouseleave="this.style.color='var(--text-muted)'">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
-        </svg>
-        Back to Dashboard
-      </a>
-
-      <!-- Hero banner -->
-      <div style="
-        background:linear-gradient(135deg,#111115 0%,#16161C 100%);
-        border:1px solid rgba(255,255,255,0.07);
-        border-radius:20px;
-        padding:2.5rem 3rem;
-        margin-bottom:2rem;
-        position:relative;overflow:hidden;
-        animation:fadeUp 0.4s ease both;
-      ">
-        <!-- Subtle grid texture -->
-        <div style="
-          position:absolute;inset:0;
-          background-image:radial-gradient(circle,rgba(200,245,66,0.03) 1px,transparent 1px);
-          background-size:24px 24px;pointer-events:none;
-        "></div>
-        <!-- Accent glow top right -->
-        <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;
-          background:radial-gradient(circle,rgba(200,245,66,0.06) 0%,transparent 70%);
-          pointer-events:none;"></div>
-
-        <div style="position:relative;">
-          <!-- Level pill -->
-          <div style="
-            display:inline-block;
-            font-family:var(--font-mono);font-size:0.68rem;font-weight:700;
-            text-transform:uppercase;letter-spacing:0.12em;
-            color:var(--text-inverse);background:var(--accent);
-            padding:0.22rem 0.75rem;border-radius:999px;
-            margin-bottom:1.1rem;
-          ">LVL ${levelId} · ${(levelNames[levelId] || 'missions').toUpperCase()}</div>
-
-          <h1 style="
-            font-family:var(--font-sans);
-            font-size:clamp(1.8rem, 4vw, 2.6rem);
-            font-weight:700;font-style:normal;
-            color:#E8E6E3;
-            letter-spacing:-0.03em;
-            margin-bottom:0.5rem;line-height:1.1;
-          ">${levelNames[levelId] || 'Level ' + levelId} Missions</h1>
-
-          <p style="color:#9A9898;font-size:0.9rem;max-width:480px;line-height:1.65;margin-bottom:0;">
-            Solve real business data requests to earn your rank. Each mission unlocks the next.
-          </p>
-
-          ${(LEVEL_OBJECTIVES[levelId] || []).length > 0 ? `
-          <ul style="margin-top:1rem;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:0.4rem;">
-            ${(LEVEL_OBJECTIVES[levelId] || []).map(obj => `
-              <li style="font-size:0.75rem;color:#9A9898;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:0.2rem 0.7rem;display:flex;align-items:center;gap:0.3rem;">
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                ${obj}
-              </li>`).join('')}
-          </ul>` : ''}
+      <!-- Hero -->
+      <section class="lvl-hero">
+        <div class="lvl-hero-inner">
+          <div class="lvl-hero-content">
+            <div class="lvl-level-tag">Level ${String(levelId).padStart(2, '0')} &middot; ${LEVEL_NAMES[levelId] || 'Missions'}</div>
+            <h1>${LEVEL_CONCEPTS_H1[levelId] || LEVEL_NAMES[levelId]}</h1>
+            <p class="lvl-hero-desc">${LEVEL_DESCRIPTIONS[levelId] || 'Solve missions to learn SQL.'}</p>
+          </div>
+          <div class="lvl-ring-wrap">
+            <div class="lvl-ring">
+              <svg width="88" height="88" viewBox="0 0 88 88">
+                <circle class="lvl-ring-bg" cx="44" cy="44" r="36"/>
+                <circle class="lvl-ring-fill" id="lvl-progress-ring" cx="44" cy="44" r="36"/>
+              </svg>
+              <div class="lvl-ring-text">
+                <span class="lvl-ring-num">${completedCount}</span>
+                <span class="lvl-ring-label">of ${total}</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Progress bar -->
-      <div style="margin-bottom:2.5rem;animation:fadeUp 0.4s ease 0.1s both;">
-        <div style="
-          display:flex;align-items:center;justify-content:space-between;
-          margin-bottom:0.6rem;
-        ">
-          <span style="font-family:var(--font-mono);font-size:0.72rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;">
-            Progress
-          </span>
-          <span style="font-family:var(--font-mono);font-size:0.72rem;font-weight:700;color:${completedCount > 0 ? 'var(--accent)' : 'var(--text-muted)'};">
-            ${completedCount} / ${total} completed
-          </span>
-        </div>
-        <!-- Segmented bar -->
-        <div style="display:flex;gap:3px;">
-          ${segments}
-        </div>
+      <!-- Skills row -->
+      <div class="lvl-skills-row">
+        ${skillChips}
       </div>
 
       <!-- Lock gate banner -->
@@ -328,69 +475,50 @@ export default function LevelPage() {
         const prevTotal = problems.filter(p => p.level === levelId - 1).length;
         const needed = Math.ceil(prevTotal * 0.8);
         return `
-        <div style="
-          margin-bottom:2rem;
-          background:rgba(234,179,8,0.07);
-          border:1px solid rgba(234,179,8,0.25);
-          border-radius:14px;padding:1.25rem 1.5rem;
-          display:flex;align-items:center;gap:1rem;
-          animation:fadeUp 0.4s ease both;
-        ">
-          <div style="
-            width:36px;height:36px;border-radius:50%;flex-shrink:0;
-            background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.3);
-            display:flex;align-items:center;justify-content:center;
-          "><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ca8a04" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="lvl-lock-gate">
+          <div class="lvl-lock-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ca8a04" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
           <div style="flex:1;">
-            <div style="font-weight:700;color:var(--text-primary);margin-bottom:0.2rem;font-size:0.9rem;">Level ${levelId - 1} not yet 80% complete</div>
-            <div style="font-size:0.8rem;color:var(--text-secondary);">Complete at least ${needed} of ${prevTotal} missions in Level ${levelId - 1} to unlock this level.</div>
+            <div style="font-weight:700;color:var(--text-primary);margin-bottom:0.2rem;font-size:0.88rem;">Level ${levelId - 1} not yet 80% complete</div>
+            <div style="font-size:0.78rem;color:var(--text-secondary);">Complete at least ${needed} of ${prevTotal} missions in Level ${levelId - 1} to unlock this level.</div>
           </div>
           <a href="#/level/${levelId - 1}" style="
-            flex-shrink:0;
-            display:inline-flex;align-items:center;gap:0.35rem;
+            flex-shrink:0;display:inline-flex;align-items:center;gap:0.3rem;
             padding:0.45rem 1rem;border-radius:999px;
-            font-family:var(--font-sans);font-size:0.8rem;font-weight:700;
+            font-family:var(--font-sans);font-size:0.78rem;font-weight:700;
             text-decoration:none;
-            background:rgba(234,179,8,0.15);color:#ca8a04;
-            border:1px solid rgba(234,179,8,0.3);
-          ">Go back →</a>
+            background:rgba(251,191,36,0.12);color:#ca8a04;
+            border:1px solid rgba(251,191,36,0.25);
+          ">Go back &rarr;</a>
         </div>`;
       })() : ''}
 
-      <!-- Mission grid -->
-      <div class="grid-missions" style="${locked ? 'pointer-events:none;opacity:0.4;' : ''}">
+      <!-- Missions label -->
+      <div class="lvl-section-label">Missions</div>
+
+      <!-- Mission list -->
+      <div class="lvl-missions-list" style="${locked ? 'pointer-events:none;opacity:0.45;' : ''}">
         ${cards}
       </div>
 
-      ${completedCount === total ? `
       <!-- All complete banner -->
-      <div style="
-        margin-top:3rem;
-        background:rgba(74,222,128,0.06);
-        border:1px solid rgba(74,222,128,0.2);
-        border-radius:14px;
-        padding:1.5rem 2rem;
-        display:flex;align-items:center;gap:1rem;
-        animation:fadeUp 0.5s ease both;
-      ">
-        <div style="
-          width:36px;height:36px;border-radius:50%;
-          background:rgba(74,222,128,0.15);
-          border:1px solid rgba(74,222,128,0.3);
-          display:flex;align-items:center;justify-content:center;
-          flex-shrink:0;
-        "><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+      ${completedCount === total ? `
+      <div class="lvl-complete-banner">
+        <div class="lvl-complete-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
         <div>
           <div style="font-weight:700;color:var(--text-primary);margin-bottom:0.2rem;">Level ${levelId} Cleared!</div>
           <div style="font-size:0.83rem;color:var(--text-secondary);">All missions complete. Ready for the next challenge.</div>
         </div>
-        ${levelId < 8 ? `<a href="#/level/${levelId + 1}" style="
+        ${levelId < 10 ? `<a href="#/level/${levelId + 1}" style="
           margin-left:auto;
           display:inline-flex;align-items:center;gap:0.35rem;
           padding:0.5rem 1.25rem;border-radius:999px;
           font-family:var(--font-sans);font-size:0.82rem;font-weight:700;
           text-decoration:none;background:var(--accent);color:var(--text-inverse);
-        ">Level ${levelId + 1} →</a>` : ''}
+        ">Level ${levelId + 1} &rarr;</a>` : ''}
       </div>` : ''}
 
     </div>

@@ -1,69 +1,87 @@
+import problems from '../data/problems.json';
+
+const levelTitleMap = {
+  1: "First Steps",
+  2: "SELECT Basics",
+  3: "Filtering & Sorting",
+  4: "Aggregations",
+  5: "JOINs",
+  6: "Modifying Data",
+  7: "Text & Dates",
+  8: "Window Functions"
+};
+
 export default function Navbar() {
+  const hash = window.location.hash || '#/';
+  let breadcrumbHtml = '';
+
+  if (hash.startsWith('#/lesson/')) {
+    const lessonId = hash.split('/').pop();
+    const problem = problems.find(p => p.id === lessonId);
+    if (problem) {
+      const levelTitle = levelTitleMap[problem.level] || `Level ${problem.level}`;
+      const levelStr = `Level ${problem.level} — ${levelTitle}`;
+      
+      const levelProblems = problems.filter(p => p.level === problem.level).sort((a, b) => a.id.localeCompare(b.id));
+      const currentIndex = levelProblems.findIndex(p => p.id === problem.id);
+      const problemNumber = currentIndex + 1;
+
+      breadcrumbHtml = `
+        <div class="breadcrumb-nav" style="margin-left: 1.5rem;">
+          <a href="#/dashboard" class="breadcrumb-item">Modules</a>
+          <span class="breadcrumb-separator">›</span>
+          <a href="#/level/${problem.level}" class="breadcrumb-item">${levelStr}</a>
+          <span class="breadcrumb-separator">›</span>
+          <span class="breadcrumb-current">Problem ${problemNumber}</span>
+        </div>
+      `;
+    }
+  } else if (hash.startsWith('#/level/')) {
+    const lvl = parseInt(hash.split('/').pop(), 10);
+    if (lvl) {
+      const levelTitle = levelTitleMap[lvl] || `Level ${lvl}`;
+      const levelStr = `Level ${lvl} — ${levelTitle}`;
+      
+      breadcrumbHtml = `
+        <div class="breadcrumb-nav" style="margin-left: 1.5rem;">
+          <a href="#/dashboard" class="breadcrumb-item">Modules</a>
+          <span class="breadcrumb-separator">›</span>
+          <span class="breadcrumb-current">${levelStr}</span>
+        </div>
+      `;
+    }
+  } else if (hash.startsWith('#/dashboard')) {
+    breadcrumbHtml = `
+      <div class="breadcrumb-nav" style="margin-left: 1.5rem;">
+        <span class="breadcrumb-current">Modules</span>
+      </div>
+    `;
+  }
+
   return `
     <nav class="navbar" style="padding: 0.85rem 2rem;">
-      <!-- Brand -->
-      <a href="#/" class="nav-brand flex items-center gap-2" style="text-decoration: none; z-index: 10; gap: 0.5rem; display: flex; align-items: center;">
-        <div style="
-          width: 22px; height: 22px; border-radius: 50%;
-          background: var(--accent);
-          color: var(--text-inverse);
-          display: flex; align-items: center; justify-content: center;
-          font-family: var(--font-mono); font-size: 0.8rem; font-weight: 800;
-        ">*</div>
-        <span style="
-          font-family: var(--font-mono);
-          color: var(--text-primary);
-          font-size: 1rem; font-weight: 700;
-          letter-spacing: -0.04em;
-        ">badcode</span>
-      </a>
-
-      <!-- Center nav links -->
-      <div class="nav-center" style="
-        position: absolute; left: 50%; transform: translateX(-50%);
-        display: flex; gap: 0.25rem;
-      ">
-        <a href="#/dashboard" style="
-          text-decoration: none;
-          color: var(--text-secondary);
-          font-size: 0.85rem; font-weight: 500;
-          padding: 0.35rem 0.85rem;
-          border-radius: var(--radius-full);
-          transition: color 0.15s, background 0.15s;
-        " onmouseenter="this.style.color='var(--text-primary)';this.style.background='var(--bg-elevated)'"
-           onmouseleave="this.style.color='var(--text-secondary)';this.style.background='transparent'">
-          Modules
+      <!-- Brand & Breadcrumbs -->
+      <div class="flex items-center">
+        <a href="#/" class="nav-brand flex items-center gap-2" style="text-decoration: none; z-index: 10; gap: 0.5rem; display: flex; align-items: center;">
+          <div style="
+            width: 22px; height: 22px; border-radius: 50%;
+            background: var(--accent);
+            color: var(--text-inverse);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono); font-size: 0.8rem; font-weight: 800;
+          ">*</div>
+          <span style="
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            font-size: 1rem; font-weight: 700;
+            letter-spacing: -0.04em;
+          ">badcode</span>
         </a>
-        <a href="#/" style="
-          text-decoration: none;
-          color: var(--text-secondary);
-          font-size: 0.85rem; font-weight: 500;
-          padding: 0.35rem 0.85rem;
-          border-radius: var(--radius-full);
-          transition: color 0.15s, background 0.15s;
-        " onmouseenter="this.style.color='var(--text-primary)';this.style.background='var(--bg-elevated)'"
-           onmouseleave="this.style.color='var(--text-secondary)';this.style.background='transparent'">
-          Practice
-        </a>
+        ${breadcrumbHtml}
       </div>
 
       <!-- Right side actions -->
       <div class="flex items-center" style="gap: 0.75rem; z-index: 10;">
-        <button id="cheatsheet-btn" style="
-          background: transparent;
-          border: 1px solid var(--border-hover);
-          color: var(--text-secondary);
-          font-family: var(--font-sans);
-          font-size: 0.8rem; font-weight: 600;
-          padding: 0.35rem 0.9rem;
-          border-radius: var(--radius-full);
-          cursor: pointer;
-          transition: border-color 0.15s, color 0.15s;
-        " onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--text-primary)'"
-           onmouseleave="this.style.borderColor='var(--border-hover)';this.style.color='var(--text-secondary)'">
-          Cheat Sheet
-        </button>
-
         <div id="ai-toggle-container" class="flex items-center" style="
           gap: 0.5rem; cursor: pointer;
           background: var(--bg-elevated);
@@ -90,9 +108,23 @@ export default function Navbar() {
           </div>
         </div>
 
-        <!-- Theme Toggle -->
+        <button id="cheatsheet-btn" style="
+          background: transparent;
+          border: 1px solid var(--border-hover);
+          color: var(--text-secondary);
+          font-family: var(--font-sans);
+          font-size: 0.8rem; font-weight: 600;
+          padding: 0.35rem 0.9rem;
+          border-radius: var(--radius-full);
+          cursor: pointer;
+          transition: border-color 0.15s, color 0.15s;
+        " onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--text-primary)'"
+           onmouseleave="this.style.borderColor='var(--border-hover)';this.style.color='var(--text-secondary)'">
+          Cheat Sheet
+        </button>
+
         <button id="theme-toggle-btn" title="Toggle light / dark mode" style="
-          width: 34px; height: 34px;
+          width: 32px; height: 32px;
           border-radius: 50%;
           background: var(--bg-elevated);
           border: 1px solid var(--border);
@@ -103,7 +135,7 @@ export default function Navbar() {
           flex-shrink: 0;
         " onmouseenter="this.style.borderColor='var(--border-hover)';this.style.color='var(--text-primary)'"
            onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)'">
-          <span id="theme-icon" style="font-size: 15px; line-height: 1;">🌙</span>
+          <span id="theme-icon" style="font-size: 14px; line-height: 1;">🌙</span>
         </button>
 
         <button id="auth-btn" style="
@@ -138,10 +170,14 @@ export function bindNavbar() {
     localStorage.setItem('bdc-theme', theme);
     const icon = document.getElementById('theme-icon');
     if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    
+    // Dispatch event if other components need to know
+    window.dispatchEvent(new CustomEvent('badcode:themechange', { detail: { theme } }));
   }
 
   // Sync icon with current theme on mount
-  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const current = document.documentElement.getAttribute('data-theme') || (localStorage.getItem('bdc-theme') || 'light');
+  document.documentElement.setAttribute('data-theme', current);
   const icon = document.getElementById('theme-icon');
   if (icon) icon.textContent = current === 'dark' ? '☀️' : '🌙';
 

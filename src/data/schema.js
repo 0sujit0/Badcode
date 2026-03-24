@@ -19,7 +19,8 @@ export const schema = {
       (6, 'Jessica', 'Taylor', 'jtaylor@example.com', '2023-04-15'),
       (7, 'Chris', 'Anderson', 'canderson@example.com', '2023-05-01'),
       (8, 'Sophie', 'Martinez', 'smartinez@example.com', '2023-05-15'),
-      (9, 'Isabella', 'Garcia', 'igarcia@example.com', '2023-06-01');
+      (9, 'Isabella', 'Garcia', 'igarcia@example.com', '2023-06-01'),
+      (10, 'Alex', 'Patel', NULL, '2023-07-01');
     `,
     description: "Contains all user accounts registered on ShopKart."
   },
@@ -43,7 +44,8 @@ export const schema = {
       (6, 'Laptop Stand', 'Accessories', 35.00, 120),
       (7, 'Bluetooth Speaker', 'Electronics', 55.00, 200),
       (8, 'Notebook', 'Office', 5.00, 500),
-      (9, 'Keyboard', 'Electronics', 70.00, 100);
+      (9, 'Keyboard', 'Electronics', 70.00, 100),
+      (10, 'Webcam', 'Electronics', 39.99, NULL);
     `,
     description: "Catalog of all products sold on ShopKart."
   },
@@ -97,14 +99,29 @@ export const schema = {
         hire_date DATE
       );
     `,
-    seed: `
+     seed: `
       INSERT INTO Employees (id, first_name, last_name, department, role, salary, hire_date) VALUES 
       (1, 'Alice', 'Brown', 'Sales', 'Manager', 95000.00, '2021-03-01'),
       (2, 'Bob', 'Thompson', 'Engineering', 'Developer', 85000.00, '2022-06-15'),
       (3, 'Charlie', 'Davis', 'Marketing', 'Specialist', 65000.00, '2020-11-20'),
       (4, 'Diana', 'Price', 'Sales', 'Representative', 55000.00, '2023-01-10'),
-      (5, 'Evan', 'Wright', 'Engineering', 'Lead', 110000.00, '2022-08-01');
+      (5, 'Evan', 'Wright', 'Engineering', 'Lead', 110000.00, '2022-08-01'),
+      (6, 'Fiona', 'Clark', 'Engineering', 'Developer', 85000.00, '2023-03-15');
     `,
     description: "Internal staff records for ShopKart."
   }
 };
+
+// SQL mutations that L7 students apply to the database.
+// Applied automatically when loading Level 8, 9, or 10 so those levels
+// always start from a deterministic post-L7 state regardless of
+// navigation order or page refresh.
+export const postL7Mutations = [
+  "INSERT INTO Customers (id, first_name, last_name, email, registration_date) VALUES (11, 'Rahul', 'Sharma', 'r.sharma@example.com', '2023-10-25');",
+  "INSERT INTO Products (id, name, category, price, stock) VALUES (11, 'Gaming Headset', 'Electronics', 99.99, 40);",
+  "UPDATE Products SET stock = 50 WHERE name = 'Laptop';",
+  "UPDATE Orders SET amount = 40.00 WHERE id = 102;",
+  "UPDATE Products SET price = price * 1.1 WHERE category = 'Electronics';",
+  "DELETE FROM Orders WHERE status = 'Cancelled';",
+  "DELETE FROM Orders WHERE product_id NOT IN (SELECT id FROM Products);"
+];
