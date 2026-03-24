@@ -87,11 +87,13 @@ export default function DashboardPage() {
   const continueProgressPct = continueLevelData.total > 0
     ? Math.round((continueLevelData.completed / continueLevelData.total) * 100) : 0;
   const continueHref = continueProblem ? `#/lesson/${continueProblem.id}` : `#/level/${continueLevelId}`;
+  
+  // NEW design title/subtext
   const continueTitleText = continueProblem
-    ? `${LEVEL_NAMES[continueLevelId]} — ${continueProblem.title}`
+    ? continueProblem.title
     : LEVEL_NAMES[continueLevelId];
   const continueSubText = continueProblem
-    ? continueProblem.story.replace(/<[^>]*>?/gm, '').slice(0, 72) + '…'
+    ? (totalSolved === 0 ? "Start your first challenge today." : "Challenge " + (problems.filter(p => p.level === continueLevelId && p.id < continueProblem.id).length + 1) + " of " + problems.filter(p => p.level === continueLevelId).length + " — you were so close last time.")
     : `${continueLevelData.completed} / ${continueLevelData.total} missions complete`;
 
   // Module cards
@@ -123,12 +125,16 @@ export default function DashboardPage() {
       badgeHtml = `<span class="mc-badge mc-badge-idle">Not Started</span>`;
     }
 
+    const maxVisible = 3;
     const skills = LEVEL_SKILLS[level] || [];
-    const skillTags = skills.map(s => `<span class="mc-skill">${s}</span>`).join('');
+    const visibleSkills = skills.slice(0, maxVisible);
+    const overflow = skills.length - maxVisible;
+    const skillTags = visibleSkills.map(s => `<span class="mc-skill">${s}</span>`).join('') + 
+                      (overflow > 0 ? `<span class="mc-skill overflow">+${overflow}</span>` : '');
 
-    const dotCount = diff.label === 'Beginner' ? 1 : diff.label === 'Intermediate' ? 2 : 3;
+    const dotCount = level <= 3 ? 1 : level <= 6 ? 2 : 3;
     const dots = [1, 2, 3].map(n =>
-      `<span class="mc-dot" style="${n <= dotCount ? `background:${diff.varColor};` : ''}"></span>`
+      `<span class="mc-dot ${n <= dotCount ? (isComplete ? 'filled-success' : 'filled') : ''}"></span>`
     ).join('');
 
     const hoverEvents = !levelLocked ? `
@@ -139,24 +145,26 @@ export default function DashboardPage() {
     return `
       <div
         class="module-card ${stateClass}"
-        style="animation-delay: ${400 + idx * 70}ms;"
+        style="animation-delay: ${idx * 70}ms;"
         ${!levelLocked ? `onclick="window.location.hash='#/level/${level}'"` : ''}
         ${hoverEvents}
       >
-        ${isInProgress ? '<div class="mc-stripe"></div>' : ''}
-        <div class="mc-top">
-          <div class="mc-num">${String(level).padStart(2, '0')}</div>
-          ${badgeHtml}
-        </div>
-        <div class="mc-title">${LEVEL_NAMES[level]}</div>
-        <div class="mc-skills">${skillTags}</div>
-        <div class="mc-footer">
-          <div class="mc-prog-bar">
-            <div class="mc-prog-fill progress-fill" style="width:${progressPct}%"></div>
+        <div class="card-inner">
+          ${isInProgress ? '<div class="mc-stripe"></div>' : ''}
+          <div class="mc-top">
+            <div class="mc-num">${String(level).padStart(2, '0')}</div>
+            ${badgeHtml}
           </div>
-          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
-            <div class="mc-diff-dots">${dots}</div>
-            <span class="mc-prog-text">${data.completed}/${data.total}</span>
+          <div class="mc-title">${LEVEL_NAMES[level]}</div>
+          <div class="mc-skills">${skillTags}</div>
+          <div class="mc-footer">
+            <div class="mc-prog-bar">
+              <div class="mc-prog-fill ${isComplete ? 'complete-fill' : ''}" style="width:${progressPct}%"></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+              <div class="mc-diff-dots">${dots}</div>
+              <span class="mc-prog-text">${data.completed}/${data.total}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -171,191 +179,187 @@ export default function DashboardPage() {
         display: flex; align-items: center; gap: 1.5rem;
         padding: 1.25rem 1.75rem;
         background: var(--bg-card);
-        border: 1px solid var(--border-accent);
-        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--accent);
+        border-radius: 0 0 var(--radius-lg) var(--radius-lg);
         position: relative; overflow: hidden;
         animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both;
       }
       .continue-banner::before {
         content: ''; position: absolute; inset: 0;
-        background: radial-gradient(ellipse at 0% 50%, var(--accent-tint) 0%, transparent 60%);
+        background: radial-gradient(ellipse at 20% 50%, var(--accent-dim) 0%, transparent 60%);
         pointer-events: none;
       }
       .continue-pulse {
         width: 44px; height: 44px; border-radius: 10px;
         background: var(--accent); color: var(--text-inverse);
         display: flex; align-items: center; justify-content: center;
-        font-family: var(--font-mono); font-weight: 800; font-size: 1rem;
-        flex-shrink: 0; animation: pulse-glow-dash 3s ease-in-out infinite;
+        flex-shrink: 0; animation: pulse-ring 2s ease-in-out infinite;
         position: relative; z-index: 1;
       }
-      @keyframes pulse-glow-dash {
-        0%,100% { box-shadow: 0 0 16px var(--accent-tint-strong); }
-        50% { box-shadow: 0 0 28px rgba(200,255,0,0.22); }
+      [data-theme="light"] .continue-pulse {
+        animation-name: pulse-ring-light;
       }
+      .continue-pulse svg { width: 22px; height: 22px; }
+      
       .continue-info { flex: 1; min-width: 0; position: relative; z-index: 1; }
       .continue-meta {
-        font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600;
+        font-family: var(--font-mono); font-size: 11px; font-weight: 500;
         letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
-        margin-bottom: 0.2rem;
+        margin-bottom: 2px;
       }
       .continue-title {
-        font-size: 0.93rem; font-weight: 700; color: var(--text-primary);
+        font-size: 16px; font-weight: 600; color: var(--text-primary);
         white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        margin-bottom: 0.15rem;
       }
-      .continue-sub { font-size: 0.76rem; color: var(--text-muted); }
+      .continue-sub { font-size: 13px; color: var(--text-secondary); }
       .continue-right {
         display: flex; align-items: center; gap: 1.25rem; flex-shrink: 0;
         position: relative; z-index: 1;
       }
       .mini-prog-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-      .mini-prog-label { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); }
-      .mini-prog-bar { width: 110px; height: 3px; border-radius: 2px; background: var(--bg-elevated); overflow: hidden; }
-      .mini-prog-fill { height: 100%; border-radius: 2px; background: var(--accent); }
+      .mini-prog-bar { width: 110px; height: 4px; border-radius: 2px; background: var(--bg-elevated); overflow: hidden; }
+      .mini-prog-fill { height: 100%; border-radius: 2px; background: var(--accent); transition: width 0.5s ease; }
+      
       .continue-cta {
-        font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
-        padding: 0.5rem 1.1rem;
+        font-family: var(--font-sans); font-size: 13px; font-weight: 600;
+        padding: 7px 16px;
         background: var(--accent); color: var(--text-inverse);
-        border: none; border-radius: var(--radius-sm); cursor: pointer;
+        border: none; border-radius: var(--radius-md); cursor: pointer;
         text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;
-        white-space: nowrap; transition: background 0.2s, transform 0.2s;
+        white-space: nowrap; transition: 0.18s ease;
       }
-      .continue-cta:hover { background: var(--accent-yellow-hover); transform: translateX(2px); }
+      .continue-cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
 
       /* Stats row */
       .dash-stats-row {
         display: grid; grid-template-columns: repeat(3, 1fr);
-        gap: 2px; margin-top: 1.25rem;
-        border-radius: var(--radius-md); overflow: hidden;
+        gap: 12px; margin-top: 28px;
         animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.2s both;
       }
       .dash-stat-cell {
-        background: var(--bg-card); padding: 1rem 1.25rem;
+        background: var(--bg-card); border: 1px solid var(--border);
+        border-radius: var(--radius-md); padding: 16px 20px;
         display: flex; flex-direction: column; gap: 2px;
       }
       .dash-stat-num {
-        font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800;
+        font-family: var(--font-mono); font-size: 28px; font-weight: 700;
         color: var(--text-primary); line-height: 1;
       }
       .dash-stat-num .nc { color: var(--accent); }
-      .dash-stat-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
+      .dash-stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
 
       /* Section header + mode toggle */
       .dash-section-header {
         display: flex; align-items: center; justify-content: space-between;
-        margin-top: 3rem; margin-bottom: 1.25rem;
+        margin-top: 48px; margin-bottom: 20px;
         animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.3s both;
       }
       .dash-section-title {
-        font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
-        letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted);
+        font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+        letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted);
       }
       .dash-mode-toggle {
-        display: flex; align-items: center;
-        background: var(--bg-elevated); border: 1px solid var(--border);
-        border-radius: var(--radius-sm); padding: 3px; gap: 2px;
+        display: flex; gap: 4px;
       }
       .dash-mode-opt {
-        font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
-        padding: 0.3rem 0.8rem; border-radius: 4px; border: none;
+        font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+        padding: 6px 14px; border-radius: var(--radius-md); border: 1px solid var(--border);
         background: transparent; color: var(--text-muted);
-        cursor: pointer; transition: all 0.15s;
-        display: flex; align-items: center; gap: 4px;
+        cursor: pointer; transition: 0.18s ease;
+        display: flex; align-items: center; gap: 6px;
       }
-      .dash-mode-opt.active { background: var(--bg-card); color: var(--text-primary); }
+      .dash-mode-opt.active { background: var(--accent-dim); color: var(--accent); border-color: var(--border-accent); }
+      .dash-mode-opt:not(.active):hover { border-color: var(--text-muted); }
 
       /* Module cards */
       .dash-modules-grid {
-        display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
       }
       .module-card {
         background: var(--bg-card); border: 1px solid var(--border);
-        border-radius: var(--radius-lg); padding: 1.5rem;
+        border-radius: var(--radius-lg);
         display: flex; flex-direction: column; min-height: 200px;
         cursor: pointer; position: relative; overflow: hidden;
         opacity: 0;
-        animation: fadeUp 0.4s cubic-bezier(0.22,1,0.36,1) both;
-        transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), border-color 0.25s, box-shadow 0.25s;
+        animation: fadeUp 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
       }
+      .card-inner { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; transition: opacity 0.2s ease; }
+      
       .mc-stripe {
-        position: absolute; top: 0; left: 0; right: 0; height: 3px;
+        position: absolute; top: 0; left: 0; right: 0; height: 2px;
         background: var(--accent);
       }
-      .mc-in-progress { border-color: var(--border-accent); }
-      .mc-in-progress::after {
-        content: ''; position: absolute; inset: 0;
-        background: radial-gradient(ellipse at 30% 0%, var(--accent-tint) 0%, transparent 50%);
-        pointer-events: none;
+      
+      /* States */
+      .module-card.mc-in-progress {
+        border-color: var(--border-accent);
+        box-shadow: inset 3px 0 0 0 var(--accent-glow), var(--glow-green);
       }
-      .mc-hovered.mc-in-progress {
-        border-color: rgba(200,245,66,0.4) !important;
-        transform: translateY(-4px) !important;
-        box-shadow: 0 8px 40px var(--accent-tint) !important;
+      .module-card.mc-in-progress.mc-hovered {
+        box-shadow: inset 3px 0 0 0 rgba(200,245,66,0.15), 0 0 32px rgba(200,245,66,0.18);
+        transform: translateY(-2px);
       }
-      .mc-hovered.mc-not-started,
-      .mc-hovered.mc-complete {
-        transform: translateY(-2px) !important;
-        border-color: var(--border-hover) !important;
-      }
-      .mc-complete { border-color: var(--success-border); }
-      .mc-locked { cursor: default; }
-      .mc-locked .mc-num,
-      .mc-locked .mc-title,
-      .mc-locked .mc-skills,
-      .mc-locked .mc-footer { opacity: 0.35; }
+      
+      .module-card.mc-complete { border-left: 3px solid var(--success); }
+      .module-card.mc-complete.mc-hovered { border-color: var(--success); }
+      
+      .module-card.mc-locked { cursor: not-allowed; }
+      .module-card.mc-locked .card-inner { opacity: 0.5; }
 
-      .mc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.9rem; }
+      .mc-top { display: flex; align-items: center; justify-content: space-between; }
       .mc-num {
-        font-family: var(--font-mono); font-size: 2.1rem; font-weight: 800;
-        color: var(--text-muted); line-height: 1; letter-spacing: -0.04em;
+        font-family: var(--font-mono); font-size: 32px; font-weight: 700;
+        color: var(--text-secondary); line-height: 1; opacity: 0.7;
+        transition: color 0.18s ease;
       }
-      .mc-in-progress .mc-num { color: var(--accent); }
-      .mc-complete .mc-num { color: var(--success); }
+      .mc-in-progress .mc-num { color: var(--accent); opacity: 1; }
+      .mc-complete .mc-num { color: var(--success); opacity: 0.7; }
+      .mc-locked .mc-num { color: var(--text-muted); opacity: 0.4; }
 
       .mc-badge {
-        font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700;
-        letter-spacing: 0.05em; text-transform: uppercase;
-        padding: 0.2rem 0.55rem; border-radius: 999px;
-        display: inline-flex; align-items: center; gap: 4px;
+        font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+        letter-spacing: 0.5px; text-transform: uppercase;
+        padding: 3px 10px; border-radius: var(--radius-full);
       }
-      .mc-badge-progress { background: var(--accent-tint); border: 1px solid var(--border-accent); color: var(--accent); }
-      .mc-badge-idle { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
-      .mc-badge-done { background: var(--success-dim); border: 1px solid var(--success-border); color: var(--success); }
-      .mc-badge-locked { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+      .mc-badge-progress { background: var(--accent-dim); color: var(--accent); }
+      .mc-badge-idle { background: var(--bg-elevated); color: var(--text-muted); }
+      .mc-badge-done { background: var(--success-dim); color: var(--success); }
+      .mc-badge-locked { background: var(--bg-elevated); color: var(--warning); }
 
       .mc-title {
-        font-size: 1.1rem; font-weight: 700; color: var(--text-primary);
-        margin-bottom: 0.6rem; letter-spacing: -0.02em; line-height: 1.2;
+        font-size: 16px; font-weight: 600; color: var(--text-primary);
+        line-height: 1.3;
       }
-      .mc-skills { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: auto; }
+      .mc-skills { display: flex; flex-wrap: wrap; gap: 5px; }
       .mc-skill {
-        font-family: var(--font-mono); font-size: 0.6rem; font-weight: 500;
-        padding: 2px 7px; border-radius: 4px;
+        font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+        padding: 2px 8px; border-radius: var(--radius-sm);
         background: var(--bg-elevated); color: var(--text-muted);
-        border: 1px solid transparent;
+        border: 1px solid var(--border);
       }
-      .mc-in-progress .mc-skill {
-        background: var(--accent-tint);
-        border-color: var(--border-accent);
-        color: var(--text-secondary);
-      }
+      .mc-skill.overflow { background: transparent; border-color: var(--border); color: var(--text-muted); font-style: italic; }
 
       .mc-footer {
         display: flex; align-items: center; justify-content: space-between;
-        margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); gap: 0.75rem;
+        margin-top: auto; padding-top: 8px; gap: 12px;
       }
-      .mc-prog-bar { flex: 1; height: 3px; border-radius: 2px; background: var(--bg-elevated); overflow: hidden; }
-      .mc-prog-fill { height: 100%; border-radius: 2px; background: var(--accent); }
-      .mc-diff-dots { display: flex; gap: 3px; align-items: center; }
-      .mc-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--bg-elevated); flex-shrink: 0; }
+      .mc-prog-bar { flex: 1; height: 3px; border-radius: var(--radius-full); background: var(--bg-elevated); overflow: hidden; }
+      .mc-prog-fill { height: 100%; border-radius: var(--radius-full); background: var(--accent); transition: width 0.5s ease; }
+      .mc-prog-fill.complete-fill { background: var(--success); }
+      
+      .mc-diff-dots { display: flex; gap: 3px; }
+      .mc-dot { width: 4px; height: 12px; border-radius: 2px; background: var(--border-main); }
+      .mc-dot.filled { background: var(--accent); }
+      .mc-dot.filled-success { background: var(--success); }
+      
       .mc-prog-text {
-        font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600; color: var(--text-muted);
+        font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);
       }
-      .mc-in-progress .mc-prog-text { color: var(--text-secondary); }
 
       @media (max-width: 900px) { .dash-modules-grid { grid-template-columns: repeat(2, 1fr); } }
-      @media (max-width: 580px) {
+      @media (max-width: 768px) {
         .dash-modules-grid { grid-template-columns: 1fr; }
         .dash-stats-row { grid-template-columns: 1fr; }
         .continue-banner { flex-direction: column; align-items: flex-start; }
@@ -368,7 +372,11 @@ export default function DashboardPage() {
 
       <!-- Continue Banner -->
       <div class="continue-banner">
-        <div class="continue-pulse">${String(continueLevelId).padStart(2, '0')}</div>
+        <div class="continue-pulse">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
         <div class="continue-info">
           <div class="continue-meta">Continue where you left off</div>
           <div class="continue-title">${continueTitleText}</div>
@@ -376,29 +384,43 @@ export default function DashboardPage() {
         </div>
         <div class="continue-right">
           <div class="mini-prog-wrap">
-            <span class="mini-prog-label">${continueLevelData.completed} / ${continueLevelData.total} missions</span>
             <div class="mini-prog-bar">
-              <div class="mini-prog-fill progress-fill" style="width:${continueProgressPct}%"></div>
+              <div class="mini-prog-fill" style="width:${continueProgressPct}%"></div>
             </div>
           </div>
-          <a href="${continueHref}" class="continue-cta">${totalSolved === 0 ? 'Start' : 'Continue'} &rarr;</a>
+          <a href="${continueHref}" class="continue-cta">Continue &rarr;</a>
         </div>
       </div>
 
       <!-- Stats row -->
       <div class="dash-stats-row">
-        <div class="dash-stat-cell">
-          <div class="dash-stat-num"><span class="nc">${totalSolved}</span> / ${totalProblems}</div>
-          <div class="dash-stat-label">Problems solved</div>
-        </div>
-        <div class="dash-stat-cell">
-          <div class="dash-stat-num">${modulesInProgress}</div>
-          <div class="dash-stat-label">Module${modulesInProgress !== 1 ? 's' : ''} in progress</div>
-        </div>
-        <div class="dash-stat-cell">
-          <div class="dash-stat-num">${modulesRemaining}</div>
-          <div class="dash-stat-label">Module${modulesRemaining !== 1 ? 's' : ''} remaining</div>
-        </div>
+        ${totalSolved === 0 ? `
+          <div class="dash-stat-cell">
+            <div class="dash-stat-num">87</div>
+            <div class="dash-stat-label">Challenges waiting</div>
+          </div>
+          <div class="dash-stat-cell">
+            <div class="dash-stat-num">10</div>
+            <div class="dash-stat-label">Modules to explore</div>
+          </div>
+          <div class="dash-stat-cell">
+            <div class="dash-stat-num">$0</div>
+            <div class="dash-stat-label">Completely free</div>
+          </div>
+        ` : `
+          <div class="dash-stat-cell">
+            <div class="dash-stat-num"><span class="nc">${totalSolved}</span> / ${totalProblems}</div>
+            <div class="dash-stat-label">Problems solved</div>
+          </div>
+          <div class="dash-stat-cell">
+            <div class="dash-stat-num">${modulesInProgress}</div>
+            <div class="dash-stat-label">Module${modulesInProgress !== 1 ? 's' : ''} in progress</div>
+          </div>
+          <div class="dash-stat-cell">
+            <div class="dash-stat-num">${modulesRemaining}</div>
+            <div class="dash-stat-label">Module${modulesRemaining !== 1 ? 's' : ''} remaining</div>
+          </div>
+        `}
       </div>
 
       <!-- Section header + mode toggle -->
@@ -406,11 +428,11 @@ export default function DashboardPage() {
         <div class="dash-section-title">All Modules</div>
         <div class="dash-mode-toggle">
           <button id="mode-gated" class="dash-mode-opt ${currentMode === 'gated' ? 'active' : ''}">
-            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             Guided
           </button>
           <button id="mode-explore" class="dash-mode-opt ${currentMode === 'explore' ? 'active' : ''}">
-            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
             Explore
           </button>
         </div>
